@@ -32,6 +32,7 @@ import ArgParser as ap
 import Config
 import ConfigParser as cp
 import Count_sp_genes as csg
+import FormatChecker as fc
 import LocateDataset as ld
 
 class bcolors:
@@ -47,7 +48,9 @@ class bcolors:
 # Default configuration file name:
 config_filename = '.config' 
 
-class Count_genes: 
+output_fn_prefix = 'sprot_genes.stat'
+
+class Count_genes:
     def __init__(self):
         # Collect user arguments into a dictionary:
         self.parsed_dict = ap.parse_args() 
@@ -100,10 +103,7 @@ class Count_genes:
         if not self.parsed_dict['outfile'] == '':
             ob = basename(self.parsed_dict['outfile'])
         else:
-            ob = basename(self.parsed_dict['t1']) + '.%s.tfa' \
-                          % basename(self.parsed_dict['g'])
-            # output file name is constructed by appending '.taxon id.tfa'
-            # as extension
+            ob = output_fn_prefix
         index = 1
         while os.path.exists(self.work_dir + '/' + ob + '.' + str(index)):
             index = index + 1
@@ -140,6 +140,46 @@ class Count_genes:
                bcolors.ENDC)
         return None
 
+    def check_sprot_format(self, sprot_fname):
+        """
+        This method exits the Filter program on any of the
+        following conditions:
+            Case 1: if the file is empty
+            Case 2: if the file is NOT in UniProtKB/SwissProt format.
+                    To check this it invokes check_sprot_format method
+                    of FormatChecker module.
+        """
+        if os.stat(sprot_fname).st_size == 0:
+            print bcolors.WARNING + 'You submitted an empty file: ' + sprot_fname + \
+                  bcolors.ENDC
+            sys.exit(1)
+        elif not fc.check_sprot_format(open(sprot_fname, 'r')):
+            print bcolors.WARNING + 'File format error: ' + \
+                  basename(sprot_fname) + bcolors.ENDC
+            print bcolors.WARNING + 'File must be in UniProtKB/SwissProt ' + \
+                'format' + bcolors.ENDC
+            sys.exit(1)
+
+    def count_genes_for_species(self):
+
+        fh = open(self.output_filename, 'w') 
+        outstr = ''
+
+        exp_bpo_ct, exp_cco_ct, exp_mfo_ct = csg.count_genes_with_EXP(
+                                                 open(self.t1_input_file, 'r'),
+                                                 self.parsed_dict['g'],
+                                                 self.ConfigParam['exp_eec'])
+        print('exp_bpo_ct: ' + str(exp_bpo_ct))
+        print('exp_cco_ct: ' + str(exp_cco_ct))
+        print('exp_mfo_ct: ' + str(exp_mfo_ct))
+
+        outstr += str(exp_bpo_ct) + '\t' + str(exp_cco_ct) + '\t' + str(exp_mfo_ct) + '\n' 
+        fh.write("%s" % outstr)
+        fh.close()
+        print(self.output_filename)
+
+        return None
+
     def process_data(self):
         """
         This method invokes other methods to perform all tasks related
@@ -148,16 +188,21 @@ class Count_genes:
         # Print the wellcome message:
         self.print_prolog()
 
+        # Check UniProtKB/SwissProt file format: 
+        self.check_sprot_format(self.t1_input_file)
+
         # Count the total number of genes with EXP evidence code 
         # from the UniProtKB/SwissProt file:
         print('Counting genes with EXP evidence code from ' + \
                basename(self.t1_input_file) + ' ...')
 
-        geneCount_exp = csg.count_gene_with_EXP_per_species(
-                          open(self.t1_input_file, 'r'),
-                          self.parsed_dict['g'],
-                          self.ConfigParam['exp_eec'])
-        print('geneCount_exp: ' + str(geneCount_exp))
+#        exp_bpo_ct, exp_cco_ct, exp_mfo_ct = csg.count_genes_with_EXP(
+#                                                 open(self.t1_input_file, 'r'),
+#                                                 self.parsed_dict['g'],
+#                                                 self.ConfigParam['exp_eec'])
+ 
+        self.count_genes_for_species()
+#        print self.output_filename
 
 #        self.print_epilog(target_count)
         return None
@@ -168,5 +213,5 @@ if __name__ == '__main__':
         print(__doc__)
     else:
         cg = Count_genes()     # Create an instance of Count_gene class
-        cg.process_data()      # Process data 
+        cg.process_data()      # Process data
     sys.exit(0)
