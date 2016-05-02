@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 '''
-    Filter program accepts the following three inputs:
+    Count_genes program accepts the following three inputs:
            (1) a UniProtKB/swissProt file 
            (2) a taxon id and 
            (3) an optional output file name 
@@ -45,7 +45,7 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 # Default configuration file name:
-config_filename = '.cafarc' 
+config_filename = '.config' 
 
 class Count_genes: 
     def __init__(self):
@@ -112,7 +112,7 @@ class Count_genes:
 
     def print_prolog(self):
         print ("*************************************************")
-        print ("Welcome to Target Generatin Tool !!!!!")
+        print ("Welcome to Count Genes Tool !!!!!")
         print ("*************************************************\n")
         print ('Following is a list of user supplied inputs:\n')
         for arg in self.parsed_dict:
@@ -168,5 +168,5 @@ if __name__ == '__main__':
         print(__doc__)
     else:
         cg = Count_genes()     # Create an instance of Count_gene class
-        cg.process_data() # Process data 
+        cg.process_data()      # Process data 
     sys.exit(0)
