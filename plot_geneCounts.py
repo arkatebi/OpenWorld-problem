@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt
 # Default configuration file name:
 config_filename = '.config'
 
-output_fn_prefix = 'sprot_genes.stat'
+output_fn_prefix = 'sprot_genes.stat.1'
 
 def convert_to_number_list(bpo_list, cco_list, mfo_list): 
 
@@ -83,7 +83,6 @@ taxon_name_list = []
 for line in fh_sp:
     taxon_id_list.append(line.strip().split('\t')[0])
     taxon_name_list.append(line.strip().split('\t')[1])
-
 
 geneFreq_bpo_dict = defaultdict(list) 
 geneFreq_cco_dict = defaultdict(list) 
