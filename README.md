@@ -32,24 +32,24 @@ The details of the usage description of this software are as follows.
 
 #### Statistics of Experimentally Annotated Genes 
 
-This program will create a file with the number of genes whose annotations 
-are experimentally validated for a set of organism over a series of time 
-points. The simplest way to run the program: 
+This program will create a file with the number of genes whose annotations
+are experimentally validated for a set of organism over a series of time
+points. The simplest way to run the program:
 
-python Count_genes --input1 file_listing_species_taxon_ids --input2 file_listing_sprot_filenames.txt 
+python Count_genes --input1 filename_listing_species_taxon_ids --input2 filename_listing_sprot_filenames 
 
-input1 is a TWO column text file containing the list of species: the first 
-column has the taxon id and the second column has the organism name. input2 
+input1 is a TWO column text file containing the list of species: the first
+column has the taxon id and the second column has the organism name. input2
 is a list of UniprotKB/SwissProt filenames over a series of time points.
 
 ```
-python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=sprot_genes.txt
+python Count_genes -I1=sp_list.txt -I2=sprot_files.txt
 ```
 
-It will create an output file: sprot_genes.stat.1 
-This output file has one row for each SwissProt file listed in 
-sprot_files.txt. Each row has THREE columns for each organism, 
-according to the organisms listed in sp_list.txt file. 
+It creates an output file: sprot_genes.stat.1
+The output file has one row for each SwissProt file listed in
+sprot_files.txt. Each row has THREE columns for each organism,
+according to the organisms listed in sp_list.txt file.
 
 
 ### Source Code
