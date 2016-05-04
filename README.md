@@ -64,25 +64,25 @@ according to the organisms listed in sp_list.txt file.
 
 
 ####  Rattus norvegicus (taxon id 10116) 
-![Alt Gene Frequency of Rat] (/figures/geneFreq.10116.png?raw=true “Gene Frequency of Rat”)
+![Alt Gene Frequency of Rat] (/figures/geneFreq.10116.1.png?raw=true “Gene Frequency of Rat”)
 
 ####  Saccharomyces cerevisiae (taxon id 559292) 
-![Alt Gene Frequency of Baker's yeast] (/figures/geneFreq.559292.png?raw=true “Gene Frequency of Baker's yeast”)
+![Alt Gene Frequency of Baker's yeast] (/figures/geneFreq.559292.1.png?raw=true “Gene Frequency of Baker's yeast”)
 
 ####  Bos taurus (taxon id 9913) 
-![Alt Gene Frequency of Bovine] (/figures/geneFreq.9913.png?raw=true “Gene Frequency of Bovine”)
+![Alt Gene Frequency of Bovine] (/figures/geneFreq.9913.1.png?raw=true “Gene Frequency of Bovine”)
 
 ####  Schizosaccharomyces pombe (taxon id 284812) 
-![Alt Gene Frequency of Fission yeast] (/figures/geneFreq.284812.png?raw=true “Gene Frequency of Fission yeast”)
+![Alt Gene Frequency of Fission yeast] (/figures/geneFreq.284812.1.png?raw=true “Gene Frequency of Fission yeast”)
 
 ####  Echerichia coli (taxon id 83333) 
-![Alt Gene Frequency of E. coli] (/figures/geneFreq.83333.png?raw=true “Gene Frequency of E. coli”)
+![Alt Gene Frequency of E. coli] (/figures/geneFreq.83333.1.png?raw=true “Gene Frequency of E. coli”)
 
 ####  Bacillus subtilis (taxon id 224308) 
-![Alt Gene Frequency of B. subtilis] (/figures/geneFreq.224308.png?raw=true “Gene Frequency of B. subtilis”)
+![Alt Gene Frequency of B. subtilis] (/figures/geneFreq.224308.1.png?raw=true “Gene Frequency of B. subtilis”)
 
 ####  Dictyostelium discoideum (taxon id 44689) 
-![Alt Gene Frequency of Slime mold] (/figures/geneFreq.44689.png?raw=true “Gene Frequency of Slime mold”)
+![Alt Gene Frequency of Slime mold] (/figures/geneFreq.44689.1.png?raw=true “Gene Frequency of Slime mold”)
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
