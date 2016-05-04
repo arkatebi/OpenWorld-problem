@@ -43,27 +43,29 @@ def plot_and_save(bpo_list, cco_list, mfo_list, taxon_id, taxon_name):
 #    plt.title('# of Gene Annotations with EXP Validation')
     plt.title(plt_title)
     plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
-    plt.ylabel('Gene Frequency')
+    plt.ylabel('Gene Count')
     plt.axis([0, 11, min(bpo_list)-b_offset, max(bpo_list)+u_offset])
     #ax_1.text(10, 10, 'BPO', fontsize=15)
 
     plt.subplot(3,1,2)
 #    ax_2=fig.add_subplot(3,1,2)
     plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
-    plt.ylabel('Gene Frequency')
+    plt.ylabel('Gene Count')
     plt.axis([0, 11, min(cco_list)-b_offset, max(cco_list)+u_offset])
 
     plt.subplot(3,1,3) 
 #    ax_3=fig.add_subplot(3,1,3) 
     plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
-    plt.ylabel('Gene Frequency')
+    plt.ylabel('Gene Count')
     plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
 
     fig_fname = './figures/geneFreq.' + str(taxon_id) + '.png'
     fig.savefig(fig_fname)
-#    plt.show()
+    #plt.show()
 
-#def plot_gene_counts():
+
+
+
 ConfigParam = Config.read_config(config_filename)
 work_dir = ConfigParam['workdir']
 
