@@ -54,7 +54,7 @@ according to the organisms listed in sp_list.txt file.
 #### Results: Graphical View of the Annotated Genes 
 
 ####  Homo sapiens (taxon id 9606) 
-![Gene Frequencey of Homo sapiens] (/figures/geneFreq.9606.png?raw=true “Gene Frequency of Homo sapiens”)
+![ Alt Gene Frequencey of Homo sapiens] (/figures/geneFreq.9606.png?raw=true “Gene Frequency of Homo sapiens”)
 
 ####  Mus musculus (taxon id 10090) 
 ![Alt CAFA time line] (/figures/geneFreq.10090.png?raw=true “Gene Frequency of Homo sapiens”)
