@@ -51,6 +51,39 @@ The output file has one row for each SwissProt file listed in
 sprot_files.txt. Each row has THREE columns for each organism,
 according to the organisms listed in sp_list.txt file.
 
+#### Results: Graphical View of the Annotated Genes 
+
+####  Homo sapiens (taxon id 9606) 
+![Alt CAFA time line] (/figures/geneFreq.9606.png?raw=true “Gene Frequency of Homo sapiens”)
+
+####  Mus musculus (taxon id 10090) 
+![Alt CAFA time line] (/figures/geneFreq.10090.png?raw=true “Gene Frequency of Homo sapiens”)
+
+####  Arabidopsis thaliana (taxon id 3702) 
+![Alt CAFA time line] (/figures/geneFreq.3702.png?raw=true “Gene Frequency of Homo sapiens”)
+
+
+####  Rattus norvegicus (taxon id 10116) 
+![Alt CAFA time line] (/figures/geneFreq.10116.png?raw=true “Gene Frequency of Homo sapiens”)
+
+
+####  Saccharomyces cerevisiae (taxon id 559292) 
+![Alt CAFA time line] (/figures/geneFreq.559292.png?raw=true “Gene Frequency of Homo sapiens”)
+
+####  Bos taurus (taxon id 9913) 
+![Alt CAFA time line] (/figures/geneFreq.9913.png?raw=true “Gene Frequency of Homo sapiens”)
+
+####  Schizosaccharomyces pombe (taxon id 284812) 
+![Alt CAFA time line] (/figures/geneFreq.284812.png?raw=true “Gene Frequency of Homo sapiens”)
+
+####  Echerichia coli (taxon id 83333) 
+![Alt CAFA time line] (/figures/geneFreq.83333.png?raw=true “Gene Frequency of Homo sapiens”)
+
+####  Bacillus subtilis (taxon id 224308) 
+![Alt CAFA time line] (/figures/geneFreq.224308.png?raw=true “Gene Frequency of Homo sapiens”)
+
+####  Dictyostelium discoideum (taxon id 44689) 
+![Alt CAFA time line] (/figures/geneFreq.446308.png?raw=true “Gene Frequency of Homo sapiens”)
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
