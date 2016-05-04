@@ -6,12 +6,10 @@ import os
 import sys
 from os.path import basename 
 from collections import defaultdict
-from collections import OrderedDict
 
+import ArgParser_plot as ap
 import Config
 import ConfigParser as cp
-import Count_sp_genes as csg
-import Download as dl
 import FormatChecker as fc
 import LocateDataset as ld
 
@@ -19,97 +17,174 @@ import matplotlib.pyplot as plt
 
 # Default configuration file name:
 config_filename = '.config'
+no_of_organisms = 10 
+output_fn_prefix = 'sprot_genes.1'
+class plot_geneCounts:
+    def __init__(self):
+        # Collect user arguments into a dictionary:
+        self.parsed_dict = ap.parse_args() 
 
-output_fn_prefix = 'sprot_genes.stat.1'
+        # Collect config file entries:
+        self.ConfigParam = Config.read_config(config_filename) 
+        self.work_dir = self.ConfigParam['workdir']
+        self.figure_dir = './figures'
+        # Look for workspace, and if none exists create one:
+        if not os.path.exists(self.work_dir):
+            os.makedirs(self.work_dir) # Create work space
 
-def convert_to_number_list(bpo_list, cco_list, mfo_list): 
+        # Extract species list file name: 
+        t1 = self.parsed_dict['t1'] 
+        # Locate file for the species list file:
+        self.species_filename = ld.locate_anyfile(t1, self.work_dir)
 
-    for i in range(len(bpo_list)):
-        bpo_list[i] = int(bpo_list[i])
-        cco_list[i] = int(cco_list[i])
-        mfo_list[i] = int(mfo_list[i])
-    return (bpo_list, cco_list, mfo_list)
+        # Extract filename containing the list of SwissProt file names:
+        t2 = self.parsed_dict['t2'] 
+        # Locate the file containing the list of the UniProtKB/SwissProt
+        # file names over a series of time points:
+        self.sprot_fnList_filename = ld.locate_anyfile(t2, self.work_dir)
 
-def plot_and_save(bpo_list, cco_list, mfo_list, taxon_id, taxon_name):
-    b_offset = 50
-    u_offset = 50
-    fig = plt.figure()
-#    fig = plt.figure(figsize=(40,40) )
-    x_axis = range(1,11)
-    plt.subplot(3,1,1)
-#    ax_1=fig.add_subplot(3,1,1)
+        # Extract the filename containing the gene counts:  
+        t3 = self.parsed_dict['t3'] 
+        # Locate the gene count file:
+        self.geneCount_filename = ld.locate_anyfile(t3, self.work_dir)
 
-    plt_title = '# of Annotated Genes with EXP:\n' + str(taxon_name) 
-#    plt.title('# of Gene Annotations with EXP Validation')
-    plt.title(plt_title)
-    plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
-    plt.ylabel('Gene Count')
-    plt.axis([0, 11, min(bpo_list)-b_offset, max(bpo_list)+u_offset])
-    #ax_1.text(10, 10, 'BPO', fontsize=15)
+        # Create output file name for target sequences:
+#        self.output_filename = self.create_outfilename() 
+        return None
 
-    plt.subplot(3,1,2)
-#    ax_2=fig.add_subplot(3,1,2)
-    plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
-    plt.ylabel('Gene Count')
-    plt.axis([0, 11, min(cco_list)-b_offset, max(cco_list)+u_offset])
+    def create_figname(self, fname_prefix):
+        """ 
+        Creates an output filename based on the output file prefix
+        provided by the user and at the end returns the newly
+        created output filename.
+        """
+#        ob = output_fn_prefix
+        ob = fname_prefix
+        index = 1
+        while os.path.exists(self.figure_dir + '/' + ob + '.' + str(index) + '.png'):
+            index = index + 1
+        output_filename = self.figure_dir + '/' + ob + '.' + str(index) + '.png'
+        return output_filename
 
-    plt.subplot(3,1,3) 
-#    ax_3=fig.add_subplot(3,1,3) 
-    plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
-    plt.ylabel('Gene Count')
-    plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
+    def create_outfilename_old(self):
+        """ 
+        Creates an output filename based on the output file prefix
+        provided by the user and at the end returns the newly
+        created output filename.
+        """
+        if not self.parsed_dict['outfile'] == '':
+            ob = basename(self.parsed_dict['outfile'])
+        else:
+            ob = output_fn_prefix
+        index = 1
+        while os.path.exists(self.work_dir + '/' + ob + '.' + str(index)):
+            index = index + 1
+        output_filename = self.work_dir + '/' + ob + '.' + str(index)
+        return output_filename
 
-    fig_fname = './figures/geneFreq.' + str(taxon_id) + '.png'
-    fig.savefig(fig_fname)
-    #plt.show()
+    def convert_to_number_list(self, bpo_list, cco_list, mfo_list): 
+        for i in range(len(bpo_list)):
+            bpo_list[i] = int(bpo_list[i])
+            cco_list[i] = int(cco_list[i])
+            mfo_list[i] = int(mfo_list[i])
+        return (bpo_list, cco_list, mfo_list)
 
+    def plot_and_save(self, bpo_list, cco_list, mfo_list, taxon_id, taxon_name):
+        b_offset = 50
+        u_offset = 50
+        fig = plt.figure()
+    #    fig = plt.figure(figsize=(40,40) )
+        x_axis = range(1,11)
+        plt.subplot(3,1,1)
+    #    ax_1=fig.add_subplot(3,1,1)
 
+        plt_title = '# of Annotated Genes with EXP:\n' + str(taxon_name) 
+    #    plt.title('# of Gene Annotations with EXP Validation')
+        plt.title(plt_title)
+        plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
+        plt.ylabel('Gene Count')
+        plt.axis([0, 11, min(bpo_list)-b_offset, max(bpo_list)+u_offset])
+        #ax_1.text(10, 10, 'BPO', fontsize=15)
 
+        plt.subplot(3,1,2)
+    #    ax_2=fig.add_subplot(3,1,2)
+        plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
+        plt.ylabel('Gene Count')
+        plt.axis([0, 11, min(cco_list)-b_offset, max(cco_list)+u_offset])
 
-ConfigParam = Config.read_config(config_filename)
-work_dir = ConfigParam['workdir']
+        plt.subplot(3,1,3) 
+    #    ax_3=fig.add_subplot(3,1,3) 
+        plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
+        plt.ylabel('Gene Count')
+        plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
+        fig_fname = self.create_figname('geneFreq.' + str(taxon_id))
+        print fig_fname
+        fig.savefig(fig_fname)
+        #plt.show()
 
-fname_sprot = work_dir + '/' + 'sprot_files.txt'
-fh_sf = open(fname_sprot, 'r')
+    def extract_taxon_info(self, fh): 
+        taxon_id_list = []
+        taxon_name_list = []
+        for line in fh:
+            taxon_id_list.append(line.strip().split('\t')[0])
+            taxon_name_list.append(line.strip().split('\t')[1])
+        return (taxon_id_list, taxon_name_list) 
 
-tp_list = []
-for line in fh_sf:
-    tp_list.append(line.strip().split('.dat.')[-1])
-fh_sf.close()
-print tp_list
+    def extract_timepoint_info(self, fh): 
+        tp_list = []
+        for line in fh:
+            tp_list.append(line.strip().split('.dat.')[-1])
+        return tp_list 
 
-species_fname = work_dir + '/' + 'sp_list.txt'
-fh_sp = open(species_fname, 'r')
-taxon_id_list = []
-taxon_name_list = []
-for line in fh_sp:
-    taxon_id_list.append(line.strip().split('\t')[0])
-    taxon_name_list.append(line.strip().split('\t')[1])
+    def extract_gene_count(self, tax_id_lst, fh): 
+        # Initialize dictionary for gene count in BPO ontological group: 
+        gc_bpo_dict = defaultdict(list) 
+        # Initialize dictionary for gene count in CCO ontological group: 
+        gc_cco_dict = defaultdict(list) 
+        # Initialize dictionary for gene count in MFO ontological group: 
+        gc_mfo_dict = defaultdict(list) 
+        for line in fh:
+            line_values = line.strip().split('\t')
+            tp = line_values[0]
+            id_no = 0
+            for i in range(1,no_of_organisms*3+1,3):
+                gc_bpo_dict[tax_id_lst[id_no]].append(line_values[i])
+                gc_cco_dict[tax_id_lst[id_no]].append(line_values[i+1])
+                gc_mfo_dict[tax_id_lst[id_no]].append(line_values[i+2])
+                id_no += 1
+        return (gc_bpo_dict, gc_cco_dict, gc_mfo_dict)
 
-geneFreq_bpo_dict = defaultdict(list) 
-geneFreq_cco_dict = defaultdict(list) 
-geneFreq_mfo_dict = defaultdict(list) 
+    def process_data(self): 
+        # Extract time points from the sprot file name list:  
+        tp_list = self.extract_timepoint_info(
+                       open(self.sprot_fnList_filename, 'r'))
+        # Extract taxon id list and taxon name list:
+        tax_id_lst, tax_name_lst = self.extract_taxon_info(
+                                        open(self.species_filename, 'r'))
+         # Extract gene count from the gene count file:
+        gc_bpo_dict, gc_cco_dict, gc_mfo_dict = self.extract_gene_count(tax_id_lst, open(self.geneCount_filename, 'r'))
 
-fname = work_dir + '/' + 'sprot_genes.stat'
-fh_sg = open(fname, 'r')
-for line in fh_sg:
-    print(line.strip())
-    line_values = line.strip().split('\t')
-    tp = line_values[0]
-    print(line_values[0])
-    id_no = 0
-    for i in range(1,31,3):
-        geneFreq_bpo_dict[taxon_id_list[id_no]].append(line_values[i])
-        geneFreq_cco_dict[taxon_id_list[id_no]].append(line_values[i+1])
-        geneFreq_mfo_dict[taxon_id_list[id_no]].append(line_values[i+2])
-        id_no += 1
+        for i in range(0, len(tax_id_lst)):
+            # Extract gene convert the gene counts from list of 
+            # strings to list of numbers: 
+            bpo_list, cco_list, mfo_list = self.convert_to_number_list(
+                                                gc_bpo_dict[tax_id_lst[i]], 
+                                                gc_cco_dict[tax_id_lst[i]],
+                                                gc_mfo_dict[tax_id_lst[i]])
+            # Plot the gene counts in BPO, CCO, and MFO ontological categories
+            # and save them to the files:
+            self.plot_and_save(bpo_list, 
+                               cco_list, 
+                               mfo_list, 
+                               tax_id_lst[i], 
+                               tax_name_lst[i])
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print (sys.argv[0] + ':')
+        print(__doc__)
+    else:
+        pg = plot_geneCounts() # Create an instance of plot_geneCount class
+        pg.process_data()      # Process data
+    sys.exit(0)
 
-for i in range(0, len(taxon_id_list)):
-    print taxon_id_list[i] 
-    print taxon_name_list[i] 
-    bpo_list = list(geneFreq_bpo_dict[taxon_id_list[i]])
-    cco_list = list(geneFreq_cco_dict[taxon_id_list[i]])
-    mfo_list = list(geneFreq_mfo_dict[taxon_id_list[i]])
-    bpo_list, cco_list, mfo_list = convert_to_number_list(bpo_list, cco_list, mfo_list)
-    plot_and_save(bpo_list, cco_list, mfo_list, taxon_id_list[i], taxon_name_list[i]) 
 
