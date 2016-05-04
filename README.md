@@ -51,13 +51,38 @@ The output file has one row for each SwissProt file listed in
 sprot_files.txt. Each row has THREE columns for each organism,
 according to the organisms listed in sp_list.txt file.
 
-![Alt CAFA time line] (/figures/cafa-timeLine.png?raw=true “CAFA Timeline”)
+#### Results: Graphical View of the Annotated Genes 
 
-#### Graphical View: Frequency of Annotated Genes
+####  Homo sapiens (taxon id 9606) 
+![Alt Gene Frequencey of Human] (/figures/geneFreq.9606.png?raw=true “Gene Frequency of Human”)
 
-####  Homo sapiens (taxon id 9606)
-![Alt Gene Frequencey of Homo sapiens] (/figures/geneFreq.9606.png?raw=true “Gene Frequency of Homo sapiens”)
+####  Mus musculus (taxon id 10090) 
+![Alt Gene Frequency of Mouse] (/figures/geneFreq.10090.png?raw=true “Gene Frequency of Mouse”)
 
+####  Arabidopsis thaliana (taxon id 3702) 
+![Alt Gene Frequency of Arabidopsis] (/figures/geneFreq.3702.png?raw=true “Gene Frequency of Arabidopsis”)
+
+
+####  Rattus norvegicus (taxon id 10116) 
+![Alt Gene Frequency of Rat] (/figures/geneFreq.10116.png?raw=true “Gene Frequency of Rat”)
+
+####  Saccharomyces cerevisiae (taxon id 559292) 
+![Alt Gene Frequency of Baker's yeast] (/figures/geneFreq.559292.png?raw=true “Gene Frequency of Baker's yeast”)
+
+####  Bos taurus (taxon id 9913) 
+![Alt Gene Frequency of Bovine] (/figures/geneFreq.9913.png?raw=true “Gene Frequency of Bovine”)
+
+####  Schizosaccharomyces pombe (taxon id 284812) 
+![Alt Gene Frequency of Fission yeast] (/figures/geneFreq.284812.png?raw=true “Gene Frequency of Fission yeast”)
+
+####  Echerichia coli (taxon id 83333) 
+![Alt Gene Frequency of E. coli] (/figures/geneFreq.83333.png?raw=true “Gene Frequency of E. coli”)
+
+####  Bacillus subtilis (taxon id 224308) 
+![Alt Gene Frequency of B. subtilis] (/figures/geneFreq.224308.png?raw=true “Gene Frequency of B. subtilis”)
+
+####  Dictyostelium discoideum (taxon id 44689) 
+![Alt Gene Frequency of Slime mold] (/figures/geneFreq.446308.png?raw=true “Gene Frequency of Slime mold”)
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
