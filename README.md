@@ -54,13 +54,13 @@ according to the organisms listed in sp_list.txt file.
 #### Graphical View: Frequency of Annotated Genes 
 
 ####  Homo sapiens (taxon id 9606) 
-![Alt Gene Frequencey of Human] (/figures/geneFreq.9606.png?raw=true “Gene Frequency of Human”)
+![Alt Gene Frequencey of Human] (/figures/geneFreq.9606.1.png?raw=true “Gene Frequency of Human”)
 
 ####  Mus musculus (taxon id 10090) 
-![Alt Gene Frequency of Mouse] (/figures/geneFreq.10090.png?raw=true “Gene Frequency of Mouse”)
+![Alt Gene Frequency of Mouse] (/figures/geneFreq.10090.1.png?raw=true “Gene Frequency of Mouse”)
 
 ####  Arabidopsis thaliana (taxon id 3702) 
-![Alt Gene Frequency of Arabidopsis] (/figures/geneFreq.3702.png?raw=true “Gene Frequency of Arabidopsis”)
+![Alt Gene Frequency of Arabidopsis] (/figures/geneFreq.3702.1.png?raw=true “Gene Frequency of Arabidopsis”)
 
 
 ####  Rattus norvegicus (taxon id 10116) 
