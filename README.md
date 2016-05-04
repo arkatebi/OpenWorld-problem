@@ -1,4 +1,4 @@
-## Genes in UniProtKB/SwissProt with experimentally valided annotations  
+## Genes in UniProtKB/SwissProt with experimental annotations  
 * How many genes for each species in the UniProtKB/SwissProt whose 
   annotations have experimental validations? 
 
