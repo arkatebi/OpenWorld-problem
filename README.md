@@ -51,7 +51,7 @@ The output file has one row for each SwissProt file listed in
 sprot_files.txt. Each row has THREE columns for each organism,
 according to the organisms listed in sp_list.txt file.
 
-#### Results: Graphical View of Frequency of Annotated Genes
+#### Graphical View: Frequency of Annotated Genes
 
 ####  Homo sapiens (taxon id 9606)
 ![Alt Gene Frequencey of Homo sapiens] (/figures/geneFreq.9606.png?raw=true “Gene Frequency of Homo sapiens”)
