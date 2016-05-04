@@ -51,6 +51,8 @@ The output file has one row for each SwissProt file listed in
 sprot_files.txt. Each row has THREE columns for each organism,
 according to the organisms listed in sp_list.txt file.
 
+![Alt CAFA time line] (/figures/cafa-timeLine.png?raw=true “CAFA Timeline”)
+
 #### Graphical View: Frequency of Annotated Genes
 
 ####  Homo sapiens (taxon id 9606)
