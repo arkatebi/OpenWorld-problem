@@ -82,7 +82,7 @@ according to the organisms listed in sp_list.txt file.
 ![Alt Gene Frequency of B. subtilis] (/figures/geneFreq.224308.png?raw=true “Gene Frequency of B. subtilis”)
 
 ####  Dictyostelium discoideum (taxon id 44689) 
-![Alt Gene Frequency of Slime mold] (/figures/geneFreq.446308.png?raw=true “Gene Frequency of Slime mold”)
+![Alt Gene Frequency of Slime mold] (/figures/geneFreq.44689.png?raw=true “Gene Frequency of Slime mold”)
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
