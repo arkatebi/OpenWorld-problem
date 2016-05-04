@@ -43,6 +43,18 @@ from os.path import basename
 import shutil
 import inspect
 
+def locate_anyfile(infile, work_dir):
+    if os.path.exists(work_dir + '/' + basename(infile)):
+        pass
+    elif os.path.exists(infile):
+        shutil.copy(infile, work_dir)
+        print basename(infile) + ' has been copied to workspace.'
+    else:
+        print (infile + ' is NOT available. Quitting ' + inspect.stack() [1][1] + ' Tool ...')  
+        print ('********************************************************************************')
+        sys.exit(1)
+    return work_dir + '/' + basename(infile)
+
 def locate_GOAfile(infile, work_dir):
     if os.path.exists(work_dir + '/' + basename(infile)):
         pass
