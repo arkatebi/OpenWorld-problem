@@ -51,7 +51,6 @@ class Count_genes:
         # Collect user arguments into a dictionary:
         self.parsed_dict = ap.parse_args() 
 
-
         # Collect config file entries:
         self.ConfigParam = Config.read_config(config_filename) 
         self.work_dir = self.ConfigParam['workdir']
