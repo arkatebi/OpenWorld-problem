@@ -1,4 +1,6 @@
-## Species growth in UniProtKB/SwissProt database over time 
+## Genes in UniProtKB/SwissProt with experimentally valided annotations  
+* How many genes for each species in the UniProtKB/SwissProt whose 
+  annotations have experimental validations? 
 
 #### Some informative sites 
 
