@@ -159,10 +159,11 @@ class Count_genes:
         for fname in fh_fn:
             sprot_fname = self.work_dir + '/' + fname.strip()
             outstr = self.count_genes_for_species(sprot_fname)
+#            print outstr
             fh_out.write("%s" % outstr)
             fh_out.flush()
 #            count += 1
-#            if count > 1:
+#            if count > 0:
 #                break
         fh_out.close()
         return None
