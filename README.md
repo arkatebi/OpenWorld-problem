@@ -62,8 +62,11 @@ python Count_genes -I1=sp_list.txt -I2=sprot_files.txt
 This command will extract the species names from the sp_list.txt file
 and the UniprotKB/SwissProt file names from the sprot_files.txt file,
 and then will calculate the gene counts for all species over all the
-time points.
-It will create an output file: sprot_genes.stat.1
+time points. If the UniProtKB/SwissProt files are not found in the 
+current directory or the workspace, the program will automatically download
+these files. 
+ 
+Successful run of this program, will create an output file: sprot_genes.stat.1
 The output file will have one row for each timepoint, containing gene
 counts for each organism, in the same seqeuence as they are found
 in the sp_list.txt file. For each organism, the file has THREE columns,
