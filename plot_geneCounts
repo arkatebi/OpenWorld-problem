@@ -190,7 +190,7 @@ class plot_geneCounts:
                                                      tax_id_lst, 
                                                      open(self.geneCount_filename, 'r'))
 
-        # Extract gene counts for each organism and plot and save graphs:  
+        # Extract gene counts for each organism, plot and save graphs:
         for i in range(0, len(tax_id_lst)):
             # Convert the gene counts from a list of 
             # strings to a list of numbers: 
@@ -199,7 +199,7 @@ class plot_geneCounts:
                                                 gc_cco_dict[tax_id_lst[i]],
                                                 gc_mfo_dict[tax_id_lst[i]])
             # Plot the gene counts in BPO, CCO, and MFO ontological categories
-            # and save them to the files:
+            # and save the graph to a file:
             self.plot_and_save(bpo_list, 
                                cco_list, 
                                mfo_list, 
