@@ -114,8 +114,8 @@ class plot_geneCounts:
         plt.xticks(x_axis, tp_lst, horizontalalignment='center')
 
         print fig_fname
-#        fig.savefig(fig_fname)
-        plt.show()
+        fig.savefig(fig_fname)
+#        plt.show()
 
     def plot_and_save_old(self, bpo_list, cco_list, mfo_list, taxon_id, taxon_name):
         b_offset = 50
