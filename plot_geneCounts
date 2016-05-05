@@ -168,6 +168,7 @@ class plot_geneCounts:
         gc_cco_dict = defaultdict(list) 
         # Initialize dictionary for gene count in MFO ontological group: 
         gc_mfo_dict = defaultdict(list) 
+
         for line in fh:
             line_values = line.strip().split('\t')
             tp = line_values[0]
