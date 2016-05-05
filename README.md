@@ -1,7 +1,6 @@
 ## Gene Annotations with Exp evidences in UniProtKB/SwissProt 
-* Creates a table of gene counts for a set of species in  
-  UniProtKB/SwissProt whose annotations have experimental 
-  evidence codes. 
+* Creates a table of gene counts for a set of species in UniProtKB/SwissProt 
+  whose annotations have experimental evidence codes. 
 * Creates a graph of the gene count for each speceis.
 
 #### Some informative sites 
