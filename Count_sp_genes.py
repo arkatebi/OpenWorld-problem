@@ -67,7 +67,7 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
 #    return (exp_ct, exp_bpo_ct, exp_cco_ct, exp_mfo_ct)
     return (exp_bpo_ct, exp_cco_ct, exp_mfo_ct)
 
-def count_genes_with_EXP_per_species_old(fh_sprot, taxon_id, EXP_default=set([])):
+def count_genes_with_EXP_old(fh_sprot, taxon_id, EXP_default=set([])):
     # The rec_count variable counts the number of records
     rec_count = 0
 
