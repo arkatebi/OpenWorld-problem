@@ -1,7 +1,7 @@
-## Gene Annotations with EXP in UniProtKB/SwissProt 
-* Creates a table of gene counts for a set of species from 
-  the UniProtKB/SwissProt whose annotations have experimental 
-  validations. 
+## Gene Annotations with Exp evidences in UniProtKB/SwissProt 
+* Creates a table of gene counts for a set of species in  
+  UniProtKB/SwissProt whose annotations have experimental 
+  evidence codes. 
 * Creates a graph of the gene count for each speceis.
 
 #### Some informative sites 
@@ -23,6 +23,13 @@ cross-reference.
   http://web.expasy.org/docs/relnotes/relstat.html
 * UniProtKB/SwissProt file format:
   http://arep.med.harvard.edu/labgc/jong/Fetch/SwissProtAll.html
+
+#### Experimental Evidence Codes 
+
+* Guide to GO evidence codes: 
+  http://geneontology.org/page/guide-go-evidence-codes
+* Evidence code decision tree: 
+  http://geneontology.org/page/evidence-code-decision-tree  
 
 ### Requirements
 * Python 2.7 
