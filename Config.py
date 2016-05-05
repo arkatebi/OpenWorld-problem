@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 '''
     This module has the following two methods:
 
