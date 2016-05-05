@@ -94,7 +94,7 @@ class plot_geneCounts:
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
 #        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
 
-        text_ht = 2*(min(bpo_list)-b_offset + max(bpo_list)+u_offset)/3
+        text_ht = 2*((min(bpo_list)-b_offset + max(bpo_list)+u_offset))/3
         ax_1.text(10, text_ht, 'BPO', fontsize=15)
 
         plt.subplot(3,1,2)
