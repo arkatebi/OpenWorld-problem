@@ -66,7 +66,7 @@ class plot_geneCounts:
         output_filename = self.figure_dir + '/' + ob + '.' + str(index) + '.png'
         return output_filename
 
-    def convert_to_number_list(self, bpo_list, cco_list, mfo_list): 
+    def convert_str2num_list(self, bpo_list, cco_list, mfo_list): 
         for i in range(len(bpo_list)):
             bpo_list[i] = int(bpo_list[i])
             cco_list[i] = int(cco_list[i])
@@ -152,7 +152,7 @@ class plot_geneCounts:
         for i in range(0, len(tax_id_lst)):
             # Convert the gene counts from a list of 
             # strings to a list of numbers: 
-            bpo_list, cco_list, mfo_list = self.convert_to_number_list(
+            bpo_list, cco_list, mfo_list = self.convert_str2num_list(
                                                 gc_bpo_dict[tax_id_lst[i]], 
                                                 gc_cco_dict[tax_id_lst[i]],
                                                 gc_mfo_dict[tax_id_lst[i]])
