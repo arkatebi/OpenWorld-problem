@@ -123,7 +123,7 @@ each speceis.
 The following section shows the figures produced by running this program with
 the given input parameters. 
 
-#### Graphical View of Gene the Counts 
+#### Graphical View of the Gene Counts 
 
 ####  Homo sapiens (taxon id 9606) 
 ![Alt Gene Frequencey of Human] (/figures/geneFreq.9606.1.png?raw=true “Gene Frequency of Human”)
