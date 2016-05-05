@@ -120,8 +120,8 @@ geneFreq.44689.1.png
 Repeated run of the program creates subsequent version of the figure file for
 each speceis. 
 
-The following section shows the figures produced by running this program with 
-the above setup. 
+The following section shows the figures produced by running this program with
+the given input parameters. 
 
 #### Graphical View of Gene Counts 
 
