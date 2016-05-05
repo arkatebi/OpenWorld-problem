@@ -66,7 +66,7 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
                             exp_cco_ct += 1
                         elif goList[-1].upper() == 'F':
                             exp_mfo_ct += 1
-                        break
+                        #break
 #    return (exp_ct, exp_bpo_ct, exp_cco_ct, exp_mfo_ct)
     return (exp_bpo_ct, exp_cco_ct, exp_mfo_ct)
 
@@ -106,7 +106,7 @@ def count_genes_with_EXP_per_species_old(fh_sprot, taxon_id, EXP_default=set([])
                     if (crossRef[3].split(':'))[0] in EXP_default:
                         exp_code = True
                         seqCount_exp += 1
-                        break
+                        #break
             # If the protein has an no EXP evidence,
             # increase seqCount_no_exp:
             if not exp_code: 
