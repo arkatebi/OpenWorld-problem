@@ -23,7 +23,7 @@ import os
 import sys
 from os.path import basename 
 
-import ArgParser as ap
+import ArgParser_count as ap
 import Config
 import ConfigParser as cp
 import Count_sp_genes as csg

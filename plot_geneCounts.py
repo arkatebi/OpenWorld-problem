@@ -164,9 +164,10 @@ class plot_geneCounts:
          # Extract gene count from the gene count file:
         gc_bpo_dict, gc_cco_dict, gc_mfo_dict = self.extract_gene_count(tax_id_lst, open(self.geneCount_filename, 'r'))
 
+        # Extract gene counts for each organism and plot and save graphs:  
         for i in range(0, len(tax_id_lst)):
-            # Extract gene convert the gene counts from list of 
-            # strings to list of numbers: 
+            # Convert the gene counts from a list of 
+            # strings to a list of numbers: 
             bpo_list, cco_list, mfo_list = self.convert_to_number_list(
                                                 gc_bpo_dict[tax_id_lst[i]], 
                                                 gc_cco_dict[tax_id_lst[i]],
@@ -178,6 +179,7 @@ class plot_geneCounts:
                                mfo_list, 
                                tax_id_lst[i], 
                                tax_name_lst[i])
+        return None
 if __name__ == '__main__':
     if len(sys.argv) == 1:
         print (sys.argv[0] + ':')
