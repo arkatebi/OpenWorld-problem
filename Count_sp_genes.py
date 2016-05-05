@@ -9,8 +9,8 @@
             (3) the set of EXP codes.
             
         This method counts the number of proteins whose annotations 
-        have experimental evidence, in each of BPO, CCO, and MFO ontological 
-        categories. 
+        have experimental evidences, in each of BPO, CCO, and MFO ontological 
+        categories, for an organism with the supplied taxon id.
           
         Finally, it returns these THREE counts.
 '''
