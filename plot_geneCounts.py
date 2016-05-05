@@ -52,7 +52,7 @@ class plot_geneCounts:
 #        self.output_filename = self.create_outfilename() 
         return None
 
-    def create_figname(self, fname_prefix):
+    def create_fig_name(self, fname_prefix):
         """ 
         Creates an output filename based on the output file prefix
         provided by the user and at the end returns the newly
@@ -64,22 +64,6 @@ class plot_geneCounts:
         while os.path.exists(self.figure_dir + '/' + ob + '.' + str(index) + '.png'):
             index = index + 1
         output_filename = self.figure_dir + '/' + ob + '.' + str(index) + '.png'
-        return output_filename
-
-    def create_outfilename_old(self):
-        """ 
-        Creates an output filename based on the output file prefix
-        provided by the user and at the end returns the newly
-        created output filename.
-        """
-        if not self.parsed_dict['outfile'] == '':
-            ob = basename(self.parsed_dict['outfile'])
-        else:
-            ob = output_fn_prefix
-        index = 1
-        while os.path.exists(self.work_dir + '/' + ob + '.' + str(index)):
-            index = index + 1
-        output_filename = self.work_dir + '/' + ob + '.' + str(index)
         return output_filename
 
     def convert_to_number_list(self, bpo_list, cco_list, mfo_list): 
@@ -117,7 +101,7 @@ class plot_geneCounts:
         plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
         plt.ylabel('Gene Count')
         plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
-        fig_fname = self.create_figname('geneFreq.' + str(taxon_id))
+        fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
         print fig_fname
         fig.savefig(fig_fname)
         #plt.show()
