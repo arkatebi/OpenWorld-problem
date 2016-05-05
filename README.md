@@ -66,7 +66,7 @@ time points. If the UniProtKB/SwissProt files are not found in the
 current directory or the workspace, the program will automatically download
 these files. 
  
-Successful run of this program, will create an output file: sprot_genes.stat.1
+Successful run of this program will create an output file: sprot_genes.stat.1
 The output file will have one row for each timepoint, containing gene
 counts for each organism, in the same seqeuence as they are found
 in the sp_list.txt file. For each organism, the file has THREE columns,
