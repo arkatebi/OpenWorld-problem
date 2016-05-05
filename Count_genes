@@ -125,7 +125,7 @@ class Count_genes:
             print('exp_cco_ct: ' + str(exp_cco_ct))
             print('exp_mfo_ct: ' + str(exp_mfo_ct))
             outstr += str(exp_bpo_ct) + '\t' + str(exp_cco_ct) + '\t' + str(exp_mfo_ct) + '\t'
-            count += 1
+#            count += 1
 #            if count > 0: 
 #                break
         outstr = outstr.strip() + '\n'
@@ -156,7 +156,7 @@ class Count_genes:
             outstr = self.count_genes_for_species(sprot_fname)
             fh_out.write("%s" % outstr)
             fh_out.flush()
-            count += 1
+#            count += 1
 #            if count > 1:
 #                break
         fh_out.close()
