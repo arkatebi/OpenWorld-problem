@@ -51,8 +51,8 @@ class plot_geneCounts:
 
     def create_fig_name(self, fname_prefix):
         """ 
-        Creates an output filename based on the output file prefix
-        provided by the user and at the end returns the newly
+        Creates an output filename based on the filename prefix
+        provided by the fname_prefix and at the end returns the newly
         created output filename.
         """
         ob = fname_prefix
