@@ -73,13 +73,6 @@ class plot_geneCounts:
         # Extract the time point list from the sprot file name list: 
         tp_lst = self.extract_timepoint_info(
                        open(self.sprot_fnList_filename, 'r'))
-
-        print tp_lst
-        print len(tp_lst)
-#        raise SystemExit
-
-        b_offset = 50
-        u_offset = 50
 #        fig = plt.figure()
         fig = plt.figure(figsize=(10,10) )
         x_axis = range(1,11)
@@ -90,66 +83,46 @@ class plot_geneCounts:
         plt.title(plt_title)
         plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
         plt.ylabel('Gene Count')
-        plt.axis([0, 11, min(bpo_list)-b_offset, max(bpo_list)+u_offset])
+        # Set offset to space at the top and bottom of the graph: 
+        offset = (max(bpo_list) - min(bpo_list))/5
+        plt.axis([0, 11, min(bpo_list) - offset, max(bpo_list) + offset])
+
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
 #        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
+        text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/15
+        ax_1.text(0.2, text_ht, 'BPO', fontsize=15)
 
-        text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/9
-        ax_1.text(10, text_ht, 'BPO', fontsize=15)
-
-        plt.subplot(3,1,2)
-    #    ax_2=fig.add_subplot(3,1,2)
+#        plt.subplot(3,1,2)
+        ax_2=fig.add_subplot(3,1,2)
         plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
         plt.ylabel('Gene Count')
-        plt.axis([0, 11, min(cco_list)-b_offset, max(cco_list)+u_offset])
+        offset = (max(cco_list) - min(cco_list))/5
+        # Set offset to space at the top and bottom of the graph: 
+        plt.axis([0, 11, min(cco_list)-offset, max(cco_list)+offset])
+
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
 #        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+        text_ht = max(cco_list) - (max(cco_list)-min(cco_list))/15
+        ax_2.text(0.2, text_ht, 'CCO', fontsize=15)
 
-        plt.subplot(3,1,3) 
-    #    ax_3=fig.add_subplot(3,1,3) 
+#        plt.subplot(3,1,3) 
+        ax_3=fig.add_subplot(3,1,3) 
         plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
         plt.ylabel('Gene Count')
-        plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
+        # Set offset to space at the top and bottom of the graph: 
+        offset = (max(mfo_list) - min(mfo_list))/5
+        plt.axis([0, 11, min(mfo_list)-offset, max(mfo_list)+offset])
+
+        # Get a file name for the figure to be saved: 
         fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
 #        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
+        text_ht = max(mfo_list) - (max(mfo_list)-min(mfo_list))/15
+        ax_3.text(0.2, text_ht, 'MFO', fontsize=15)
 
         print fig_fname
         fig.savefig(fig_fname)
 #        plt.show()
-
-    def plot_and_save_old(self, bpo_list, cco_list, mfo_list, taxon_id, taxon_name):
-        b_offset = 50
-        u_offset = 50
-        fig = plt.figure()
-    #    fig = plt.figure(figsize=(40,40) )
-        x_axis = range(1,11)
-        plt.subplot(3,1,1)
-    #    ax_1=fig.add_subplot(3,1,1)
-
-        plt_title = '# of Annotated Genes with EXP:\n' + str(taxon_name) 
-    #    plt.title('# of Gene Annotations with EXP Validation')
-        plt.title(plt_title)
-        plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
-        plt.ylabel('Gene Count')
-        plt.axis([0, 11, min(bpo_list)-b_offset, max(bpo_list)+u_offset])
-        #ax_1.text(10, 10, 'BPO', fontsize=15)
-
-        plt.subplot(3,1,2)
-    #    ax_2=fig.add_subplot(3,1,2)
-        plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
-        plt.ylabel('Gene Count')
-        plt.axis([0, 11, min(cco_list)-b_offset, max(cco_list)+u_offset])
-
-        plt.subplot(3,1,3) 
-    #    ax_3=fig.add_subplot(3,1,3) 
-        plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
-        plt.ylabel('Gene Count')
-        plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
-        fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
-        print fig_fname
-        fig.savefig(fig_fname)
-        plt.show()
 
     def extract_taxon_info(self, fh): 
         taxon_id_list = []
