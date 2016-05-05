@@ -1,18 +1,15 @@
 #!/usr/bin/env python
 '''
-    This module has the following two methods:
+    This module has the following method:
 
     count_genes_with_EXP:
         This method takes four input arguments:
             (1) a uniprot-swissProt file handle,
             (2) a taxonomy id,
-            (3) an output file handle for writing target sequences,
-            (4) an output file handle for writing the mapping between
-                target id and protein name, and
-            (5) the set of EXP codes.
+            (3) the set of EXP codes.
             
         This method counts the number of proteins whose annotations 
-        have EXP evidence, in each of BPO, CCO, and MFO ontological 
+        have experimental evidence, in each of BPO, CCO, and MFO ontological 
         categories. 
           
         Finally, it returns these THREE counts.
