@@ -73,7 +73,7 @@ Repeated run of the program, will create subsequent version of the
 output file. 
 
 The program can also take an output filename prefix as an additional 
-argument which shown below: 
+argument which is shown below: 
 
 ```
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=sprot_genes.stat
