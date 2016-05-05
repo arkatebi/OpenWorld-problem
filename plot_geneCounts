@@ -5,13 +5,17 @@
     files. One can run the program as follows: 
 
       >python plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=sprot_genes.stat.1
-    The program will use the gene counts from sprot_genes.stat.1 file. 
+
+    The program will use the gene counts from sprot_genes.stat.1 file and draw 
+    one graph for each organism. The description of the input file names:  
         sp_list.txt needs to have the list of species: column 1 has the 
             taxon ids and column 2 has the taxon name. 
+
         sprot_files.txt needs to have the SwissProt filenames. The 
             program extracts the time points from this file. Also, 
             each entry in this file corresponds to the rows in 
             sprot_genes.stat.1 file.
+
         sprot_genes.stat.1 needs to have the geen counts. 
             Each row corresponds to the SwissProt file name listed
             in sprot_files.txt file. For each organism, there are 
