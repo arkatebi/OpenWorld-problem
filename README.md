@@ -1,7 +1,8 @@
 ## Gene Annotations with EXP in UniProtKB/SwissProt 
-* Creates a table to gene count for each species in the UniProtKB/SwissProt whose 
-  annotations have experimental validations. 
-* Creates a graph for gene count for each speceis.
+* Creates a table of gene counts for a set of species from 
+  the UniProtKB/SwissProt whose annotations have experimental 
+  validations. 
+* Creates a graph of the gene count for each speceis.
 
 #### Some informative sites 
 
