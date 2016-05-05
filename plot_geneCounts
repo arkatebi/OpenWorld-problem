@@ -102,7 +102,7 @@ class plot_geneCounts:
         x_axis = range(1,11)
         #plt.subplot(3,1,1)
         ax_1=fig.add_subplot(3,1,1)
-        plt_title = '# of Annotated Genes with Exp Evidence Codes:\n' + str(taxon_name) 
+        plt_title = '# of Genes Annotated with Exp Evidence Codes:\n' + str(taxon_name) 
         plt.title(plt_title)
         plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
         plt.ylabel('Gene Count')
