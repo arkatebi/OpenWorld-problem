@@ -18,6 +18,9 @@
         For each UnirProtKB/SwissProt time point described in sprot_files, 
         the file has one line with gene counts for all species in sp_list.txt 
         file. 
+    The program can also take an optional output filename prefix: 
+       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt -O=sprot_genes.stat
+
 '''
 import os
 import sys
@@ -141,12 +144,14 @@ class Count_genes:
         """
         # Check the existence of data files
         # If any data file is not found, download the data file
-#        dlObject = dl.Download(self.work_dir, self.sprot_filename)
-#        dlObject.download_testDataset(open(self.sprot_filename, 'r'))    
+        # Create an object of Download class: 
+        dlObject = dl.Download(self.work_dir, self.sprot_filename)
+        # Run the download_testDataset method which checks and downloads 
+        # the data files listed in the self.sprot_filename: 
+        dlObject.download_testDataset(open(self.sprot_filename, 'r'))    
 
         # Count the total number of genes with EXP evidence code 
         # from the UniProtKB/SwissProt files:
-#        self.count_genes_for_species()
 
         fh_out = open(self.output_filename, 'w')
         fh_fn = open(self.sprot_filename, 'r')
