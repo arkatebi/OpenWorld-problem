@@ -110,9 +110,9 @@ class Count_genes:
                 'format' + bcolors.ENDC
             sys.exit(1)
 
-    def create_outfile_header(self): 
+    def create_outfile_header(self):
         sp_header = ''
-        ont_header ='\t'  
+        ont_header ='\t'
         fh_sp = open(self.species_filename, 'r')
         for line in fh_sp: 
             sp_header += '\t\t\t\t\t' + line.strip().split('\t')[0]
