@@ -36,7 +36,7 @@ cross-reference.
 
 The details of the usage description of this software are as follows.
 
-#### Generate Counts of Annotated Genes with EXP Evidence
+#### Generate Counts of Annotated Genes with Exp Evidence Codes
 
 This program will create a file with the number of genes whose annotations
 have experimental evidence codes in the UniProtKB/SwissProt files for a set 
