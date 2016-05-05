@@ -52,7 +52,7 @@ The output file has one row for each SwissProt file listed in
 sprot_files.txt. Each row has THREE columns for each organism,
 according to the organisms listed in sp_list.txt file.
 
-#### Generate Graphs of the Gene Counts 
+#### Generate Graphs for the Gene Counts 
 
 This program will create a graph for the gene count of each organism 
 that is found in the above step. The simplest way to run the program:
