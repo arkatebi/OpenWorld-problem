@@ -91,7 +91,7 @@ each speceis.
 
 The following section shows the figures produced by running this program. 
 
-#### Graphical View: Frequency of Annotated Genes 
+#### Graphical View of Gene Counts 
 
 ####  Homo sapiens (taxon id 9606) 
 ![Alt Gene Frequencey of Human] (/figures/geneFreq.9606.1.png?raw=true “Gene Frequency of Human”)
