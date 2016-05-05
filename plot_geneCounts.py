@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 # Default configuration file name:
 config_filename = '.config'
 no_of_organisms = 10 
-output_fn_prefix = 'sprot_genes.1'
+
 class plot_geneCounts:
     def __init__(self):
         # Collect user arguments into a dictionary:
@@ -47,9 +47,6 @@ class plot_geneCounts:
         t3 = self.parsed_dict['t3'] 
         # Locate the gene count file:
         self.geneCount_filename = ld.locate_anyfile(t3, self.work_dir)
-
-        # Create output file name for target sequences:
-#        self.output_filename = self.create_outfilename() 
         return None
 
     def create_fig_name(self, fname_prefix):
@@ -58,7 +55,6 @@ class plot_geneCounts:
         provided by the user and at the end returns the newly
         created output filename.
         """
-#        ob = output_fn_prefix
         ob = fname_prefix
         index = 1
         while os.path.exists(self.figure_dir + '/' + ob + '.' + str(index) + '.png'):
@@ -74,6 +70,39 @@ class plot_geneCounts:
         return (bpo_list, cco_list, mfo_list)
 
     def plot_and_save(self, bpo_list, cco_list, mfo_list, taxon_id, taxon_name):
+        b_offset = 50
+        u_offset = 50
+        fig = plt.figure()
+    #    fig = plt.figure(figsize=(40,40) )
+        x_axis = range(1,11)
+#        plt.subplot(3,1,1)
+        ax_1=fig.add_subplot(3,1,1)
+        plt_title = '# of Annotated Genes with EXP:\n' + str(taxon_name) 
+    #    plt.title('# of Gene Annotations with EXP Validation')
+        plt.title(plt_title)
+        plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
+        plt.ylabel('Gene Count')
+        plt.axis([0, 11, min(bpo_list)-b_offset, max(bpo_list)+u_offset])
+        ax_1.text(10, 10, 'BPO', fontsize=15)
+       
+
+        plt.subplot(3,1,2)
+    #    ax_2=fig.add_subplot(3,1,2)
+        plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
+        plt.ylabel('Gene Count')
+        plt.axis([0, 11, min(cco_list)-b_offset, max(cco_list)+u_offset])
+
+        plt.subplot(3,1,3) 
+    #    ax_3=fig.add_subplot(3,1,3) 
+        plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
+        plt.ylabel('Gene Count')
+        plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
+        fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
+        print fig_fname
+#        fig.savefig(fig_fname)
+        plt.show()
+
+    def plot_and_save_old(self, bpo_list, cco_list, mfo_list, taxon_id, taxon_name):
         b_offset = 50
         u_offset = 50
         fig = plt.figure()
@@ -104,7 +133,7 @@ class plot_geneCounts:
         fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
         print fig_fname
         fig.savefig(fig_fname)
-        #plt.show()
+        plt.show()
 
     def extract_taxon_info(self, fh): 
         taxon_id_list = []
@@ -163,6 +192,7 @@ class plot_geneCounts:
                                mfo_list, 
                                tax_id_lst[i], 
                                tax_name_lst[i])
+            break
         return None
 if __name__ == '__main__':
     if len(sys.argv) == 1:
