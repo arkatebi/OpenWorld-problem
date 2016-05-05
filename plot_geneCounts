@@ -72,8 +72,12 @@ class plot_geneCounts:
     def create_fig_name(self, fname_prefix):
         """ 
         Creates an output filename based on the filename prefix
-        provided by the fname_prefix and at the end returns the newly
-        created output filename.
+        provided by fname_prefix and at the end returns the newly
+        created filename for a figure.
+        Note:  
+        The program uses index variable to find whether the previous
+        versions (starting from one consecutively) of the file exists. 
+        It returns the file name with the subsequent version. 
         """
         ob = fname_prefix
         index = 1
@@ -93,13 +97,12 @@ class plot_geneCounts:
         # Extract the time point list from the sprot file name list: 
         tp_lst = self.extract_timepoint_info(
                        open(self.sprot_fnList_filename, 'r'))
-#        fig = plt.figure()
+        #fig = plt.figure()
         fig = plt.figure(figsize=(10,10) )
         x_axis = range(1,11)
-#        plt.subplot(3,1,1)
+        #plt.subplot(3,1,1)
         ax_1=fig.add_subplot(3,1,1)
         plt_title = '# of Annotated Genes with EXP:\n' + str(taxon_name) 
-    #    plt.title('# of Gene Annotations with EXP Validation')
         plt.title(plt_title)
         plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
         plt.ylabel('Gene Count')
@@ -108,11 +111,11 @@ class plot_geneCounts:
         plt.axis([0, 11, min(bpo_list) - offset, max(bpo_list) + offset])
 
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-#        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
+        #plt.xticks(x_axis, tp_lst, horizontalalignment='center')
         text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/15
         ax_1.text(0.2, text_ht, 'BPO', fontsize=15)
 
-#        plt.subplot(3,1,2)
+        #plt.subplot(3,1,2)
         ax_2=fig.add_subplot(3,1,2)
         plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
         plt.ylabel('Gene Count')
@@ -121,11 +124,11 @@ class plot_geneCounts:
         plt.axis([0, 11, min(cco_list)-offset, max(cco_list)+offset])
 
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-#        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+        #plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
         text_ht = max(cco_list) - (max(cco_list)-min(cco_list))/15
         ax_2.text(0.2, text_ht, 'CCO', fontsize=15)
 
-#        plt.subplot(3,1,3) 
+        #plt.subplot(3,1,3) 
         ax_3=fig.add_subplot(3,1,3) 
         plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
         plt.ylabel('Gene Count')
@@ -133,16 +136,16 @@ class plot_geneCounts:
         offset = (max(mfo_list) - min(mfo_list))/5
         plt.axis([0, 11, min(mfo_list)-offset, max(mfo_list)+offset])
 
-        # Get a file name for the figure to be saved: 
-        fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-#        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
+        #plt.xticks(x_axis, tp_lst, horizontalalignment='center')
         text_ht = max(mfo_list) - (max(mfo_list)-min(mfo_list))/15
         ax_3.text(0.2, text_ht, 'MFO', fontsize=15)
 
+        # Get a file name for the figure to be saved: 
+        fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
         print fig_fname
         fig.savefig(fig_fname)
-#        plt.show()
+        #plt.show()
 
     def extract_taxon_info(self, fh): 
         taxon_id_list = []
@@ -177,10 +180,6 @@ class plot_geneCounts:
         return (gc_bpo_dict, gc_cco_dict, gc_mfo_dict)
 
     def process_data(self): 
-        # Extract time points from the sprot file name list:  
-        tp_lst = self.extract_timepoint_info(
-                       open(self.sprot_fnList_filename, 'r'))
-        print tp_lst
         # Extract taxon id list and taxon name list:
         tax_id_lst, tax_name_lst = self.extract_taxon_info(
                                         open(self.species_filename, 'r'))
