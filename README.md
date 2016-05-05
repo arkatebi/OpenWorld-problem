@@ -30,7 +30,7 @@ cross-reference.
 
 The details of the usage description of this software are as follows.
 
-#### Statistics of Experimentally Annotated Genes 
+#### Generate Counts of Annotated Genes with EXP Evidence
 
 This program will create a file with the number of genes whose annotations
 are experimentally validated for a set of organism over a series of time
