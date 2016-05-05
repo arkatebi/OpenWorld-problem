@@ -2,7 +2,7 @@
 '''
     This module has the following two methods:
 
-    count_genes_with_EXP_per_species:
+    count_genes_with_EXP:
         This method takes four input arguments:
             (1) a uniprot-swissProt file handle,
             (2) a taxonomy id,
