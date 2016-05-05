@@ -91,8 +91,8 @@ class plot_geneCounts:
         plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
         plt.ylabel('Gene Count')
         plt.axis([0, 11, min(bpo_list)-b_offset, max(bpo_list)+u_offset])
-#        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
+        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+#        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
 
         ax_1.text(10, 10, 'BPO', fontsize=15)
 
@@ -101,8 +101,8 @@ class plot_geneCounts:
         plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
         plt.ylabel('Gene Count')
         plt.axis([0, 11, min(cco_list)-b_offset, max(cco_list)+u_offset])
+        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
 #        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
 
         plt.subplot(3,1,3) 
     #    ax_3=fig.add_subplot(3,1,3) 
@@ -110,8 +110,8 @@ class plot_geneCounts:
         plt.ylabel('Gene Count')
         plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
         fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
-#        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
+        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+#        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
 
         print fig_fname
         fig.savefig(fig_fname)
