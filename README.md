@@ -1,6 +1,7 @@
 ## Gene Annotations with EXP in UniProtKB/SwissProt 
-* How many genes for each species in the UniProtKB/SwissProt whose 
-  annotations have experimental validations? 
+* Creates a table to gene count for each species in the UniProtKB/SwissProt whose 
+  annotations have experimental validations. 
+* Creates a graph for gene count for each speceis.
 
 #### Some informative sites 
 
@@ -50,6 +51,45 @@ It creates an output file: sprot_genes.stat.1
 The output file has one row for each SwissProt file listed in
 sprot_files.txt. Each row has THREE columns for each organism,
 according to the organisms listed in sp_list.txt file.
+
+#### Generate Graphs of the Gene Counts 
+
+This program will create a graph for the gene count of each organism 
+that is found in the above step. The simplest way to run the program:
+
+python Count_genes --input1 filename_listing_species_taxon_ids --input2 filename_listing_sprot_filenames --input3 filename_gene_counts 
+
+input1 is a TWO column text file containing the list of species: the first
+column has the taxon id and the second column has the organism name. input2
+is a list of UniprotKB/SwissProt filenames over a series of time points. 
+input3 is the gene count file generated in the previous step.  
+
+One specific example run with input1 file sp_list.txt, input2 file 
+sprot_files.txt, and input3 file sprot_genes.stat.1:
+
+```
+python plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=sprot_genes.stat.1
+```
+
+This command takes the species list from sp_list.txt file, the time points from
+the filenames listed in the sprot_files.txt file, and gene counts from the 
+sprot_genes.stat.1 file and draw a graph of gene count for each speceis over 
+those time points extracted sprot_files.txt. For this specific example, it 
+generates the following figure files (one figure for each speceis):
+
+geneFreq.9606.1.png
+geneFreq.10090.1.png
+geneFreq.3702.1.png
+geneFreq.10116.1.png
+geneFreq.559292.1.png
+geneFreq.9913.1.png
+geneFreq.284812.1.png
+geneFreq.44689.1.png
+
+Repeated run of the program creates subsequent version of the figure file for
+each speceis. 
+
+The following section shows the figures produced by running this program. 
 
 #### Graphical View: Frequency of Annotated Genes 
 
