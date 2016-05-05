@@ -80,8 +80,8 @@ class plot_geneCounts:
 
         b_offset = 50
         u_offset = 50
-        fig = plt.figure()
-    #    fig = plt.figure(figsize=(40,40) )
+#        fig = plt.figure()
+        fig = plt.figure(figsize=(10,10) )
         x_axis = range(1,11)
 #        plt.subplot(3,1,1)
         ax_1=fig.add_subplot(3,1,1)
