@@ -39,23 +39,46 @@ The details of the usage description of this software are as follows.
 #### Generate Counts of Annotated Genes with EXP Evidence
 
 This program will create a file with the number of genes whose annotations
-are experimentally validated for a set of organism over a series of time
-points. The simplest way to run the program:
+have experimental evidence codes in the UniProtKB/SwissProt files for a set 
+of organismis over a series of time points. The simplest way to run the 
+program:
 
+```
 python Count_genes --input1 filename_listing_species_taxon_ids --input2 filename_listing_sprot_filenames 
+```
 
-input1 is a TWO column text file containing the list of species: the first
-column has the taxon id and the second column has the organism name. input2
-is a list of UniprotKB/SwissProt filenames over a series of time points.
+input1 is a TWO column text file containing the list of species to be 
+considered: the first column has the taxon id and the second column has 
+the organism name. input2 is a list of UniprotKB/SwissProt filenames over 
+a series of time points.
+
+One specific example run with input1 file sp_list.txt and input2 file 
+sprot_files.txt:  
 
 ```
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt
 ```
 
-It creates an output file: sprot_genes.stat.1
-The output file has one row for each SwissProt file listed in
-sprot_files.txt. Each row has THREE columns for each organism,
-according to the organisms listed in sp_list.txt file.
+This command will extract the species names from the sp_list.txt file
+and the UniprotKB/SwissProt file names from the sprot_files.txt file,
+and then will calculate the gene counts for all species over all the
+time points.
+It will create an output file: sprot_genes.stat.1
+The output file will have one row for each timepoint, containing gene
+counts for each organism, in the same seqeuence as they are found
+in the sp_list.txt file. For each organism, the file has THREE columns,
+for gene counts in BPO, CCO, and MFO ontological categories.
+
+Repeated run of the program, will create subsequent version of the 
+output file. 
+
+The program can also take an output filename prefix as the 
+program argument as shown below: 
+
+```
+python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=sprot_genes.stat
+```
+It will behave the same way as described above. 
 
 #### Generate Graphs for the Gene Counts 
 
