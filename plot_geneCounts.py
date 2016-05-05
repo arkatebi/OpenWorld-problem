@@ -62,7 +62,7 @@ class plot_geneCounts:
         output_filename = self.figure_dir + '/' + ob + '.' + str(index) + '.png'
         return output_filename
 
-    def convert_str2num_list(self, bpo_list, cco_list, mfo_list): 
+    def convert_str2num_list(self, bpo_list, cco_list, mfo_list):
         for i in range(len(bpo_list)):
             bpo_list[i] = int(bpo_list[i])
             cco_list[i] = int(cco_list[i])
@@ -70,6 +70,14 @@ class plot_geneCounts:
         return (bpo_list, cco_list, mfo_list)
 
     def plot_and_save(self, bpo_list, cco_list, mfo_list, taxon_id, taxon_name):
+        # Extract the time point list from the sprot file name list: 
+        tp_lst = self.extract_timepoint_info(
+                       open(self.sprot_fnList_filename, 'r'))
+
+        print tp_lst
+        print len(tp_lst)
+#        raise SystemExit
+
         b_offset = 50
         u_offset = 50
         fig = plt.figure()
@@ -83,14 +91,18 @@ class plot_geneCounts:
         plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
         plt.ylabel('Gene Count')
         plt.axis([0, 11, min(bpo_list)-b_offset, max(bpo_list)+u_offset])
+#        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
+
         ax_1.text(10, 10, 'BPO', fontsize=15)
-       
 
         plt.subplot(3,1,2)
     #    ax_2=fig.add_subplot(3,1,2)
         plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
         plt.ylabel('Gene Count')
         plt.axis([0, 11, min(cco_list)-b_offset, max(cco_list)+u_offset])
+#        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
 
         plt.subplot(3,1,3) 
     #    ax_3=fig.add_subplot(3,1,3) 
@@ -98,6 +110,9 @@ class plot_geneCounts:
         plt.ylabel('Gene Count')
         plt.axis([0, 11, min(mfo_list)-b_offset, max(mfo_list)+u_offset])
         fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
+#        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(x_axis, tp_lst, horizontalalignment='center')
+
         print fig_fname
 #        fig.savefig(fig_fname)
         plt.show()
@@ -169,13 +184,17 @@ class plot_geneCounts:
 
     def process_data(self): 
         # Extract time points from the sprot file name list:  
-        tp_list = self.extract_timepoint_info(
+        tp_lst = self.extract_timepoint_info(
                        open(self.sprot_fnList_filename, 'r'))
+        print tp_lst
         # Extract taxon id list and taxon name list:
         tax_id_lst, tax_name_lst = self.extract_taxon_info(
                                         open(self.species_filename, 'r'))
+
          # Extract gene count from the gene count file:
-        gc_bpo_dict, gc_cco_dict, gc_mfo_dict = self.extract_gene_count(tax_id_lst, open(self.geneCount_filename, 'r'))
+        gc_bpo_dict, gc_cco_dict, gc_mfo_dict = self.extract_gene_count(
+                                                     tax_id_lst, 
+                                                     open(self.geneCount_filename, 'r'))
 
         # Extract gene counts for each organism and plot and save graphs:  
         for i in range(0, len(tax_id_lst)):
@@ -192,7 +211,7 @@ class plot_geneCounts:
                                mfo_list, 
                                tax_id_lst[i], 
                                tax_name_lst[i])
-            break
+#            break
         return None
 if __name__ == '__main__':
     if len(sys.argv) == 1:
