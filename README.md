@@ -87,6 +87,11 @@ additional argument which is shown below:
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=sprot_genes.stat
 ```
 It will behave the same way as described above. 
+##### Warning
+The UniProtKB/SwissProt files are huge in size. Running this program 
+for the first time, without having those files already stored in the 
+workspace, will automatically download the files and that will take 
+a substantial amount of time.
 
 #### Generate Graphs for the Gene Counts 
 
