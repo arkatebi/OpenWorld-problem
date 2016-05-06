@@ -121,6 +121,7 @@ geneFreq.3702.1.png
 geneFreq.10116.1.png
 geneFreq.559292.1.png
 geneFreq.9913.1.png
+geneFreq.83333.1.png
 geneFreq.284812.1.png
 geneFreq.44689.1.png
 ```
