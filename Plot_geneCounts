@@ -78,16 +78,31 @@ class Plot_geneCounts:
         # file names over a series of time points:
         self.sprot_fnList_filename = ld.locate_anyfile(t2, self.work_dir)
 
+        # Get the file count from the file listing the SwissProt filenames: 
+        self.sprot_file_count = self.get_sprot_fileCount()
+
         # Extract the filename containing the gene counts:
         t3 = self.parsed_dict['t3']
         # Locate the gene count file:
         self.geneCount_filename = ld.locate_anyfile(t3, self.work_dir)
         return None
 
+    def get_sprot_fileCount(self):
+        '''
+        This method counts the number of SwissProt files used in this 
+        software and returns that count.
+        '''
+        file_count = 0
+        with open(self.sprot_fnList_filename, 'r') as fh:
+            for line in fh:
+                if line.strip():
+                    file_count += 1
+        return file_count
+
     def get_organismCount(self):
         '''
         This method counts the number of organisms used in this 
-        software and returns that count
+        software and returns that count.
         '''
         org_count = 0
         with open(self.species_filename, 'r') as fh:
@@ -128,10 +143,10 @@ class Plot_geneCounts:
         # Extract the time points from the sprot file name list: 
         tp_lst = self.extract_timepoint_info(
                        open(self.sprot_fnList_filename, 'r'))
-        #fig = plt.figure()
         fig = plt.figure(figsize=(10,10) )
         x_axis = range(1,11)
-        #plt.subplot(3,1,1)
+   
+        # Subplot for BPO graph: 
         ax_1=fig.add_subplot(3,1,1)
         plt_title = '# of Genes Annotated with Exp Evidence Codes\n' + str(taxon_name) 
         plt.title(plt_title)
@@ -139,40 +154,38 @@ class Plot_geneCounts:
         plt.ylabel('Gene Count')
         # Set offset to space at the top and bottom of the graph: 
         offset = (max(bpo_list) - min(bpo_list))/5
-        plt.axis([0, 11, min(bpo_list) - offset, max(bpo_list) + offset])
+        plt.axis([0, self.sprot_file_count+1, min(bpo_list) - offset, max(bpo_list) + offset])
+
 
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-        #plt.xticks(x_axis, tp_lst, horizontalalignment='center')
         text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/15
         ax_1.text(0.2, text_ht, 'BPO', fontsize=15)
 
-        #plt.subplot(3,1,2)
+        # Subplot for CCO graph: 
         ax_2=fig.add_subplot(3,1,2)
         plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
         plt.ylabel('Gene Count')
         offset = (max(cco_list) - min(cco_list))/5
         # Set offset to space at the top and bottom of the graph: 
-        plt.axis([0, 11, min(cco_list)-offset, max(cco_list)+offset])
+        plt.axis([0, self.sprot_file_count+1, min(cco_list)-offset, max(cco_list)+offset])
 
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-        #plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
         text_ht = max(cco_list) - (max(cco_list)-min(cco_list))/15
         ax_2.text(0.2, text_ht, 'CCO', fontsize=15)
 
-        #plt.subplot(3,1,3) 
+        # Subplot for MFO graph:
         ax_3=fig.add_subplot(3,1,3) 
         plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
         plt.ylabel('Gene Count')
         # Set offset to space at the top and bottom of the graph: 
         offset = (max(mfo_list) - min(mfo_list))/5
-        plt.axis([0, 11, min(mfo_list)-offset, max(mfo_list)+offset])
+        plt.axis([0, self.sprot_file_count+1, min(mfo_list)-offset, max(mfo_list)+offset])
 
         plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
-        #plt.xticks(x_axis, tp_lst, horizontalalignment='center')
         text_ht = max(mfo_list) - (max(mfo_list)-min(mfo_list))/15
         ax_3.text(0.2, text_ht, 'MFO', fontsize=15)
 
-        # Get a file name for the figure to be saved: 
+        # Get a file name for the figure to be saved:
         fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
         print fig_fname
         fig.savefig(fig_fname)
@@ -228,7 +241,7 @@ class Plot_geneCounts:
         tax_id_lst, tax_name_lst = self.extract_taxon_info(
                                         open(self.species_filename, 'r'))
 
-         # Extract gene count from the gene count file:
+        # Extract gene count from the gene count file:
         gc_bpo_dict, gc_cco_dict, gc_mfo_dict = self.extract_gene_count(
                                                      tax_id_lst,
                                                      open(self.geneCount_filename, 'r'))
