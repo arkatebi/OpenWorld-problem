@@ -99,7 +99,7 @@ One specific example run with input1 file sp_list.txt, input2 file
 sprot_files.txt, and input3 file sprot_genes.stat.1:
 
 ```
-python plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=sprot_genes.stat.1
+python Plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=sprot_genes.stat.1
 ```
 
 This command takes the species list from sp_list.txt file, the time points from
