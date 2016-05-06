@@ -26,6 +26,8 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
         # SELECT records that are related to a specific
         # taxon_id such as 559292 for yeast:
         if taxon_id in rec.taxonomy_id:
+            # Three flags to check whether an Exp evidence is found
+            # in any of BPO, CCO, and MFO ontological categories: 
             bpo_exp_flag = cco_exp_flag = mfo_exp_flag = False
             # Go over the list of DB cross references:
             for crossRef in rec.cross_references:
@@ -42,6 +44,8 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
                             cco_exp_flag = True
                         elif goList[-1].upper() == 'F':
                             mfo_exp_flag = True
+                # Whenever an exp evidence for all three ontological 
+                # categories are found, break out the loop:
                 if (bpo_exp_flag and cco_exp_flag and mfo_exp_flag):
                     break
             # Increase gene counts in BPO, CCO, and MFO categories
