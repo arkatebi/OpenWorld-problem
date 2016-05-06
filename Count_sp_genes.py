@@ -14,12 +14,7 @@
           
         Finally, it returns these THREE counts.
 '''
-import sys
-from Bio import SeqIO
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
 from Bio import SwissProt as sp
-from collections import defaultdict
 
 def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
     gene_count = {} 
