@@ -95,6 +95,7 @@ class Plot_geneCounts:
         file_count = 0
         with open(self.sprot_fnList_filename, 'r') as fh:
             for line in fh:
+                # Count only the nonempty lines:
                 if line.strip():
                     file_count += 1
         return file_count
@@ -107,6 +108,7 @@ class Plot_geneCounts:
         org_count = 0
         with open(self.species_filename, 'r') as fh:
             for line in fh:
+                # Count only the nonempty lines:
                 if line.strip():
                     org_count += 1
         return org_count
