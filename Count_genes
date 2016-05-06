@@ -151,18 +151,18 @@ class Count_genes:
                 continue 
             taxon_id = line.strip().split('\t')[0]
             print line.strip()
-            exp_bpo_ct, exp_cco_ct, exp_mfo_ct = csg.count_genes_with_EXP(
-                                                 open(sprot_fname, 'r'),
-                                                 taxon_id,
-                                                 self.ConfigParam['exp_eec'])
-            print('exp_bpo_ct: ' + str(exp_bpo_ct))
-            print('exp_cco_ct: ' + str(exp_cco_ct))
-            print('exp_mfo_ct: ' + str(exp_mfo_ct))
-            geneCount_str += str(exp_bpo_ct) + '\t' + \
-                             str(exp_cco_ct) + '\t' + \
-                             str(exp_mfo_ct) + '\t'
+            gene_count = csg.count_genes_with_EXP(
+                             open(sprot_fname, 'r'),
+                             taxon_id,
+                             self.ConfigParam['exp_eec'])
 
-        geneCount_str = geneCount_str.strip() + '\n'
+            print('Gene count in BPO ontology: ' + str(gene_count['BPO']))
+            print('Gene count in CCO ontology: ' + str(gene_count['CCO']))
+            print('Gene count in MFO ontology: ' + str(gene_count['CCO']))
+            geneCount_str += str(gene_count['BPO']) + '\t' + \
+                             str(gene_count['CCO']) + '\t' + \
+                             str(gene_count['MFO']) + '\t'
+        geneCount_str = geneCount_str.rstrip() + '\n'
         fh_sp.close()
         return geneCount_str
 
@@ -173,12 +173,13 @@ class Count_genes:
         EXP validated in BPO, CCO, and MFO category, for all the 
         SwissProt files. 
         """
-        # Check the existence of data files
-        # If any data file is not found, download the data file
-        # Create an object of Download class: 
+        # Check the existence of data files and download that
+        # are not available:
+
+        # Create an object of Download class:
         dlObject = dl.Download(self.work_dir, self.sprot_filename)
-        # Run the download_testDataset method which checks and downloads 
-        # the data files listed in the self.sprot_filename: 
+        # Run the download_testDataset method which checks and 
+        # downloads the data files listed in the self.sprot_filename:
         dlObject.download_testDataset(open(self.sprot_filename, 'r'))    
    
         # Create TWO header lines for the output file: 
@@ -201,7 +202,7 @@ class Count_genes:
         # Count the total number of genes with EXP evidence code 
         # for each UniProtKB/SwissProt file:
         for fname in fh_fn:
-            # Skip any empty line in the file with the file names
+            # Skip any empty line in the file with the file names:
             if not (fname.strip()):
                 continue 
             # Retrieve the UniProtKB/SwissProt filename:
