@@ -71,11 +71,11 @@ class plot_geneCounts:
 
     def create_fig_name(self, fname_prefix):
         """ 
-        Creates an output filename based on the filename prefix
-        provided by fname_prefix and at the end returns the newly
+        This method creates an output filename based on the filename
+        prefix provided by fname_prefix and at the end returns the newly
         created filename for a figure.
         Note:  
-        The program uses index variable to find whether the previous
+        This method uses index variable to find whether the previous
         versions (starting from one consecutively) of the file exists. 
         It returns the file name with the subsequent version. 
         """
@@ -161,18 +161,26 @@ class plot_geneCounts:
             tp_list.append(line.strip().split('.dat.')[-1])
         return tp_list 
 
-    def extract_gene_count(self, tax_id_lst, fh): 
-        # Initialize dictionary for gene count in BPO ontological group: 
-        gc_bpo_dict = defaultdict(list) 
-        # Initialize dictionary for gene count in CCO ontological group: 
-        gc_cco_dict = defaultdict(list) 
-        # Initialize dictionary for gene count in MFO ontological group: 
-        gc_mfo_dict = defaultdict(list) 
+    def extract_gene_count(self, tax_id_lst, fh):
+        # Initialize dictionary for gene count in BPO ontological group:
+        gc_bpo_dict = defaultdict(list)
+        # Initialize dictionary for gene count in CCO ontological group:
+        gc_cco_dict = defaultdict(list)
+        # Initialize dictionary for gene count in MFO ontological group:
+        gc_mfo_dict = defaultdict(list)
 
+        # Skip the first two header lines of the gene count file:
+        next(fh)
+        next(fh)
+        # Read the subseqent lines of the gene count file and
+        # Store the gene counts in dictionaries - BPO, CCO, and MFO
+        # ontological groups:
         for line in fh:
             line_values = line.strip().split('\t')
             tp = line_values[0]
             id_no = 0
+            # For each organism, append the gene count in the list 
+            # for that organism:
             for i in range(1,no_of_organisms*3+1,3):
                 gc_bpo_dict[tax_id_lst[id_no]].append(line_values[i])
                 gc_cco_dict[tax_id_lst[id_no]].append(line_values[i+1])
@@ -192,20 +200,19 @@ class plot_geneCounts:
 
         # Extract gene counts for each organism, plot and save graphs:
         for i in range(0, len(tax_id_lst)):
-            # Convert the gene counts from a list of 
-            # strings to a list of numbers: 
+            # Convert the gene counts from a list of
+            # strings to a list of numbers:
             bpo_list, cco_list, mfo_list = self.convert_str2num_list(
                                                 gc_bpo_dict[tax_id_lst[i]], 
                                                 gc_cco_dict[tax_id_lst[i]],
                                                 gc_mfo_dict[tax_id_lst[i]])
             # Plot the gene counts in BPO, CCO, and MFO ontological categories
             # and save the graph to a file:
-            self.plot_and_save(bpo_list, 
-                               cco_list, 
-                               mfo_list, 
-                               tax_id_lst[i], 
+            self.plot_and_save(bpo_list,
+                               cco_list,
+                               mfo_list,
+                               tax_id_lst[i],
                                tax_name_lst[i])
-#            break
         return None
 if __name__ == '__main__':
     if len(sys.argv) == 1:
