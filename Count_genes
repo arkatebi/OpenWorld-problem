@@ -111,12 +111,14 @@ class Count_genes:
             sys.exit(1)
 
     def create_outfile_header(self):
-        sp_header = ''
-        ont_header ='\t'
+        sp_header = '\t'
+        ont_header =''
         fh_sp = open(self.species_filename, 'r')
-        for line in fh_sp: 
-            sp_header += '\t\t\t\t\t' + line.strip().split('\t')[0]
+        for line in fh_sp:
+            sp_header += '\t' + line.strip().split('\t')[0] + '\t\t'
             ont_header += '\t' + 'BPO' + '\t' + 'CCO' + '\t' + 'MFO'
+        sp_header = sp_header.rstrip() + '\n'
+        ont_header = ont_header.rstrip() + '\n'
         return (sp_header, ont_header)
 
     def count_genes_for_species(self, sprot_fname):
@@ -137,9 +139,6 @@ class Count_genes:
             print('exp_cco_ct: ' + str(exp_cco_ct))
             print('exp_mfo_ct: ' + str(exp_mfo_ct))
             outstr += str(exp_bpo_ct) + '\t' + str(exp_cco_ct) + '\t' + str(exp_mfo_ct) + '\t'
-#            count += 1
-#            if count > 0: 
-#                break
         outstr = outstr.strip() + '\n'
         fh_sp.close()
         return outstr 
@@ -159,21 +158,23 @@ class Count_genes:
         # the data files listed in the self.sprot_filename: 
         dlObject.download_testDataset(open(self.sprot_filename, 'r'))    
 
+        sp_header, ont_header = self.create_outfile_header()
+
         # Count the total number of genes with EXP evidence code 
         # from the UniProtKB/SwissProt files:
 
         fh_out = open(self.output_filename, 'w')
+        # Write the TWO header lines:
+        fh_out.write("%s" % sp_header)
+        fh_out.write("%s" % ont_header)
+        fh_out.flush()
         fh_fn = open(self.sprot_filename, 'r')
         count = 0
         for fname in fh_fn:
             sprot_fname = self.work_dir + '/' + fname.strip()
             outstr = self.count_genes_for_species(sprot_fname)
-#            print outstr
             fh_out.write("%s" % outstr)
             fh_out.flush()
-#            count += 1
-#            if count > 0:
-#                break
         fh_out.close()
         return None
 
