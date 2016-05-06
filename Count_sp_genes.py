@@ -32,7 +32,7 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
         # taxon_id such as 559292 for yeast:
         if taxon_id in rec.taxonomy_id:
             bpo_exp_flag = cco_exp_flag = mfo_exp_flag = False
-            # Go over the list of GO information:
+            # Go over the list of DB cross references:
             for crossRef in rec.cross_references:
                 # Consider the cross_reference entries that
                 # relate to GO DB:
