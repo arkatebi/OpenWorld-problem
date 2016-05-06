@@ -1,26 +1,41 @@
 #!/usr/bin/env python
 '''
-    Count_genes program accepts the following three inputs:
-           (1) a UniProtKB/swissProt file 
-           (2) a taxon id and 
-           (3) an optional output file name 
-
-    When the output file name is NOT given, it will construct an output file
-    name.
-
-    How to run this program: 
-        For some input file uniprot_sprot.dat.2014_09 and taxon id 559292
+    This tool count the number of genes for a set of organisms in
+    some UniProtKB/SwissProt files over a series of time points.
+    One can run this program as follows:
 
        > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt
-  
-    The method creates one output file: 
-        sprot_genes.stat.1: 
-        For each UnirProtKB/SwissProt time point described in sprot_files, 
-        the file has one line with gene counts for all species in sp_list.txt 
-        file. 
-    The program can also take an optional output filename prefix: 
-       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt -O=sprot_genes.stat
+   
+    The program will use the organisms from the sp_list.txt file
+    and UniProtKB/SwissProt files from the sprot_files.txt file.
+    The description of these input files are as follows:
 
+         sp_list.txt: This file has the list of species: column 1
+            has the taxon ids and column 2 has the taxon names.
+
+        sprot_files.txt: This file has has the SwissProt filenames in the
+            format uniprot_sprot.dat.yyyy_mm for example
+            uniprot_sprot.data.2016_01 for the SwissProt file release in
+            Januray 2016. The program extracts the time points from this file.
+            Also, each entry in this file corresponds to the rows in
+            sprot_genes.stat.1 file.
+
+    The program will generate an output file sprot_genes.stat.1 whose 
+    description is as follows:
+
+        sprot_genes.stat.1: This file has the gene counts.
+            Each row corresponds to the SwissProt file name listed
+            in sprot_files.txt file. For each organism, there are
+            there consecutive columns (for BPO, CCO, and MFO,
+            respectively). The columns corresponds to the species
+            listed in the sp_list.txt file, in the same order.
+    
+    Repeated run of this program will create subsequent version of 
+    the output file.
+
+    The program can also be supplied with an output filename prefix:
+
+       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt -O=sprot_genes.stat
 '''
 import os
 import sys
@@ -122,26 +137,34 @@ class Count_genes:
         return (sp_header, ont_header)
 
     def count_genes_for_species(self, sprot_fname):
-        fh_sp = open(self.species_filename, 'r')
         # Initialize geneCount_str with the time stamp part of the SwissProt filename 
         geneCount_str = basename(sprot_fname).strip().split('.dat.')[-1] + '\t'
         print geneCount_str
-        count = 0
+        # Get a file handle for the species filename: 
+        fh_sp = open(self.species_filename, 'r')
+
+        # Calculate gene counts for each species in the
+        # Swissprot file supplied by the file handle:
         for line in fh_sp:
+            # Skip any empty line in the file with the organism name
+            if not (line.strip()):
+                continue 
             taxon_id = line.strip().split('\t')[0]
             print line.strip()
             exp_bpo_ct, exp_cco_ct, exp_mfo_ct = csg.count_genes_with_EXP(
                                                  open(sprot_fname, 'r'),
                                                  taxon_id,
                                                  self.ConfigParam['exp_eec'])
-
             print('exp_bpo_ct: ' + str(exp_bpo_ct))
             print('exp_cco_ct: ' + str(exp_cco_ct))
             print('exp_mfo_ct: ' + str(exp_mfo_ct))
-            geneCount_str += str(exp_bpo_ct) + '\t' + str(exp_cco_ct) + '\t' + str(exp_mfo_ct) + '\t'
+            geneCount_str += str(exp_bpo_ct) + '\t' + \
+                             str(exp_cco_ct) + '\t' + \
+                             str(exp_mfo_ct) + '\t'
+
         geneCount_str = geneCount_str.strip() + '\n'
         fh_sp.close()
-        return geneCount_str 
+        return geneCount_str
 
     def process_data(self):
         """
@@ -178,16 +201,19 @@ class Count_genes:
         # Count the total number of genes with EXP evidence code 
         # for each UniProtKB/SwissProt file:
         for fname in fh_fn:
+            # Skip any empty line in the file with the file names
+            if not (fname.strip()):
+                continue 
             # Retrieve the UniProtKB/SwissProt filename:
             sprot_fname = self.work_dir + '/' + fname.strip()
             # Create a string of gene counts for all species: 
             geneCount_str = self.count_genes_for_species(sprot_fname)
             fh_out.write("%s" % geneCount_str)
             fh_out.flush()
-        # Close the file handles:
+            break 
+        # Close the open file:
         fh_fn.close()
         fh_out.close()
-        
         return None
 
 if __name__ == '__main__':
