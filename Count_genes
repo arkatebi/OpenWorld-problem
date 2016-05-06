@@ -211,7 +211,6 @@ class Count_genes:
             geneCount_str = self.count_genes_for_species(sprot_fname)
             fh_out.write("%s" % geneCount_str)
             fh_out.flush()
-            break 
         # Close the open file:
         fh_fn.close()
         fh_out.close()
