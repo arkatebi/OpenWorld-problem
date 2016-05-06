@@ -147,10 +147,13 @@ class Count_genes:
         return None
 
     def print_epilog(self):
-        print(bcolors.OKGREEN + 'The following gene count file ' + \
-                                'is created:' + bcolors.ENDC)
-        if os.path.exists(self.self.output_filename):
-            print basename(self.self.output_filename)
+        if os.path.exists(self.output_filename):
+            print(bcolors.OKGREEN + 'The following gene count file ' + \
+                                    'is created:' + bcolors.ENDC)
+            print basename(self.output_filename)
+        else: 
+            print(bcolors.WARNING + 'No gene count file is created ' + \
+                                    'with the given parameters' + bcolors.ENDC)
         print(bcolors.OKGREEN + 'Thank you for using Gene Count ' + \
                                 'Tool' + bcolors.ENDC)
         return None
