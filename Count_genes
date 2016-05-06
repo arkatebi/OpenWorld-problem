@@ -123,9 +123,9 @@ class Count_genes:
 
     def count_genes_for_species(self, sprot_fname):
         fh_sp = open(self.species_filename, 'r')
-        # Initialize outstr with the time stamp part of the SwissProt filename 
-        outstr = basename(sprot_fname).strip().split('.dat.')[-1] + '\t'
-        print outstr
+        # Initialize geneCount_str with the time stamp part of the SwissProt filename 
+        geneCount_str = basename(sprot_fname).strip().split('.dat.')[-1] + '\t'
+        print geneCount_str
         count = 0
         for line in fh_sp:
             taxon_id = line.strip().split('\t')[0]
@@ -138,10 +138,10 @@ class Count_genes:
             print('exp_bpo_ct: ' + str(exp_bpo_ct))
             print('exp_cco_ct: ' + str(exp_cco_ct))
             print('exp_mfo_ct: ' + str(exp_mfo_ct))
-            outstr += str(exp_bpo_ct) + '\t' + str(exp_cco_ct) + '\t' + str(exp_mfo_ct) + '\t'
-        outstr = outstr.strip() + '\n'
+            geneCount_str += str(exp_bpo_ct) + '\t' + str(exp_cco_ct) + '\t' + str(exp_mfo_ct) + '\t'
+        geneCount_str = geneCount_str.strip() + '\n'
         fh_sp.close()
-        return outstr 
+        return geneCount_str 
 
     def process_data(self):
         """
@@ -157,25 +157,37 @@ class Count_genes:
         # Run the download_testDataset method which checks and downloads 
         # the data files listed in the self.sprot_filename: 
         dlObject.download_testDataset(open(self.sprot_filename, 'r'))    
-
+   
+        # Create TWO header lines for the output file: 
+        # sp_header: a string with species taxon ids
+        # ont_header: a strings with BPO, CCO, MFO for each speceis
         sp_header, ont_header = self.create_outfile_header()
 
-        # Count the total number of genes with EXP evidence code 
-        # from the UniProtKB/SwissProt files:
-
+        # Create a file hanlde fh_out for the output file: 
         fh_out = open(self.output_filename, 'w')
-        # Write the TWO header lines:
+
+        # Write the TWO header lines to the output file: 
         fh_out.write("%s" % sp_header)
         fh_out.write("%s" % ont_header)
         fh_out.flush()
+
+        # Create a file handle fh_fn for the file containing the 
+        # list of UniProtKB/SwissProt filenames:   
         fh_fn = open(self.sprot_filename, 'r')
-        count = 0
+
+        # Count the total number of genes with EXP evidence code 
+        # for each UniProtKB/SwissProt file:
         for fname in fh_fn:
+            # Retrieve the UniProtKB/SwissProt filename:
             sprot_fname = self.work_dir + '/' + fname.strip()
-            outstr = self.count_genes_for_species(sprot_fname)
-            fh_out.write("%s" % outstr)
+            # Create a string of gene counts for all species: 
+            geneCount_str = self.count_genes_for_species(sprot_fname)
+            fh_out.write("%s" % geneCount_str)
             fh_out.flush()
+        # Close the file handles:
+        fh_fn.close()
         fh_out.close()
+        
         return None
 
 if __name__ == '__main__':
