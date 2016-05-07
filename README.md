@@ -11,8 +11,15 @@
 
 1.2\. [Experimental Evidence Codes] (#expCode)
 
-1.3\. [Requirements] (#requirements)
+2\. [Requirements] (#requirements)
 
+3\. [Software Usage] (#usage)
+
+3.1\. [Generate Counts of Genes Annotated with Exp Evidence Codes] (#genGeneCounts)
+
+3.1\. [Generate Graphs for Gene Counts] (#genGraphs)
+
+3\. [Graphical View of Gene Counts] (#graphicalView)
 
 
 <a name="sites" />
@@ -51,10 +58,12 @@ cross-reference.
 * Python 2.7 
 * Biopython 1.66 or greater 
 
+<a name="usage" />
 ### Software Usage 
 
 The details of the usage description of this software are as follows.
 
+<a name="genGeneCounts" />
 #### Generate Counts of Genes Annotated with Exp Evidence Codes
 
 This program will create a file with the number of genes whose annotations
@@ -123,6 +132,7 @@ operated by Ubuntu 14.04.4 LTS, is as follows:
 
 The subsequent run of this program would cost only the gene count time.
 
+<a name="genGraphs" />
 #### Generate Graphs for the Gene Counts 
 
 This program will create a graph for the gene count of each organism 
@@ -165,6 +175,7 @@ Repeated run of the program creates the subsequent versions of each figure file.
 The following section shows the figures produced by running this program with
 the above input files.
 
+<a name="graphicalView" />
 #### Graphical View of Gene Counts 
 
 ####  Homo sapiens (taxon id 9606) 
