@@ -89,17 +89,18 @@ python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=sprot_genes.stat
 It will behave the same way as described above. 
 
 ##### Execution time
-The UniProtKB/SwissProt files are large in size (several gigabytes each).
-Running this program for the first time, without having those files 
+The UniProtKB/SwissProt files are large in size (each file several 
+GB). Running this program for the first time, without having those files
 already stored in the workspace, will automatically download the files 
 taking a substantial amount of time. Execution time breakdown for a 
 first time run of this program with the default input files on a 
 computing environment, consisting of an Intel hardware platform 
-(Intel(R) Core(TM) i7-4790 CPU @ 3.60GHz, 16GiB System Memory) 
+(Intel(R) Core(TM) i7-4790 CPU @ 3.60 GHz, 16 GB System Memory) 
 operated by Ubuntu 14.04.4 LTS, is as follows: 
 
-* Download time for UniProtKB/SwissProt file: 01 hr, 14 min, and 30 sec.
-* Gene count time: 02 hr, 20 min, and 14 sec. 
+* Download time for the UniProtKB/SwissProt files: 01 hr, 14 min, and 30 sec.
+* Gene count time for all species in all UniProtKB/SwissProt files: 
+  02 hr, 20 min, and 14 sec.
 
 The subsequent run of this program would cost only the gene count time.
 
