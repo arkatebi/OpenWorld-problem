@@ -21,6 +21,25 @@
 
 4\. [Graphical View of Gene Counts] (#graphicalView)
 
+4.1\. [Home sapiens (taxon id 9606)] (#hSapiens)
+
+4.2\. [Mus musculus (taxon id 10090)] (#mMusculus)
+
+4.3\. [Arabidopsis thaliana (taxon id 3702)] (#aThaliana)
+
+4.4\. [Rattus norvegicus (taxon id 10116)] (#rNorvegicus)
+
+4.5\. [Saccharomyces cerevisiae (taxon id 559292)] (#sCerevisiae)
+
+4.6\. [Bos taurus (taxon id 9913)] (#bTaurus)
+
+4.7\. [Schizosaccharomyces pombe (taxon id 284812)] (#sPombe)
+
+4.8\. [Echerichia coli (taxon id 83333)] (#eColi)
+
+4.9\. [Bacillus subtiis (taxon id 224308)] (#bSubtilis)
+
+4.10\. [Dictyostelium discoideum (taxon id 44689)] (#dDiscodeum)
 
 <a name="sites" />
 #### Some Informative Sites 
@@ -178,34 +197,45 @@ the above input files.
 <a name="graphicalView" />
 #### Graphical View of Gene Counts 
 
+<a name="hSapiens" />
 ####  Homo sapiens (taxon id 9606) 
 ![Alt Gene Frequencey of Human] (/figures/geneFreq.9606.1.png?raw=true “Gene Frequency of Human”)
 
+<a name="mMusculus" />
 ####  Mus musculus (taxon id 10090) 
 ![Alt Gene Frequency of Mouse] (/figures/geneFreq.10090.1.png?raw=true “Gene Frequency of Mouse”)
 
+
+<a name="aThaliana" />
 ####  Arabidopsis thaliana (taxon id 3702) 
 ![Alt Gene Frequency of Arabidopsis] (/figures/geneFreq.3702.1.png?raw=true “Gene Frequency of Arabidopsis”)
 
 
+<a name="rNorvegicus" />
 ####  Rattus norvegicus (taxon id 10116) 
 ![Alt Gene Frequency of Rat] (/figures/geneFreq.10116.1.png?raw=true “Gene Frequency of Rat”)
 
+<a name="sCerevisiae" />
 ####  Saccharomyces cerevisiae (taxon id 559292) 
 ![Alt Gene Frequency of Baker's yeast] (/figures/geneFreq.559292.1.png?raw=true “Gene Frequency of Baker's yeast”)
 
+<a name="bTaurus" />
 ####  Bos taurus (taxon id 9913) 
 ![Alt Gene Frequency of Bovine] (/figures/geneFreq.9913.1.png?raw=true “Gene Frequency of Bovine”)
 
+<a name="sPombe" />
 ####  Schizosaccharomyces pombe (taxon id 284812) 
 ![Alt Gene Frequency of Fission yeast] (/figures/geneFreq.284812.1.png?raw=true “Gene Frequency of Fission yeast”)
 
+<a name="eColi" />
 ####  Echerichia coli (taxon id 83333) 
 ![Alt Gene Frequency of E. coli] (/figures/geneFreq.83333.1.png?raw=true “Gene Frequency of E. coli”)
 
+<a name="bSubtilis" />
 ####  Bacillus subtilis (taxon id 224308) 
 ![Alt Gene Frequency of B. subtilis] (/figures/geneFreq.224308.1.png?raw=true “Gene Frequency of B. subtilis”)
 
+<a name="dDiscodeum" />
 ####  Dictyostelium discoideum (taxon id 44689) 
 ![Alt Gene Frequency of Slime mold] (/figures/geneFreq.44689.1.png?raw=true “Gene Frequency of Slime mold”)
 
