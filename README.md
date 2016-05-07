@@ -247,4 +247,4 @@ GitHub through the following URL: https://github.com/arkatebi/CAFA-Toolset.
 For questions, please email either of us: Iddo Friedberg (idoerg@gmail.com),  
 Ataur Katebi (arkatebi@gmail.com).
 
-Go to the top (#contents)
+[Go to the top] (#contents)
