@@ -4,6 +4,8 @@
 * Creates graphs of the gene counts for those speceis over a series of time 
   points.
 
+
+<a name="contents" />
 ### Contents
 1\. [Some Informative Sites] (#sites)
 
@@ -245,3 +247,5 @@ GitHub through the following URL: https://github.com/arkatebi/CAFA-Toolset.
 For questions, please email either of us: Iddo Friedberg (idoerg@gmail.com),  
 Ataur Katebi (arkatebi@gmail.com).
 
+<a name="contents" />
+###### Go to the top
