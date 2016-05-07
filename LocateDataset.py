@@ -4,6 +4,14 @@
     This module has the definitions of the following methods that can be 
     invoked to locate a file:
 
+    locate_anyfile:
+        This method takes a filename as input. 
+        If the file is not available in the 
+           current directory or the workspace, 
+           it quits the program with a message. 
+        If the file is available, it returns 
+           the filename with its complete path. 
+
     locate_GOAfile:
         This method takes a UniProt-GOA file as input.
         If the file available in the work space, 
