@@ -98,8 +98,9 @@ computing environment, consisting of an Intel hardware platform
 (Intel(R) Core(TM) i7-4790 CPU @ 3.60 GHz, 16 GB System Memory) 
 operated by Ubuntu 14.04.4 LTS, is as follows: 
 
-* Download time for the target set of UniProtKB/SwissProt files: 01 hr, 14 min, and 30 sec.
-* Gene count time for the query species in those UniProtKB/SwissProt files:
+* Download time for the target set of UniProtKB/SwissProt files: 
+  01 hr, 14 min, and 30 sec.
+* Gene count time for the query species in those target files:
   02 hr, 20 min, and 14 sec.
 
 The subsequent run of this program would cost only the gene count time.
