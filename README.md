@@ -11,6 +11,8 @@
 
 1.2\. [Experimental Evidence Codes] (#expCode)
 
+1.3\. [Requirements] (#requirements]
+
 
 
 <a name="sites" />
@@ -44,6 +46,7 @@ cross-reference.
 * Evidence code decision tree: 
   http://geneontology.org/page/evidence-code-decision-tree  
 
+<a name="requirements" />
 ### Requirements
 * Python 2.7 
 * Biopython 1.66 or greater 
