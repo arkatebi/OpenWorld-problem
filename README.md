@@ -9,6 +9,9 @@
 
 1.1\. [UniProtKB/SwissProt] (#swissprot)
 
+1.2\. [Experimental Evidence Codes] (#expCode)
+
+
 
 <a name="sites" />
 #### Some Informative Sites 
@@ -32,6 +35,8 @@ cross-reference.
 * UniProtKB/SwissProt file format:
   http://arep.med.harvard.edu/labgc/jong/Fetch/SwissProtAll.html
 
+
+<a name="expCode" />
 ##### Experimental Evidence Codes 
 
 * Guide to GO evidence codes: 
