@@ -1,3 +1,4 @@
+<a name="title" />
 ## Gene Annotations with Exp Evidences in UniProtKB/SwissProt 
 * Creates a table of gene counts for a set of species in UniProtKB/SwissProt 
   whose annotations have experimental evidence codes. 
@@ -5,7 +6,6 @@
   points.
 
 
-<a name="contents" />
 ### Contents
 1\. [Some Informative Sites] (#sites)
 
@@ -247,4 +247,4 @@ GitHub through the following URL: https://github.com/arkatebi/CAFA-Toolset.
 For questions, please email either of us: Iddo Friedberg (idoerg@gmail.com),  
 Ataur Katebi (arkatebi@gmail.com).
 
-[Go to the top] (#contents)
+[Go to the top] (#title)
