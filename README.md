@@ -4,7 +4,16 @@
 * Creates graphs of the gene counts for those speceis over a series of time 
   points.
 
-#### UniProtKB/SwissProt
+### Contents
+1\. [Some Informative Sites] (#sites)
+1.1\. [UniProtKB/SwissProt] (#swissprot)
+
+
+<a name="sites" />
+#### Some Informative Sites 
+
+<a name="swissprot" />
+##### UniProtKB/SwissProt
 This is a non-redundant protein sequence database. Each entry in this database
 is manually annotated involving detailed analysis of the protein sequence and
 of the scientific literature. The database is recognized as the central access
@@ -22,7 +31,7 @@ cross-reference.
 * UniProtKB/SwissProt file format:
   http://arep.med.harvard.edu/labgc/jong/Fetch/SwissProtAll.html
 
-#### Experimental Evidence Codes 
+##### Experimental Evidence Codes 
 
 * Guide to GO evidence codes: 
   http://geneontology.org/page/guide-go-evidence-codes
