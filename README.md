@@ -19,7 +19,7 @@
 
 3.1\. [Generate Graphs for Gene Counts] (#genGraphs)
 
-3\. [Graphical View of Gene Counts] (#graphicalView)
+4\. [Graphical View of Gene Counts] (#graphicalView)
 
 
 <a name="sites" />
