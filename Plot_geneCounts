@@ -222,6 +222,10 @@ class Plot_geneCounts:
         return (taxon_id_list, taxon_name_list) 
 
     def extract_timepoints(self): 
+        '''
+        This method extracts the time points from the filenames 
+        listed in the file self.sprot_fnList_filename.  
+        '''
         fh = open(self.sprot_fnList_filename, 'r')
         tp_list = []
         for line in fh:
@@ -229,6 +233,11 @@ class Plot_geneCounts:
         return tp_list 
 
     def extract_gene_count(self, tax_id_lst):
+        '''
+        This method extracts the gene counts from self.geneCount_filename 
+        and returns those counts as a tuple of three lists - 
+        one for BPO ontology, one for CCO ontology, and one for MFO ontology.
+        '''
         # Initialize dictionary for gene count in BPO ontological group:
         gc_bpo_dict = defaultdict(list)
         # Initialize dictionary for gene count in CCO ontological group:
