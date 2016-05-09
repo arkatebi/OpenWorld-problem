@@ -107,6 +107,10 @@ class Plot_geneCounts:
         '''
         org_count = 0
         with open(self.species_filename, 'r') as fh:
+            # Skip the header line: 
+            next(fh)
+            # Count the number of organisms which is 
+            # equal to the number of nonempty lines:
             for line in fh:
                 # Count only the nonempty lines:
                 if line.strip():
@@ -196,6 +200,10 @@ class Plot_geneCounts:
     def extract_taxon_info(self, fh): 
         taxon_id_list = []
         taxon_name_list = []
+        # Skip the header line: 
+        next(fh) 
+        # Extract taxon id and taxon name from the file 
+        # append to the corresponding lists: 
         for line in fh:
             taxon_id_list.append(line.strip().split('\t')[0])
             taxon_name_list.append(line.strip().split('\t')[1])
@@ -242,7 +250,7 @@ class Plot_geneCounts:
         # Extract taxon id list and taxon name list:
         tax_id_lst, tax_name_lst = self.extract_taxon_info(
                                         open(self.species_filename, 'r'))
-
+        
         # Extract gene count from the gene count file:
         gc_bpo_dict, gc_cco_dict, gc_mfo_dict = self.extract_gene_count(
                                                      tax_id_lst,
