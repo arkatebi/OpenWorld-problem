@@ -135,6 +135,9 @@ class Plot_geneCounts:
         return output_filename
 
     def convert_str2num_list(self, bpo_list, cco_list, mfo_list):
+        '''
+        This method converts lists of strings to lists of numbers.
+        '''
         for i in range(len(bpo_list)):
             bpo_list[i] = int(bpo_list[i])
             cco_list[i] = int(cco_list[i])
@@ -146,9 +149,12 @@ class Plot_geneCounts:
                             mfo_list, 
                             taxon_id, 
                             taxon_name):
+        '''
+        This method creates a graph of gene counts over a series of SwissProt
+        files for a specific species and then saves the plot to a .png file.
+        '''
         # Extract the time points from the sprot file name list: 
-        tp_lst = self.extract_timepoint_info(
-                       open(self.sprot_fnList_filename, 'r'))
+        tp_lst = self.extract_timepoints()
         fig = plt.figure(figsize=(10,10) )
         x_axis = range(1,11)
    
@@ -197,9 +203,15 @@ class Plot_geneCounts:
         fig.savefig(fig_fname)
         #plt.show()
 
-    def extract_taxon_info(self, fh): 
+    def extract_taxon_info(self): 
+        '''
+        This method extracts the taxon id and taxon name from 
+        the speceis file and then returns them as list. 
+        '''
         taxon_id_list = []
         taxon_name_list = []
+
+        fh = open(self.species_filename, 'r')
         # Skip the header line: 
         next(fh) 
         # Extract taxon id and taxon name from the file 
@@ -209,13 +221,14 @@ class Plot_geneCounts:
             taxon_name_list.append(line.strip().split('\t')[1])
         return (taxon_id_list, taxon_name_list) 
 
-    def extract_timepoint_info(self, fh): 
+    def extract_timepoints(self): 
+        fh = open(self.sprot_fnList_filename, 'r')
         tp_list = []
         for line in fh:
             tp_list.append(line.strip().split('.dat.')[-1])
         return tp_list 
 
-    def extract_gene_count(self, tax_id_lst, fh):
+    def extract_gene_count(self, tax_id_lst):
         # Initialize dictionary for gene count in BPO ontological group:
         gc_bpo_dict = defaultdict(list)
         # Initialize dictionary for gene count in CCO ontological group:
@@ -223,6 +236,7 @@ class Plot_geneCounts:
         # Initialize dictionary for gene count in MFO ontological group:
         gc_mfo_dict = defaultdict(list)
 
+        fh = open(self.geneCount_filename, 'r')
         # Skip the first two header lines of the gene count file:
         next(fh)
         next(fh)
@@ -248,13 +262,11 @@ class Plot_geneCounts:
         gene counts for the species set over the UniProt fileset. 
         '''
         # Extract taxon id list and taxon name list:
-        tax_id_lst, tax_name_lst = self.extract_taxon_info(
-                                        open(self.species_filename, 'r'))
+        tax_id_lst, tax_name_lst = self.extract_taxon_info()
         
         # Extract gene count from the gene count file:
         gc_bpo_dict, gc_cco_dict, gc_mfo_dict = self.extract_gene_count(
-                                                     tax_id_lst,
-                                                     open(self.geneCount_filename, 'r'))
+                                                     tax_id_lst)
 
         # Extract gene counts for each organism, plot and save graphs:
         for i in range(0, len(tax_id_lst)):
