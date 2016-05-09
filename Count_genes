@@ -127,8 +127,8 @@ class Count_genes:
 
     def create_outfile_header(self):
         '''
-        This method creates header lines for the output file 
-        for writing gene counts for all species in SwissProt 
+        This method creates the TWO header lines for the output 
+        file for writing gene counts for all species in SwissProt 
         files over a series of time points.
         '''
         sp_header = '\t'
