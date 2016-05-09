@@ -1,3 +1,4 @@
+Taxon id	Taxon name
 9606	Homo sapiens (Human)
 10090	Mus musculus (Mouse)
 3702	Arabidopsis thaliana (Mouse-ear cress)
