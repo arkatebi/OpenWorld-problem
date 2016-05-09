@@ -134,6 +134,10 @@ class Count_genes:
         sp_header = '\t'
         ont_header =''
         fh_sp = open(self.species_filename, 'r')
+        # Skip the header line: 
+        next(fh_sp)
+        # Read each subsequent line of the species file 
+        # and construct the two header lines:
         for line in fh_sp:
             sp_header += '\t' + line.strip().split('\t')[0] + '\t\t'
             ont_header += '\t' + 'BPO' + '\t' + 'CCO' + '\t' + 'MFO'
