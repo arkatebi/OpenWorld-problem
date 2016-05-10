@@ -22,7 +22,7 @@
         sprot_genes.stat.1: This file has the gene counts. 
             Each row corresponds to the SwissProt file name listed
             in sprot_files.txt file. For each organism, there are 
-            there consecutive columns (for BPO, CCO, and MFO, 
+            three consecutive columns (for BPO, CCO, and MFO, 
             respectively). The columns corresponds to the species 
             listed in the sp_list.txt file, in the same order.  
 '''
