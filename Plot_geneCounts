@@ -88,6 +88,9 @@ class Plot_geneCounts:
         t3 = self.parsed_dict['t3']
         # Locate the gene count file:
         self.geneCount_filename = ld.locate_anyfile(t3, self.work_dir)
+
+        # Create output file name for target sequences:
+#        self.output_filename = self.create_outfilename()
         return None
 
     def get_sprot_fileCount(self):
@@ -120,7 +123,8 @@ class Plot_geneCounts:
                     org_count += 1
         return org_count
 
-    def create_fig_name(self, fname_prefix):
+#    def create_fig_name(self, fname_prefix):
+    def create_fig_name(self, taxon_id):
         """ 
         This method creates an output filename based on the filename
         prefix provided by fname_prefix and at the end returns the newly
@@ -130,7 +134,11 @@ class Plot_geneCounts:
         versions (starting from one consecutively) of the file exists. 
         It returns the file name with the subsequent version. 
         """
-        ob = fname_prefix
+        if not self.parsed_dict['outfile'] == '':
+            ob = basename(self.parsed_dict['outfile']) + taxon_id
+        else:
+#            ob = fname_prefix
+            ob = figname_prefix + '.' + taxon_id
         index = 1
         while os.path.exists(self.figure_dir + '/' + ob + '.' + str(index) + '.png'):
             index = index + 1
@@ -201,7 +209,9 @@ class Plot_geneCounts:
         ax_3.text(0.2, text_ht, 'MFO', fontsize=15)
 
         # Get a file name for the figure to be saved:
-        fig_fname = self.create_fig_name(figname_prefix + '.' + str(taxon_id))
+#        fig_fname = self.create_fig_name(figname_prefix + '.' + str(taxon_id))
+        fig_fname = self.create_fig_name(str(taxon_id))
+
         print fig_fname
         fig.savefig(fig_fname)
         #plt.show()
