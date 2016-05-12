@@ -135,7 +135,7 @@ class Plot_geneCounts:
         It returns the file name with the subsequent version. 
         """
         if not self.parsed_dict['outfile'] == '':
-            ob = basename(self.parsed_dict['outfile']) + taxon_id
+            ob = basename(self.parsed_dict['outfile']) + '.' + taxon_id
         else:
 #            ob = fname_prefix
             ob = figname_prefix + '.' + taxon_id
