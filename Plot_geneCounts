@@ -41,6 +41,9 @@ import LocateDataset as ld
 # Default configuration file name:
 config_filename = '.config'
 
+# Figure name prefix: 
+figname_prefix = 'geneCount'
+
 class Plot_geneCounts:
     def __init__(self):
         # Collect user arguments into a dictionary:
@@ -198,7 +201,7 @@ class Plot_geneCounts:
         ax_3.text(0.2, text_ht, 'MFO', fontsize=15)
 
         # Get a file name for the figure to be saved:
-        fig_fname = self.create_fig_name('geneFreq.' + str(taxon_id))
+        fig_fname = self.create_fig_name(figname_prefix + '.' + str(taxon_id))
         print fig_fname
         fig.savefig(fig_fname)
         #plt.show()
