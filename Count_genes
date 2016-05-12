@@ -85,7 +85,7 @@ class Count_genes:
         # file names over a series of time points:
         self.sprot_filename = ld.locate_anyfile(t2, self.work_dir)
 
-        # Create output file name for target sequences:
+        # Create output file name for saving gene counts:
         self.output_filename = self.create_outfilename() 
         return None
 
