@@ -252,7 +252,7 @@ the above input files.
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
-GitHub through the following URL: https://github.com/arkatebi/CAFA-Toolset.
+GitHub through the following URL: https://github.com/arkatebi/SwissProt-stats.
 For questions, please email either of us: Iddo Friedberg (idoerg@gmail.com),  
 Ataur Katebi (arkatebi@gmail.com).
 
