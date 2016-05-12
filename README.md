@@ -193,6 +193,15 @@ geneCount.44689.1.png
 ```
 Repeated run of the program creates the subsequent versions of each figure file. 
 
+The program can also take an output filename prefix as an additional argument 
+as shown below: 
+
+```
+python Plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=sprot_genes.stat.1 -O=geneCount
+```
+This will behave the same way as it does without the additional argument with 
+the exception that the figure name prefix can be supplied by the user now.
+
 The following section shows the figures produced by running this program with
 the above input files.
 
