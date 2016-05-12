@@ -39,6 +39,9 @@ def collect_args():
     parser.add_argument('-I3', '--input3', help=' Specifies path to a ' + \
         'file containing gene counts in a set of UniProtKB/SwissProt ' + \
         'files. This opton is mandatory.')
+    parser.add_argument('-O', '--output', default='', help='Provides user ' + \
+        'an option to specify a filename prefix to save the figures. When not ' + \
+        'specified, the program will use a default filename prefix.')
     return parser
 
 def extract_args(args):
@@ -50,7 +53,7 @@ def extract_args(args):
     args_dict['t1'] = args.input1
     args_dict['t2'] = args.input2
     args_dict['t3'] = args.input3
-#    args_dict['outfile'] = args.output
+    args_dict['outfile'] = args.output
     return args_dict
     
 def check_args(args_dict,parser):
@@ -81,8 +84,6 @@ def check_args(args_dict,parser):
                 print (parser.parse_args(['--help']))
             else:
                 user_dict['t3'] = args_dict[arg]
-
-
         elif arg == 'outfile':
             user_dict[arg] = args_dict[arg]
     return user_dict
@@ -98,7 +99,6 @@ def parse_args():
          arguments.
       4. returns the dictionary at the end.
     """
-
     # Collect user arguments:
     parser = collect_args() 
     args_dict = {}
