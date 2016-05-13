@@ -160,7 +160,7 @@ This program will create a graph for the gene count of each organism
 that is found in the above step. One can run the program as follows:
 
 ```
-python Count_genes --input1 filename_listing_species_taxon_ids --input2 filename_listing_sprot_filenames --input3 filename_gene_counts 
+python Plot_geneCounts --input1 filename_listing_species_taxon_ids --input2 filename_listing_sprot_filenames --input3 filename_gene_counts 
 ```
 
 input1 is a TWO column text file containing the list of species: the first
