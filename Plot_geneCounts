@@ -165,44 +165,49 @@ class Plot_geneCounts:
         # Extract the time points from the sprot file name list: 
         tp_lst = self.extract_timepoints()
         fig = plt.figure(figsize=(10,10) )
-        x_axis = range(1,11)
-   
+
         # Subplot for BPO graph: 
+        x_axis = range(1,len(bpo_list)+1)
         ax_1=fig.add_subplot(3,1,1)
         plt_title = '# of Genes Annotated with Exp Evidence Codes\n' + str(taxon_name) 
         plt.title(plt_title)
+
         plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
+
         plt.ylabel('Gene Count')
         # Set offset to space at the top and bottom of the graph: 
         offset = (max(bpo_list) - min(bpo_list))/5
         plt.axis([0, self.sprot_file_count+1, min(bpo_list) - offset, max(bpo_list) + offset])
 
-
-        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
         text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/15
         ax_1.text(0.2, text_ht, 'BPO', fontsize=15)
 
         # Subplot for CCO graph: 
         ax_2=fig.add_subplot(3,1,2)
+        x_axis = range(1,len(cco_list)+1)
         plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
+
         plt.ylabel('Gene Count')
         offset = (max(cco_list) - min(cco_list))/5
         # Set offset to space at the top and bottom of the graph: 
         plt.axis([0, self.sprot_file_count+1, min(cco_list)-offset, max(cco_list)+offset])
 
-        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
         text_ht = max(cco_list) - (max(cco_list)-min(cco_list))/15
         ax_2.text(0.2, text_ht, 'CCO', fontsize=15)
 
         # Subplot for MFO graph:
         ax_3=fig.add_subplot(3,1,3) 
+        x_axis = range(1,len(mfo_list)+1)
         plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
+
         plt.ylabel('Gene Count')
         # Set offset to space at the top and bottom of the graph: 
         offset = (max(mfo_list) - min(mfo_list))/5
         plt.axis([0, self.sprot_file_count+1, min(mfo_list)-offset, max(mfo_list)+offset])
 
-        plt.xticks(x_axis, tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
         text_ht = max(mfo_list) - (max(mfo_list)-min(mfo_list))/15
         ax_3.text(0.2, text_ht, 'MFO', fontsize=15)
 
