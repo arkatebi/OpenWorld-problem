@@ -254,7 +254,7 @@ class Count_genes:
             geneCount_str = self.count_genes_for_species(sprot_fname)
             fh_out.write("%s" % geneCount_str)
             fh_out.flush()
-        # Close the open file:
+        # Close the open files:
         fh_fn.close()
         fh_out.close()
         # Print summary of running this program:
@@ -266,6 +266,6 @@ if __name__ == '__main__':
         print (sys.argv[0] + ':')
         print(__doc__)
     else:
-        cg = Count_genes()     # Create an instance of Count_gene class
+        cg = Count_genes()     # Create an instance of the Count_gene class
         cg.process_data()      # Process data
     sys.exit(0)
