@@ -313,6 +313,6 @@ if __name__ == '__main__':
         print (sys.argv[0] + ':')
         print(__doc__)
     else:
-        pg = Plot_geneCounts() # Create an instance of plot_geneCount class
+        pg = Plot_geneCounts() # Create an instance of Plot_geneCount class
         pg.process_data()      # Process data
     sys.exit(0)
