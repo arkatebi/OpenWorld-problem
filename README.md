@@ -25,7 +25,7 @@
 
 4.1\. [Home sapiens (taxon id 9606)] (#hSapiens)
 
-4.2\. [Gene Counts for All Organims ] (#allOrganims)
+4.2\. [Gene Counts for All Organims ] (#allOrganisms)
 
 <a name="sites" />
 #### Some Informative Sites 
@@ -195,10 +195,9 @@ the above input files.
 ####  Homo sapiens (taxon id 9606) 
 ![Alt Gene Count of Human] (/figures/geneCount.9606.1.png?raw=true “Gene Count of Human”)
 
-<a name ="allOrganims" />
-### Gene Counts for All Organims 
+<a name ="allOrganisms" />
+### Views for all Organisms 
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
-
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
