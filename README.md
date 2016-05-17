@@ -26,7 +26,6 @@
 4.1\. [Home sapiens (taxon id 9606)] (#hSapiens)
 
 4.2\. [Gene Counts for All Organims ] (#mMusculus)
-      geneCount.md
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
 
 <a name="sites" />
@@ -195,8 +194,10 @@ the above input files.
 
 <a name="hSapiens" />
 ####  Homo sapiens (taxon id 9606) 
-![Alt Gene Frequencey of Human] (/figures/geneCount.9606.1.png?raw=true “Gene Frequency of Human”)
+![Alt Gene Count of Human] (/figures/geneCount.9606.1.png?raw=true “Gene Count of Human”)
 
+### Gene Counts for All Organims 
+![Alt Gene Counts of All Organims] (/geneCount.md?raw=true “Gene Counts of All Organisms”)
 
 
 
