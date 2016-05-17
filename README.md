@@ -5,7 +5,6 @@
 * Creates graphs of the gene counts for those speceis over a series of time 
   points.
 
-https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
 
 ### Contents
 1\. [Some Informative Sites] (#sites)
@@ -26,23 +25,9 @@ https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
 
 4.1\. [Home sapiens (taxon id 9606)] (#hSapiens)
 
-4.2\. [Mus musculus (taxon id 10090)] (#mMusculus)
-
-4.3\. [Arabidopsis thaliana (taxon id 3702)] (#aThaliana)
-
-4.4\. [Rattus norvegicus (taxon id 10116)] (#rNorvegicus)
-
-4.5\. [Saccharomyces cerevisiae (taxon id 559292)] (#sCerevisiae)
-
-4.6\. [Bos taurus (taxon id 9913)] (#bTaurus)
-
-4.7\. [Schizosaccharomyces pombe (taxon id 284812)] (#sPombe)
-
-4.8\. [Echerichia coli (taxon id 83333)] (#eColi)
-
-4.9\. [Bacillus subtiis (taxon id 224308)] (#bSubtilis)
-
-4.10\. [Dictyostelium discoideum (taxon id 44689)] (#dDiscodeum)
+4.2\. [Gene Counts for All Organims ] (#mMusculus)
+      geneCount.md
+https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
 
 <a name="sites" />
 #### Some Informative Sites 
@@ -212,43 +197,8 @@ the above input files.
 ####  Homo sapiens (taxon id 9606) 
 ![Alt Gene Frequencey of Human] (/figures/geneCount.9606.1.png?raw=true “Gene Frequency of Human”)
 
-<a name="mMusculus" />
-####  Mus musculus (taxon id 10090) 
-![Alt Gene Frequency of Mouse] (/figures/geneCount.10090.1.png?raw=true “Gene Frequency of Mouse”)
 
 
-<a name="aThaliana" />
-####  Arabidopsis thaliana (taxon id 3702) 
-![Alt Gene Frequency of Arabidopsis] (/figures/geneCount.3702.1.png?raw=true “Gene Frequency of Arabidopsis”)
-
-
-<a name="rNorvegicus" />
-####  Rattus norvegicus (taxon id 10116) 
-![Alt Gene Frequency of Rat] (/figures/geneCount.10116.1.png?raw=true “Gene Frequency of Rat”)
-
-<a name="sCerevisiae" />
-####  Saccharomyces cerevisiae (taxon id 559292) 
-![Alt Gene Frequency of Baker's yeast] (/figures/geneCount.559292.1.png?raw=true “Gene Frequency of Baker's yeast”)
-
-<a name="bTaurus" />
-####  Bos taurus (taxon id 9913) 
-![Alt Gene Frequency of Bovine] (/figures/geneCount.9913.1.png?raw=true “Gene Frequency of Bovine”)
-
-<a name="sPombe" />
-####  Schizosaccharomyces pombe (taxon id 284812) 
-![Alt Gene Frequency of Fission yeast] (/figures/geneCount.284812.1.png?raw=true “Gene Frequency of Fission yeast”)
-
-<a name="eColi" />
-####  Echerichia coli (taxon id 83333) 
-![Alt Gene Frequency of E. coli] (/figures/geneCount.83333.1.png?raw=true “Gene Frequency of E. coli”)
-
-<a name="bSubtilis" />
-####  Bacillus subtilis (taxon id 224308) 
-![Alt Gene Frequency of B. subtilis] (/figures/geneCount.224308.1.png?raw=true “Gene Frequency of B. subtilis”)
-
-<a name="dDiscodeum" />
-####  Dictyostelium discoideum (taxon id 44689) 
-![Alt Gene Frequency of Slime mold] (/figures/geneCount.44689.1.png?raw=true “Gene Frequency of Slime mold”)
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
