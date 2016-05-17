@@ -18,9 +18,9 @@ from Bio import SwissProt as sp
 
 def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
     gene_count = {} 
+    gene_count['MFO'] = 0
     gene_count['BPO'] = 0
     gene_count['CCO'] = 0
-    gene_count['MFO'] = 0
 
     for rec in sp.parse(fh_sprot):
         # SELECT records that are related to a specific
@@ -38,24 +38,25 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
                               (crossRef[3].split(':'))[0],
                               crossRef[2][0]]
                     if (crossRef[3].split(':'))[0] in EXP_default:
-                        if goList[-1].upper() == 'P':
+                        if goList[-1].upper() == 'F':
+                            mfo_exp_flag = True
+                        elif goList[-1].upper() == 'P':
                             bpo_exp_flag = True
                         elif goList[-1].upper() == 'C':
                             cco_exp_flag = True
-                        elif goList[-1].upper() == 'F':
-                            mfo_exp_flag = True
                 # Whenever an exp evidence for all three ontological 
                 # categories are found, break out the loop:
                 if (bpo_exp_flag and cco_exp_flag and mfo_exp_flag):
                     break
             # Increase gene counts in BPO, CCO, and MFO categories
             # depending on the corresponding flag values:
+            if mfo_exp_flag:
+                gene_count['MFO'] += 1
             if bpo_exp_flag:
                 gene_count['BPO'] += 1
-            if cco_exp_flag:  
+            if cco_exp_flag:
                 gene_count['CCO'] += 1
-            if mfo_exp_flag:  
-                gene_count['MFO'] += 1
+
     return gene_count
 
 def count_genes_with_EXP_old(fh_sprot, taxon_id, EXP_default=set([])):
@@ -105,7 +106,6 @@ def count_genes_with_EXP_old(fh_sprot, taxon_id, EXP_default=set([])):
             if mfo_exp_flag:  
                 exp_mfo_ct += 1
     return (exp_bpo_ct, exp_cco_ct, exp_mfo_ct)
-
 
 if __name__ == '__main__':
     print (sys.argv[0] + ':')
