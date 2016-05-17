@@ -56,7 +56,6 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
                 gene_count['BPO'] += 1
             if cco_exp_flag:
                 gene_count['CCO'] += 1
-
     return gene_count
 
 def count_genes_with_EXP_old(fh_sprot, taxon_id, EXP_default=set([])):
