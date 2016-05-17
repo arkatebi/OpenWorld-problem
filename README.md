@@ -5,6 +5,7 @@
 * Creates graphs of the gene counts for those speceis over a series of time 
   points.
 
+https://github.com/arkatebi/SwissProt-stats/geneCount.md
 
 ### Contents
 1\. [Some Informative Sites] (#sites)
@@ -63,8 +64,7 @@ cross-reference.
 * Detailed release statistics:
   http://web.expasy.org/docs/relnotes/relstat.html
 * UniProtKB/SwissProt file format:
-  http://arep.med.harvard.edu/labgc/jong/Fetch/SwissProtAll.html
-
+  http://web.expasy.org/docs/userman.html
 
 <a name="expCode" />
 ##### Experimental Evidence Codes 
