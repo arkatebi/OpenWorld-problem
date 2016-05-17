@@ -5,7 +5,6 @@
 * Creates graphs of the gene counts for those speceis over a series of time 
   points.
 
-
 ### Contents
 1\. [Some Informative Sites] (#sites)
 
