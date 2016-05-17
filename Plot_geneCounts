@@ -143,73 +143,76 @@ class Plot_geneCounts:
         output_filename = self.figure_dir + '/' + ob + '.' + str(index) + '.png'
         return output_filename
 
-    def convert_str2num_list(self, bpo_list, cco_list, mfo_list):
+    def convert_str2num_list(self, mfo_list, bpo_list, cco_list):
         '''
         This method converts lists of strings to lists of numbers.
         '''
-        for i in range(len(bpo_list)):
+        for i in range(len(mfo_list)):
+            mfo_list[i] = int(mfo_list[i])
             bpo_list[i] = int(bpo_list[i])
             cco_list[i] = int(cco_list[i])
-            mfo_list[i] = int(mfo_list[i])
-        return (bpo_list, cco_list, mfo_list)
+        return (mfo_list, bpo_list, cco_list)
 
-    def plot_and_save(self, bpo_list, 
-                            cco_list, 
-                            mfo_list, 
-                            taxon_id, 
+    def plot_and_save(self, mfo_list,
+                            bpo_list,
+                            cco_list,
+                            taxon_id,
                             taxon_name):
         '''
         This method creates a graph of gene counts over a series of SwissProt
         files for a specific species and then saves the plot to a .png file.
         '''
-        # Extract the time points from the sprot file name list: 
+        # Extract the time points from the sprot file name list:
         tp_lst = self.extract_timepoints()
-        fig = plt.figure(figsize=(10,10) )
+        fig = plt.figure(figsize=(10,10))
 
-        # Subplot for BPO graph: 
-        x_axis = range(1,len(bpo_list)+1)
-        ax_1=fig.add_subplot(3,1,1)
-        plt_title = '# of Genes Annotated with Exp Evidence Codes\n' + str(taxon_name) 
-        plt.title(plt_title)
-
-        plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
-
-        plt.ylabel('Gene Count')
-        # Set offset to space at the top and bottom of the graph: 
-        offset = (max(bpo_list) - min(bpo_list))/5
-        plt.axis([0, self.sprot_file_count+1, min(bpo_list) - offset, max(bpo_list) + offset])
-
-        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
-        text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/15
-        ax_1.text(0.2, text_ht, 'BPO', fontsize=15)
-
-        # Subplot for CCO graph: 
-        ax_2=fig.add_subplot(3,1,2)
-        x_axis = range(1,len(cco_list)+1)
-        plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
-
-        plt.ylabel('Gene Count')
-        offset = (max(cco_list) - min(cco_list))/5
-        # Set offset to space at the top and bottom of the graph: 
-        plt.axis([0, self.sprot_file_count+1, min(cco_list)-offset, max(cco_list)+offset])
-
-        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
-        text_ht = max(cco_list) - (max(cco_list)-min(cco_list))/15
-        ax_2.text(0.2, text_ht, 'CCO', fontsize=15)
 
         # Subplot for MFO graph:
-        ax_3=fig.add_subplot(3,1,3) 
+        ax_1=fig.add_subplot(3,1,1)
         x_axis = range(1,len(mfo_list)+1)
-        plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
 
+        # Write the figure title:
+        plt_title = '# of Genes Annotated with Exp Evidence Codes\n' + str(taxon_name)
+        plt.title(plt_title)
+
+        plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
         plt.ylabel('Gene Count')
-        # Set offset to space at the top and bottom of the graph: 
+        # Set offset for space around the figure:
         offset = (max(mfo_list) - min(mfo_list))/5
         plt.axis([0, self.sprot_file_count+1, min(mfo_list)-offset, max(mfo_list)+offset])
 
         plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
         text_ht = max(mfo_list) - (max(mfo_list)-min(mfo_list))/15
-        ax_3.text(0.2, text_ht, 'MFO', fontsize=15)
+        ax_1.text(0.2, text_ht, 'MFO', fontsize=15)
+
+        # Subplot for BPO graph:
+        x_axis = range(1,len(bpo_list)+1)
+        ax_2=fig.add_subplot(3,1,2)
+
+        plt.plot(x_axis, bpo_list, 'ro', x_axis, bpo_list, 'k')
+
+        plt.ylabel('Gene Count')
+        # Set offset for space around the figure:
+        offset = (max(bpo_list) - min(bpo_list))/5
+        plt.axis([0, self.sprot_file_count+1, min(bpo_list) - offset, max(bpo_list) + offset])
+
+        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
+        text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/15
+        ax_2.text(0.2, text_ht, 'BPO', fontsize=15)
+
+        # Subplot for CCO graph: 
+        ax_3=fig.add_subplot(3,1,3)
+        x_axis = range(1,len(cco_list)+1)
+        plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
+
+        plt.ylabel('Gene Count')
+        offset = (max(cco_list) - min(cco_list))/5
+        # Set offset for space around the figure:
+        plt.axis([0, self.sprot_file_count+1, min(cco_list)-offset, max(cco_list)+offset])
+
+        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
+        text_ht = max(cco_list) - (max(cco_list)-min(cco_list))/15
+        ax_3.text(0.2, text_ht, 'CCO', fontsize=15)
 
         # Get a file name for the figure to be saved:
         fig_fname = self.create_fig_name(str(taxon_id))
@@ -253,12 +256,12 @@ class Plot_geneCounts:
         and returns those counts as a tuple of three lists - 
         one for BPO ontology, one for CCO ontology, and one for MFO ontology.
         '''
+        # Initialize dictionary for gene count in MFO ontological group:
+        gc_mfo_dict = defaultdict(list)
         # Initialize dictionary for gene count in BPO ontological group:
         gc_bpo_dict = defaultdict(list)
         # Initialize dictionary for gene count in CCO ontological group:
         gc_cco_dict = defaultdict(list)
-        # Initialize dictionary for gene count in MFO ontological group:
-        gc_mfo_dict = defaultdict(list)
 
         fh = open(self.geneCount_filename, 'r')
         # Skip the first two header lines of the gene count file:
@@ -274,11 +277,12 @@ class Plot_geneCounts:
             # For each organism, append the gene count in the list 
             # for that organism:
             for i in range(1, self.organism_count*3+1,3):
-                gc_bpo_dict[tax_id_lst[id_no]].append(line_values[i])
-                gc_cco_dict[tax_id_lst[id_no]].append(line_values[i+1])
-                gc_mfo_dict[tax_id_lst[id_no]].append(line_values[i+2])
+                gc_mfo_dict[tax_id_lst[id_no]].append(line_values[i])
+                gc_bpo_dict[tax_id_lst[id_no]].append(line_values[i+1])
+                gc_cco_dict[tax_id_lst[id_no]].append(line_values[i+2])
                 id_no += 1
-        return (gc_bpo_dict, gc_cco_dict, gc_mfo_dict)
+        fh.close()
+        return (gc_mfo_dict, gc_bpo_dict, gc_cco_dict)
 
     def process_data(self): 
         '''
@@ -289,22 +293,22 @@ class Plot_geneCounts:
         tax_id_lst, tax_name_lst = self.extract_taxon_info()
         
         # Extract gene count from the gene count file:
-        gc_bpo_dict, gc_cco_dict, gc_mfo_dict = self.extract_gene_count(
+        gc_mfo_dict, gc_bpo_dict, gc_cco_dict = self.extract_gene_count(
                                                      tax_id_lst)
 
         # Extract gene counts for each organism, plot and save graphs:
         for i in range(0, len(tax_id_lst)):
             # Convert the gene counts from a list of
             # strings to a list of numbers:
-            bpo_list, cco_list, mfo_list = self.convert_str2num_list(
-                                                gc_bpo_dict[tax_id_lst[i]], 
-                                                gc_cco_dict[tax_id_lst[i]],
-                                                gc_mfo_dict[tax_id_lst[i]])
+            mfo_list, bpo_list, cco_list = self.convert_str2num_list(
+                                                gc_mfo_dict[tax_id_lst[i]], 
+                                                gc_bpo_dict[tax_id_lst[i]],
+                                                gc_cco_dict[tax_id_lst[i]])
             # Plot the gene counts in BPO, CCO, and MFO ontological categories
             # and save the graph to a file:
-            self.plot_and_save(bpo_list,
+            self.plot_and_save(mfo_list,
+                               bpo_list,
                                cco_list,
-                               mfo_list,
                                tax_id_lst[i],
                                tax_name_lst[i])
         return None
