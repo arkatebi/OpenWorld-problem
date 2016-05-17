@@ -5,7 +5,7 @@
 * Creates graphs of the gene counts for those speceis over a series of time 
   points.
 
-https://github.com/arkatebi/SwissProt-stats/geneCount.md
+https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
 
 ### Contents
 1\. [Some Informative Sites] (#sites)
