@@ -22,9 +22,9 @@
 
 4\. [Graphical View of Gene Counts] (#graphicalView)
 
-4.1\. [Home sapiens (taxon id 9606)] (#hSapiens)
+4.1\. [Gene Count from Homo sapiens (taxon id 9606)] (#hSapiens)
 
-4.2\. [Gene Counts for all Organims ] (#allOrganisms)
+4.2\. [Gene Counts from all Organisms ] (#allOrganisms)
 
 <a name="sites" />
 #### Some Informative Sites 
@@ -191,8 +191,8 @@ the above input files.
 #### Graphical View of Gene Counts 
 
 <a name="hSapiens" />
-####  Homo sapiens (taxon id 9606) 
-![Alt Gene Count of Human] (/figures/geneCount.9606.1.png?raw=true “Gene Count of Human”)
+####  Gene Count from Homo sapiens (taxon id 9606) 
+![Alt Gene Count from Homo sapiens] (/figures/geneCount.9606.1.png?raw=true “Gene Count of Human”)
 
 <a name ="allOrganisms" />
 ### Views for all Organisms 
