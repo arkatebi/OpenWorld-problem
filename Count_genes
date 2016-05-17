@@ -37,6 +37,7 @@
 
        > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt -O=sprot_genes.stat
 '''
+
 import os
 import sys
 from os.path import basename 
@@ -115,15 +116,17 @@ class Count_genes:
                     of FormatChecker module.
         """
         if os.stat(sprot_fname).st_size == 0:
-            print bcolors.WARNING + 'You submitted an empty file: ' + sprot_fname + \
-                  bcolors.ENDC
-            sys.exit(1)
+            print bcolors.WARNING + 'UniProtKB/SwissProt file ' + \
+                                    basename(sprot_fname) + \
+                                    ' is empty.' + bcolors.ENDC
+            return False 
         elif not fc.check_sprot_format(open(sprot_fname, 'r')):
             print bcolors.WARNING + 'File format error: ' + \
                   basename(sprot_fname) + bcolors.ENDC
             print bcolors.WARNING + 'File must be in UniProtKB/SwissProt ' + \
-                'format' + bcolors.ENDC
-            sys.exit(1)
+                'format.' + bcolors.ENDC
+            return False
+        return True 
 
     def create_outfile_header(self):
         '''
@@ -140,7 +143,7 @@ class Count_genes:
         # and construct the two header lines:
         for line in fh_sp:
             sp_header += '\t' + line.strip().split('\t')[0] + '\t\t'
-            ont_header += '\t' + 'BPO' + '\t' + 'CCO' + '\t' + 'MFO'
+            ont_header += '\t' + 'MFO' + '\t' + 'BPO' + '\t' + 'CCO'
         sp_header = sp_header.rstrip() + '\n'
         ont_header = ont_header.rstrip() + '\n'
         return (sp_header, ont_header)
@@ -196,53 +199,53 @@ class Count_genes:
                              taxon_id,
                              self.ConfigParam['exp_eec'])
 
+            print('Gene count in MFO ontology: ' + str(gene_count['MFO']))
             print('Gene count in BPO ontology: ' + str(gene_count['BPO']))
             print('Gene count in CCO ontology: ' + str(gene_count['CCO']))
-            print('Gene count in MFO ontology: ' + str(gene_count['CCO']))
-            geneCount_str += str(gene_count['BPO']) + '\t' + \
-                             str(gene_count['CCO']) + '\t' + \
-                             str(gene_count['MFO']) + '\t'
+            geneCount_str += str(gene_count['MFO']) + '\t' + \
+                             str(gene_count['BPO']) + '\t' + \
+                             str(gene_count['CCO']) + '\t'
         geneCount_str = geneCount_str.rstrip() + '\n'
         fh_sp.close()
         return geneCount_str
 
     def process_data(self):
         """
-        This method repeatedly calls count_genes_for_species method 
-        from Count_sp_genes.py module to count the genes that are 
-        EXP validated in BPO, CCO, and MFO category, for all the 
-        SwissProt files. 
+        This method repeatedly calls count_genes_for_species method
+        from Count_sp_genes.py module to count the genes that are
+        EXP validated in BPO, CCO, and MFO category, for all the
+        SwissProt files.
         """
         # Print the wellcome message and argument list:
-        self.print_prolog() 
+        self.print_prolog()
 
         # Check the existence of data files and download that
         # are not available:
 
         # Create an object of Download class:
         dlObject = dl.Download(self.work_dir, self.sprot_filename)
-        # Run the download_testDataset method which checks and 
+        # Run the download_testDataset method which checks and
         # downloads the data files listed in the self.sprot_filename:
-        dlObject.download_testDataset(open(self.sprot_filename, 'r'))    
+        dlObject.download_testDataset(open(self.sprot_filename, 'r'))
    
-        # Create TWO header lines for the output file: 
+        # Create TWO header lines for the output file:
         # sp_header: a string with species taxon ids
         # ont_header: a strings with BPO, CCO, MFO for each speceis
         sp_header, ont_header = self.create_outfile_header()
 
-        # Create a file hanlde fh_out for the output file: 
+        # Create a file hanlde fh_out for the output file:
         fh_out = open(self.output_filename, 'w')
 
-        # Write the TWO header lines to the output file: 
+        # Write the TWO header lines to the output file:
         fh_out.write("%s" % sp_header)
         fh_out.write("%s" % ont_header)
         fh_out.flush()
 
-        # Create a file handle fh_fn for the file containing the 
-        # list of UniProtKB/SwissProt filenames:   
+        # Create a file handle fh_fn for the file containing the
+        # list of UniProtKB/SwissProt filenames:
         fh_fn = open(self.sprot_filename, 'r')
 
-        # Count the total number of genes with EXP evidence code 
+        # Count the total number of genes with EXP evidence code
         # for each UniProtKB/SwissProt file:
         for fname in fh_fn:
             # Skip any empty line in the file with the file names:
@@ -250,10 +253,17 @@ class Count_genes:
                 continue
             # Retrieve the UniProtKB/SwissProt filename:
             sprot_fname = self.work_dir + '/' + fname.strip()
+            # Check UniProtKB/SwissProt file format:
+            # If the SwissProt file is empty or
+            # is NOT in correct format,
+            # skip the rest of the operations:
+            if(not self.check_sprot_format(sprot_fname)):
+                continue
             # Create a string of gene counts for all species:
             geneCount_str = self.count_genes_for_species(sprot_fname)
             fh_out.write("%s" % geneCount_str)
             fh_out.flush()
+#            break
         # Close the open files:
         fh_fn.close()
         fh_out.close()
