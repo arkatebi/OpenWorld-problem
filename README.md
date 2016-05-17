@@ -24,7 +24,7 @@
 
 4.1\. [Home sapiens (taxon id 9606)] (#hSapiens)
 
-4.2\. [Gene Counts for All Organims ] (#allOrganisms)
+4.2\. [Gene Counts for all Organims ] (#allOrganisms)
 
 <a name="sites" />
 #### Some Informative Sites 
