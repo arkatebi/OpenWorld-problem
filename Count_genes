@@ -258,6 +258,7 @@ class Count_genes:
             # is NOT in correct format,
             # skip the rest of the operations:
             if(not self.check_sprot_format(sprot_fname)):
+                print('This file is skipped.')
                 continue
             # Create a string of gene counts for all species:
             geneCount_str = self.count_genes_for_species(sprot_fname)
