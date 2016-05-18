@@ -136,6 +136,8 @@ class Plot_geneCounts:
         if not self.parsed_dict['outfile'] == '':
             ob = basename(self.parsed_dict['outfile']) + '.' + str(taxon_id)
         else:
+            # If figure name prefix is not supplied by the user, 
+            # use the default one using the variable figname_prefix:
             ob = figname_prefix + '.' + str(taxon_id)
         index = 1
         while os.path.exists(self.figure_dir + '/' + ob + '.' + str(index) + '.png'):
@@ -165,7 +167,6 @@ class Plot_geneCounts:
         # Extract the time points from the sprot file name list:
         tp_lst = self.extract_timepoints()
         fig = plt.figure(figsize=(10,10))
-
 
         # Subplot for MFO graph:
         ax_1=fig.add_subplot(3,1,1)
