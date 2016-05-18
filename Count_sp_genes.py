@@ -62,51 +62,6 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
                 gene_count['CCO'] += 1
     return gene_count
 
-def count_genes_with_EXP_old2(fh_sprot, taxon_id, EXP_default=set([])):
-    gene_count = {} 
-    gene_count['MFO'] = 0
-    gene_count['BPO'] = 0
-    gene_count['CCO'] = 0
-
-    for rec in sp.parse(fh_sprot):
-        # SELECT records that are related to a specific
-        # taxon_id such as 559292 for yeast:
-        if taxon_id in rec.taxonomy_id:
-            # Three flags to check whether an Exp evidence is found
-            # in any of BPO, CCO, and MFO ontological categories: 
-#            bpo_exp_flag = cco_exp_flag = mfo_exp_flag = False
-            bpo_exp_flag = False
-            cco_exp_flag = False
-            mfo_exp_flag = False
-            # Go over the list of DB cross references:
-            for crossRef in rec.cross_references:
-                # Consider the cross_reference entries that
-                # relate to GO DB:
-                if crossRef[0] == 'GO':
-                    goList = [crossRef[1],
-                              (crossRef[3].split(':'))[0],
-                              crossRef[2][0]]
-                    if (crossRef[3].split(':'))[0] in EXP_default:
-                        if goList[-1].upper() == 'F':
-                            mfo_exp_flag = True
-                        elif goList[-1].upper() == 'P':
-                            bpo_exp_flag = True
-                        elif goList[-1].upper() == 'C':
-                            cco_exp_flag = True
-                # Whenever an exp evidence for all three ontological 
-                # categories are found, break out the loop:
-                if (bpo_exp_flag and cco_exp_flag and mfo_exp_flag):
-                    break
-            # Increase gene counts in BPO, CCO, and MFO categories
-            # depending on the corresponding flag values:
-            if mfo_exp_flag:
-                gene_count['MFO'] += 1
-            if bpo_exp_flag:
-                gene_count['BPO'] += 1
-            if cco_exp_flag:
-                gene_count['CCO'] += 1
-    return gene_count
-
 def count_genes_with_EXP_old(fh_sprot, taxon_id, EXP_default=set([])):
     # The exp_bpo_ct variable counts total number of genes in
     # the sprot file related to the taxonomy id taxon_id whose
