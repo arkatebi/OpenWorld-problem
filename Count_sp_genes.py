@@ -27,8 +27,57 @@ def count_genes_with_EXP(fh_sprot, taxon_id, EXP_default=set([])):
         # taxon_id such as 559292 for yeast:
         if taxon_id in rec.taxonomy_id:
             # Three flags to check whether an Exp evidence is found
+            # in any of BPO, CCO, and MFO ontological categories:
+            exp_flag = {}
+            exp_flag['MFO'] = False
+            exp_flag['BPO'] = False
+            exp_flag['CCO'] = False
+
+            # Go over the list of DB cross references:
+            for crossRef in rec.cross_references:
+                # Consider the cross_reference entries that
+                # relate to GO DB:
+                if crossRef[0] == 'GO':
+                    goList = [crossRef[1],
+                              (crossRef[3].split(':'))[0],
+                              crossRef[2][0]]
+                    if (crossRef[3].split(':'))[0] in EXP_default:
+                        if goList[-1].upper() == 'F':
+                            exp_flag['MFO'] = True
+                        elif goList[-1].upper() == 'P':
+                            exp_flag['BPO'] = True
+                        elif goList[-1].upper() == 'C':
+                            exp_flag['CCO'] = True
+                # Whenever an exp evidence for all three ontological 
+                # categories are found, break out the loop:
+                if (exp_flag['MFO'] and exp_flag['BPO'] and exp_flag['CCO']):
+                    break
+            # Increase gene counts in BPO, CCO, and MFO categories
+            # depending on the corresponding flag values:
+            if exp_flag['MFO']:
+                gene_count['MFO'] += 1
+            if exp_flag['BPO']:
+                gene_count['BPO'] += 1
+            if exp_flag['CCO']:
+                gene_count['CCO'] += 1
+    return gene_count
+
+def count_genes_with_EXP_old2(fh_sprot, taxon_id, EXP_default=set([])):
+    gene_count = {} 
+    gene_count['MFO'] = 0
+    gene_count['BPO'] = 0
+    gene_count['CCO'] = 0
+
+    for rec in sp.parse(fh_sprot):
+        # SELECT records that are related to a specific
+        # taxon_id such as 559292 for yeast:
+        if taxon_id in rec.taxonomy_id:
+            # Three flags to check whether an Exp evidence is found
             # in any of BPO, CCO, and MFO ontological categories: 
-            bpo_exp_flag = cco_exp_flag = mfo_exp_flag = False
+#            bpo_exp_flag = cco_exp_flag = mfo_exp_flag = False
+            bpo_exp_flag = False
+            cco_exp_flag = False
+            mfo_exp_flag = False
             # Go over the list of DB cross references:
             for crossRef in rec.cross_references:
                 # Consider the cross_reference entries that
