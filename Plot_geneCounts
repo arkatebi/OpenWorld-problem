@@ -268,7 +268,7 @@ class Plot_geneCounts:
         next(fh)
         next(fh)
         # Read the subseqent lines of the gene count file and
-        # Store the gene counts in dictionaries - BPO, CCO, and MFO
+        # Store the gene counts in dictionaries - MFO, BPO, and CCO
         # ontological groups:
         for line in fh:
             line_values = line.strip().split('\t')
@@ -295,7 +295,6 @@ class Plot_geneCounts:
         # Extract gene count from the gene count file:
         gc_mfo_dict, gc_bpo_dict, gc_cco_dict = self.extract_gene_count(
                                                      tax_id_lst)
-
         # Extract gene counts for each organism, plot and save graphs:
         for i in range(0, len(tax_id_lst)):
             # Convert the gene counts from a list of
