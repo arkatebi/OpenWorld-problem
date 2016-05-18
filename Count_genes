@@ -4,14 +4,14 @@
     some UniProtKB/SwissProt files over a series of time points.
     One can run this program as follows:
 
-       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt
-   
+       > python Count_genes -I1=sp_list.txt -I2=sprot_files.txt
+
     The program will use the organisms from the sp_list.txt file
     and UniProtKB/SwissProt files from the sprot_files.txt file.
     The description of these input files are as follows:
 
          sp_list.txt: This file has the list of species: column 1
-            has the taxon ids and column 2 has the taxon names.
+            has the taxon ids and column 2 has the species names.
 
         sprot_files.txt: This file has has the SwissProt filenames in the
             format uniprot_sprot.dat.yyyy_mm for example
@@ -35,7 +35,7 @@
 
     The program can also be supplied with an output filename prefix:
 
-       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt -O=sprot_genes.stat
+       > python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=sprot_genes.stat
 '''
 
 import os
