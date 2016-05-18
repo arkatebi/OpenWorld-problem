@@ -226,7 +226,7 @@ class Plot_geneCounts:
     def extract_taxon_info(self): 
         '''
         This method extracts the taxon id and taxon name from 
-        the speceis file and then returns them as list. 
+        the speceis file and then returns them as a list.
         '''
         taxon_id_list = []
         taxon_name_list = []
