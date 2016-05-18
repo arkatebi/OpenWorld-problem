@@ -170,45 +170,6 @@ class Count_genes:
                                 'Tool' + bcolors.ENDC)
         return None
 
-    def count_genes_for_species_old(self, sprot_fname):
-        '''
-        This method counts the number of experimentall annotated
-        genes for all speceis in specific UniProtKB/SwissProt file 
-        whose name is supplied by the argument sprot_fname. For each 
-        speceis, the method calls count_genes_with_EXP method to count 
-        the number of experimentally genes for that species in the 
-        SwissProt file.
-        '''
-        # Initialize geneCount_str with the time stamp retrieved
-        # from the UniProtKB/SwissProt filename:
-        geneCount_str = basename(sprot_fname).strip().split('.dat.')[-1] + '\t'
-        # Get a file handle for the species filename:
-        fh_sp = open(self.species_filename, 'r')
-        # Skip the first header line:
-        next(fh_sp)
-        # Calculate gene counts for each species in the
-        # Swissprot file supplied by the file handle:
-        for line in fh_sp:
-            # Skip any empty line in the file with the organism name:
-            if not (line.strip()):
-                continue
-            taxon_id = line.strip().split('\t')[0]
-            print line.strip()
-            gene_count = csg.count_genes_with_EXP(
-                             open(sprot_fname, 'r'),
-                             taxon_id,
-                             self.ConfigParam['exp_eec'])
-
-            print('Gene count in MFO ontology: ' + str(gene_count['MFO']))
-            print('Gene count in BPO ontology: ' + str(gene_count['BPO']))
-            print('Gene count in CCO ontology: ' + str(gene_count['CCO']))
-            geneCount_str += str(gene_count['MFO']) + '\t' + \
-                             str(gene_count['BPO']) + '\t' + \
-                             str(gene_count['CCO']) + '\t'
-        geneCount_str = geneCount_str.rstrip() + '\n'
-        fh_sp.close()
-        return geneCount_str
-
     def create_null_geneCount_str(self, sprot_fname):
         '''
         This method creates a null gene count string for all speceis in
@@ -359,7 +320,7 @@ class Count_genes:
                 geneCount_str = self.count_genes_for_species(sprot_fname)
             fh_out.write("%s" % geneCount_str)
             fh_out.flush()
-            break
+#            break
         # Close the open files:
         fh_fn.close()
         fh_out.close()
