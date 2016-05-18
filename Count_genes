@@ -170,7 +170,7 @@ class Count_genes:
                                 'Tool' + bcolors.ENDC)
         return None
 
-    def count_genes_for_species(self, sprot_fname):
+    def count_genes_for_species_old(self, sprot_fname):
         '''
         This method counts the number of experimentall annotated
         genes for all speceis in specific UniProtKB/SwissProt file 
@@ -209,6 +209,92 @@ class Count_genes:
         fh_sp.close()
         return geneCount_str
 
+    def create_null_geneCount_str(self, sprot_fname):
+        '''
+        This method creates a null gene count string for all speceis in
+        species filename. Time stamp is taken from UniProtKB/SwissProt
+        filename argument from sprot_fname.
+        '''
+        # Initialize geneCount_str with the time stamp retrieved
+        # from the UniProtKB/SwissProt filename:
+        geneCount_str = basename(sprot_fname).strip().split('.dat.')[-1] + '\t'
+        # Get a file handle for the species filename:
+        fh_sp = open(self.species_filename, 'r')
+        # Skip the first header line:
+        next(fh_sp)
+        # Calculate gene counts for each species in the
+        # Swissprot file supplied by the file handle:
+        for line in fh_sp:
+            # Skip any empty line in the file with the organism name:
+            if not (line.strip()):
+                continue
+            print line.strip()
+            geneCount_str += str(0) + '\t' + str(0) + '\t' + str(0) + '\t'
+        fh_sp.close()
+        geneCount_str = geneCount_str.rstrip() + '\n'
+        return geneCount_str
+
+    def count_genes_for_species(self, sprot_fname):
+        '''
+        This method counts the number of experimentall annotated
+        genes for all speceis in specific UniProtKB/SwissProt file 
+        whose name is supplied by the argument sprot_fname. For each 
+        speceis, the method calls count_genes_with_EXP method to count 
+        the number of experimentally genes for that species in the 
+        SwissProt file.
+        '''
+        # Initialize geneCount_str with the time stamp retrieved
+        # from the UniProtKB/SwissProt filename:
+        geneCount_str = basename(sprot_fname).strip().split('.dat.')[-1] + '\t'
+        
+        # Get a file handle for the species filename:
+        fh_sp = open(self.species_filename, 'r')
+        # Skip the first header line:
+        next(fh_sp)
+        # Calculate gene counts for each species in the
+        # Swissprot file supplied by the file handle:
+        for line in fh_sp:
+            # Skip any empty line in the file with the organism name:
+            if not (line.strip()):
+                continue
+            taxon_id = line.strip().split('\t')[0]
+            print line.strip()
+            gene_count = csg.count_genes_with_EXP(
+                             open(sprot_fname, 'r'),
+                             taxon_id,
+                             self.ConfigParam['exp_eec'])
+
+            print('Gene count in MFO ontology: ' + str(gene_count['MFO']))
+            print('Gene count in BPO ontology: ' + str(gene_count['BPO']))
+            print('Gene count in CCO ontology: ' + str(gene_count['CCO']))
+            geneCount_str += str(gene_count['MFO']) + '\t' + \
+                             str(gene_count['BPO']) + '\t' + \
+                             str(gene_count['CCO']) + '\t'
+        geneCount_str = geneCount_str.rstrip() + '\n'
+        fh_sp.close()
+        return geneCount_str
+
+    def check_SwissProt_filename_format(self, fh_sprot_filename_list):
+        for line in fh_sprot_filename_list: 
+            filename_parts = basename(line).strip().split('.')
+#            print filename_parts 
+#            yy_mm = filename_parts[2].split('_')
+#            print (yy_mm) 
+#            sys.exit(0) 
+            if filename_parts[0] != 'uniprot_sprot':
+                print('First part of the file name must be the string ' + 'uniprot_sprot')
+                print('Program quiting ...')
+                sys.exit(0)
+            elif filename_parts[1] != 'dat':
+                print('Second part of the file name must be string ' + 'dat')
+                print('Program quiting ...')
+                sys.exit(0)
+            else:
+                yy_mm = filename_parts[2].split('_')
+                print('Third part of the file name must be in the format ' + 'yy_mm')
+                #sys.exit(0)
+        return None
+        
     def process_data(self):
         """
         This method repeatedly calls count_genes_for_species method
@@ -218,6 +304,12 @@ class Count_genes:
         """
         # Print the wellcome message and argument list:
         self.print_prolog()
+
+        # Check file format for species file:
+        # Yet to come
+
+        # Check file format for UniProtKB/SwissProt filenames:
+        self.check_SwissProt_filename_format(open(self.sprot_filename, 'r'))
 
         # Check the existence of data files and download that
         # are not available:
@@ -253,16 +345,17 @@ class Count_genes:
                 continue
             # Retrieve the UniProtKB/SwissProt filename:
             sprot_fname = self.work_dir + '/' + fname.strip()
+            print(basename(sprot_fname))
             # Check UniProtKB/SwissProt file format:
             # If the SwissProt file is empty or
             # is NOT in correct format,
             # skip the rest of the operations:
             if(not self.check_sprot_format(sprot_fname)):
-                print('This file is skipped.')
-                continue
-            # Create a string of gene counts for all species:
-            print(basename(sprot_fname))
-            geneCount_str = self.count_genes_for_species(sprot_fname)
+                # Creating a null gene count string for this file:
+                geneCount_str = self.create_null_geneCount_str(sprot_fname)
+            else:
+                # Create a string of gene counts for all species:
+                geneCount_str = self.count_genes_for_species(sprot_fname)
             fh_out.write("%s" % geneCount_str)
             fh_out.flush()
 #            break
