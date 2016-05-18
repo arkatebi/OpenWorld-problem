@@ -147,7 +147,8 @@ class Plot_geneCounts:
 
     def convert_str2num_list(self, mfo_list, bpo_list, cco_list):
         '''
-        This method converts lists of strings to lists of numbers.
+        This method converts the three lists of strings to 
+        three lists of numbers and then return them.
         '''
         for i in range(len(mfo_list)):
             mfo_list[i] = int(mfo_list[i])
