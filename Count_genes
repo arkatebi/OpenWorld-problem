@@ -108,12 +108,13 @@ class Count_genes:
 
     def check_sprot_format(self, sprot_fname):
         """
-        This method exits the Filter program on any of the
+        This method returns False on any of the
         following conditions:
             Case 1: if the file is empty
             Case 2: if the file is NOT in UniProtKB/SwissProt format.
                     To check this it invokes check_sprot_format method
                     of FormatChecker module.
+        Otherswise, it returns True
         """
         if os.stat(sprot_fname).st_size == 0:
             print bcolors.WARNING + 'UniProtKB/SwissProt file ' + \
@@ -268,7 +269,7 @@ class Count_genes:
         self.print_prolog()
 
         # Check file format for species file:
-        # Yet to come
+        # ... 
 
         # Check file format for UniProtKB/SwissProt filenames:
         self.check_SwissProt_filename_format(open(self.sprot_filename, 'r'))
