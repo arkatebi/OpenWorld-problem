@@ -64,6 +64,8 @@ class bcolors:
 config_filename = '.config' 
 
 output_fn_prefix = 'sprot_genes.stat'
+year_Llimit = 2010
+month_str = ['01','02','03','04','05','06','07','08','09','10','11','12']
 
 class Count_genes:
     def __init__(self):
@@ -239,23 +241,29 @@ class Count_genes:
     def check_SwissProt_filename_format(self, fh_sprot_filename_list):
         for line in fh_sprot_filename_list: 
             filename_parts = basename(line).strip().split('.')
-#            print filename_parts 
-#            yy_mm = filename_parts[2].split('_')
-#            print (yy_mm) 
-#            sys.exit(0) 
             if filename_parts[0] != 'uniprot_sprot':
-                print('First part of the file name must be the string ' + 'uniprot_sprot')
+                print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
+                print('First part of the file name must be the string ' + '"uniprot_sprot"')
                 print('Program quiting ...')
                 sys.exit(0)
             elif filename_parts[1] != 'dat':
-                print('Second part of the file name must be string ' + 'dat')
+                print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
+                print('Second part of the file name must be the string ' + '"dat"')
                 print('Program quiting ...')
                 sys.exit(0)
             else:
-                yy_mm = filename_parts[2].split('_')
-#                if (int(yy_mm[0] < 2010 or (int(yy_mm[1]) < 1 or int(yy_mm[1]) > 12)):
-                print('Third part of the file name must be in the format ' + 'yy_mm')
-#                   sys.exit(0)
+                yy = filename_parts[2].split('_')[0]
+                mm = filename_parts[2].split('_')[1]
+                if int(yy) < year_Llimit:
+                    print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
+                    print('Third part of the filename must be in the format: ' + '"yy_mm"')
+                    print('And valid year must be greater than 2009')
+                    sys.exit(0)
+                if(int(mm) < 01 or int(mm) > 12 or mm not in month_str): 
+                    print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
+                    print('Third part of the filename must be in the format: ' + '"yy_mm"')
+                    print('And a valid month must be between 01 and 12.')
+                    sys.exit(0)
         return None
         
     def process_data(self):
