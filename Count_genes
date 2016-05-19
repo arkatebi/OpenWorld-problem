@@ -269,11 +269,13 @@ class Count_genes:
                 print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
                 print('First part of the file name must be the string ' + '"uniprot_sprot"')
                 print('Program quiting ...')
+                fh_fname.close()
                 return False
             elif filename_parts[1] != 'dat':
                 print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
                 print('Second part of the file name must be the string ' + '"dat"')
                 print('Program quiting ...')
+                fh_fname.close()
                 return False
             else:
                 yy = filename_parts[2].split('_')[0]
@@ -282,11 +284,13 @@ class Count_genes:
                     print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
                     print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
                     print('And a valid year must be greater than 2009')
+                    fh_fname.close()
                     return False
                 if(mm not in month_str):
                     print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
                     print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
                     print('And a valid month must be between 01 and 12.')
+                    fh_fname.close()
                     return False
         fh_fname.close()
         return True
@@ -316,11 +320,14 @@ class Count_genes:
         species_name = header.strip().split('\t')[1]
         if (not taxon_id == 'Taxon id') or (not species_name == 'Species name'): 
             print('Incorrect file format: ' + basename(self.species_filename))
+            fh_fname.close()
             return False
         nextLine = fh_fname.readline()
         if not nextLine.strip():
             print('No species information is found in the file: ' + basename(self.species_filename))
+            fh_fname.close()
             return False
+        fh_fname.close()
         return True 
 
     def process_data(self):
