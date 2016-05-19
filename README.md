@@ -22,7 +22,7 @@
 
 4\. [Graphical View of Gene Counts] (#graphicalView)
 
-4.1\. [Gene Count from Homo sapiens (taxon id 9606)] (#hSapiens)
+4.1\. [Gene Counts from Homo sapiens (taxon id 9606)] (#hSapiens)
 
 4.2\. [Gene Counts from all Organisms ] (#allOrganisms)
 
