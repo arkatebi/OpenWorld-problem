@@ -238,34 +238,91 @@ class Count_genes:
         fh_sp.close()
         return geneCount_str
 
-    def check_SwissProt_filename_format(self, fh_sprot_filename_list):
-        for line in fh_sprot_filename_list: 
+    def check_SwissProt_filename_format(self):
+        '''
+        This method checks whether UniProtKB/SwissProt filenames are 
+        are named correctly.
+        If the file does not exist or filesize is empty, 
+            return False
+        The names of the files should be in this format: 
+            uniprot_sprot.dat.yyyy_mm
+            yyyy is a year that cannot be less than year_Llimit 
+            mm is a month that must be in month_str
+            where year_Llimit and month_str are global variables.   
+        If any of the names listed in the file, is NOT in that format, 
+            the the method returns False.
+        If all above checks are passed, the method returns True
+        '''
+        if not os.path.exists(self.sprot_filename):
+            print('The following file does not exist: ' + \
+                 basename(self.sprot_filename))
+            return False
+        if os.stat(self.sprot_filename).st_size == 0:
+            print('The following file is empty: ' + \
+                 basename(self.sprot_filename))
+            return False       
+
+        fh_fname = open(self.sprot_filename, 'r')
+        for line in fh_fname:
             filename_parts = basename(line).strip().split('.')
             if filename_parts[0] != 'uniprot_sprot':
                 print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
                 print('First part of the file name must be the string ' + '"uniprot_sprot"')
                 print('Program quiting ...')
-                sys.exit(0)
+                return False
             elif filename_parts[1] != 'dat':
                 print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
                 print('Second part of the file name must be the string ' + '"dat"')
                 print('Program quiting ...')
-                sys.exit(0)
+                return False
             else:
                 yy = filename_parts[2].split('_')[0]
                 mm = filename_parts[2].split('_')[1]
                 if int(yy) < year_Llimit:
                     print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
-                    print('Third part of the filename must be in the format: ' + '"yy_mm"')
-                    print('And valid year must be greater than 2009')
-                    sys.exit(0)
-                if(int(mm) < 01 or int(mm) > 12 or mm not in month_str): 
+                    print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
+                    print('And a valid year must be greater than 2009')
+                    return False
+                if(mm not in month_str):
                     print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
-                    print('Third part of the filename must be in the format: ' + '"yy_mm"')
+                    print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
                     print('And a valid month must be between 01 and 12.')
-                    sys.exit(0)
-        return None
+                    return False
+        fh_fname.close()
+        return True
         
+    def check_species_file_format(self):
+        '''
+        This method checks whether the species file is in correct 
+        format.
+        If the file does not exist or is empty, it returns False. 
+        If the file does not have the correct header line, it returns False. 
+        If the file does not have at least one line of species information, 
+            it returns False.
+        Otherwise, it returns True.
+        '''
+        if not os.path.exists(self.species_filename):
+            print('The following file does not exist: ' + \
+                 basename(self.species_filename))
+            return False
+        if os.stat(self.species_filename).st_size == 0:
+            print('The following file is empty: ' + \
+                 basename(self.species_filename))
+            return False
+
+        fh_fname = open(self.species_filename, 'r')
+        header = fh_fname.readline()
+        taxon_id = header.strip().split('\t')[0]
+        species_name = header.strip().split('\t')[1]
+        if (not taxon_id == 'Taxon id') or (not species_name == 'Species name'): 
+            print('Incorrect file format: ' + basename(self.species_filename))
+            return False
+        nextLine = fh_fname.readline()
+        if not nextLine.strip():
+            print('No species information is found in the file: ' + basename(self.species_filename))
+            return False
+        return True 
+
     def process_data(self):
         """
         This method repeatedly calls count_genes_for_species method
@@ -277,14 +334,15 @@ class Count_genes:
         self.print_prolog()
 
         # Check file format for species file:
-        # ... 
-
-        # Check file format for UniProtKB/SwissProt filenames:
-        self.check_SwissProt_filename_format(open(self.sprot_filename, 'r'))
-
-        # Check the existence of data files and download that
+        if( not self.check_species_file_format()): 
+             print('Program Quitting ...')
+             sys.exit(0)
+        # Check naming format for UniProtKB/SwissProt filenames:
+        if(not self.check_SwissProt_filename_format()):
+            print('Program Quitting ...')
+            sys.exit(0)
+        # Check the existence of data files and download the ones that
         # are not available:
-
         # Create an object of Download class:
         dlObject = dl.Download(self.work_dir, self.sprot_filename)
         # Run the download_testDataset method which checks and
