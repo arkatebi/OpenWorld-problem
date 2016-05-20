@@ -171,17 +171,27 @@ class Plot_geneCounts:
 
         # Subplot for MFO graph:
         ax_1=fig.add_subplot(3,1,1)
-        x_axis = range(1,len(mfo_list)+1)
-
         # Write the figure title:
         plt_title = '# of Genes Annotated with Exp Evidence Codes\n' + str(taxon_name)
         plt.title(plt_title)
-
+        # X-axis range: 
+        x_axis = range(1,len(mfo_list)+1)
         plt.plot(x_axis, mfo_list, 'ro', x_axis, mfo_list, 'k')
         plt.ylabel('Gene Count')
         # Set offset for space around the figure:
         offset = (max(mfo_list) - min(mfo_list))/5
-        plt.axis([0, self.sprot_file_count+1, min(mfo_list)-offset, max(mfo_list)+offset])
+
+        # x-start and x-end:
+        x_start = 0
+        x_end = self.sprot_file_count+1
+        # y-start and y-end:
+        if (len(mfo_list)==1):
+            y_start = min(mfo_list)-offset-5
+            y_end = max(mfo_list)+offset+5
+        else: 
+            y_start = min(mfo_list)-offset
+            y_end = max(mfo_list)+offset
+        plt.axis([x_start, x_end, y_start, y_end])
 
         plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
         text_ht = max(mfo_list) - (max(mfo_list)-min(mfo_list))/15
@@ -196,7 +206,19 @@ class Plot_geneCounts:
         plt.ylabel('Gene Count')
         # Set offset for space around the figure:
         offset = (max(bpo_list) - min(bpo_list))/5
-        plt.axis([0, self.sprot_file_count+1, min(bpo_list) - offset, max(bpo_list) + offset])
+        # x-start and x-end:
+        x_start = 0
+        x_end = self.sprot_file_count+1
+        # y-start and y-end:
+        if (len(bpo_list)==1):
+            y_start = min(bpo_list)-offset-5
+            y_end = max(bpo_list)+offset+5
+        else: 
+            y_start = min(bpo_list)-offset
+            y_end = max(bpo_list)+offset
+        plt.axis([x_start, x_end, y_start, y_end])
+
+#        plt.axis([0, self.sprot_file_count+1, min(bpo_list) - offset, max(bpo_list) + offset])
 
         plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
         text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/15
@@ -208,17 +230,27 @@ class Plot_geneCounts:
         plt.plot(x_axis, cco_list, 'ro', x_axis, cco_list, 'k')
 
         plt.ylabel('Gene Count')
-        offset = (max(cco_list) - min(cco_list))/5
         # Set offset for space around the figure:
-        plt.axis([0, self.sprot_file_count+1, min(cco_list)-offset, max(cco_list)+offset])
+        offset = (max(cco_list) - min(cco_list))/5
+        # x-start and x-end:
+        x_start = 0
+        x_end = self.sprot_file_count+1
+        # y-start and y-end:
+        if (len(cco_list)==1):
+            y_start = min(cco_list)-offset-5
+            y_end = max(cco_list)+offset+5
+        else: 
+            y_start = min(cco_list)-offset
+            y_end = max(cco_list)+offset
+        plt.axis([x_start, x_end, y_start, y_end])
 
+        # Set the ticks: 
         plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
         text_ht = max(cco_list) - (max(cco_list)-min(cco_list))/15
         ax_3.text(0.2, text_ht, 'CCO', fontsize=15)
 
         # Get a file name for the figure to be saved:
         fig_fname = self.create_fig_name(str(taxon_id))
-
         print fig_fname
         fig.savefig(fig_fname)
         #plt.show()
@@ -312,6 +344,7 @@ class Plot_geneCounts:
                                cco_list,
                                tax_id_lst[i],
                                tax_name_lst[i])
+            #break
         return None
 if __name__ == '__main__':
     if len(sys.argv) == 1:
