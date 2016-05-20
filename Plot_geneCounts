@@ -193,7 +193,8 @@ class Plot_geneCounts:
             y_end = max(mfo_list)+offset
         plt.axis([x_start, x_end, y_start, y_end])
 
-        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', 
+                   horizontalalignment='center')
         text_ht = max(mfo_list) - (max(mfo_list)-min(mfo_list))/15
         ax_1.text(0.2, text_ht, 'MFO', fontsize=15)
 
