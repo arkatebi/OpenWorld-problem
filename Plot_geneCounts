@@ -172,7 +172,8 @@ class Plot_geneCounts:
         # Subplot for MFO graph:
         ax_1=fig.add_subplot(3,1,1)
         # Write the figure title:
-        plt_title = '# of Genes Annotated with Exp Evidence Codes\n' + str(taxon_name)
+        plt_title = '# of Genes Annotated with Exp Evidence Codes\n' + \
+                    str(taxon_name)
         plt.title(plt_title)
         # X-axis range: 
         x_axis = range(1,len(mfo_list)+1)
@@ -219,9 +220,8 @@ class Plot_geneCounts:
             y_end = max(bpo_list)+offset
         plt.axis([x_start, x_end, y_start, y_end])
 
-#        plt.axis([0, self.sprot_file_count+1, min(bpo_list) - offset, max(bpo_list) + offset])
-
-        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', 
+                   horizontalalignment='center')
         text_ht = max(bpo_list) - (max(bpo_list)-min(bpo_list))/15
         ax_2.text(0.2, text_ht, 'BPO', fontsize=15)
 
@@ -246,7 +246,8 @@ class Plot_geneCounts:
         plt.axis([x_start, x_end, y_start, y_end])
 
         # Set the ticks: 
-        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', horizontalalignment='center')
+        plt.xticks(range(1,len(tp_lst)+1), tp_lst, size='small', 
+                   horizontalalignment='center')
         text_ht = max(cco_list) - (max(cco_list)-min(cco_list))/15
         ax_3.text(0.2, text_ht, 'CCO', fontsize=15)
 
@@ -321,7 +322,7 @@ class Plot_geneCounts:
 
     def process_data(self): 
         '''
-        This method calls other methods to produce the plots for the 
+        This method calls other methods to produce the plots for the
         gene counts for the species set over the UniProt fileset. 
         '''
         # Extract taxon id list and taxon name list:
@@ -335,7 +336,7 @@ class Plot_geneCounts:
             # Convert the gene counts from a list of
             # strings to a list of numbers:
             mfo_list, bpo_list, cco_list = self.convert_str2num_list(
-                                                gc_mfo_dict[tax_id_lst[i]], 
+                                                gc_mfo_dict[tax_id_lst[i]],
                                                 gc_bpo_dict[tax_id_lst[i]],
                                                 gc_cco_dict[tax_id_lst[i]])
             # Plot the gene counts in BPO, CCO, and MFO ontological categories
