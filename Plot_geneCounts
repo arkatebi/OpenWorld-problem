@@ -140,9 +140,11 @@ class Plot_geneCounts:
             # use the default one using the variable figname_prefix:
             ob = figname_prefix + '.' + str(taxon_id)
         index = 1
-        while os.path.exists(self.figure_dir + '/' + ob + '.' + str(index) + '.png'):
+        while os.path.exists(self.figure_dir + '/' + ob + '.' + \
+                             str(index) + '.png'):
             index = index + 1
-        output_filename = self.figure_dir + '/' + ob + '.' + str(index) + '.png'
+        output_filename = self.figure_dir + '/' + ob + '.' + \
+                          str(index) + '.png'
         return output_filename
 
     def convert_str2num_list(self, mfo_list, bpo_list, cco_list):
