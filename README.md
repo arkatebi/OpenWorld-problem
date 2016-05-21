@@ -10,25 +10,33 @@
   a series of time points.
 
 ### Contents
-1\. [Some Informative Sites] (#sites)
+1\. [Introduction] ($introduction)
+2\. [Some Informative Sites] (#sites)
 
-1.1\. [UniProtKB/SwissProt] (#swissprot)
+2.1\. [UniProtKB/SwissProt] (#swissprot)
 
-1.2\. [Experimental Evidence Codes] (#expCode)
+2.2\. [Experimental Evidence Codes] (#expCode)
 
-2\. [Requirements] (#requirements)
+3\. [Requirements] (#requirements)
 
-3\. [Software Usage] (#usage)
+4\. [Software Usage] (#usage)
 
-3.1\. [Generate Counts of Genes Annotated with Exp Evidence Codes] (#genGeneCounts)
+4.1\. [Generate Counts of Genes Annotated with Exp Evidence Codes] (#genGeneCounts)
 
-3.1\. [Generate Graphs for Gene Counts] (#genGraphs)
+4.1\. [Generate Graphs for Gene Counts] (#genGraphs)
 
-4\. [Graphical View of Gene Counts] (#graphicalView)
+5\. [Graphical View of Gene Counts] (#graphicalView)
 
-4.1\. [Gene Counts from Homo sapiens (taxon id 9606)] (#hSapiens)
+5.1\. [Gene Counts from Homo sapiens (taxon id 9606)] (#hSapiens)
 
-4.2\. [Gene Counts from all Organisms ] (#allOrganisms)
+5.2\. [Gene Counts from all Organisms ] (#allOrganisms)
+
+
+<a name="introduction">
+#### Introduction
+![alt Depiction of Incomplete Knowledge] (/figures/incomplete-knowledge-1.1.png?raw=true “Depiction of Incomplete Knowledge”)
+
+
 
 <a name="sites" />
 #### Some Informative Sites 
@@ -196,7 +204,7 @@ the above input files.
 
 <a name="hSapiens" />
 ####  Gene Count from Homo sapiens (taxon id 9606) 
-![Alt Gene Count from Homo sapiens] (/figures/geneCount.9606.1.png?raw=true “Gene Count of Human”)
+![alt gene count from homo sapiens] (/figures/genecount.9606.1.png?raw=true “gene count of human”)
 
 <a name ="allOrganisms" />
 ### Views for all Organisms 
