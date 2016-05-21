@@ -35,6 +35,8 @@
 
 <a name="introduction">
 #### Introduction
+The following figure ... 
+
 ![alt Incomplete Knowledge] (/figures/incomplete-knowledge-1.1.png?raw=true “Incomplete Knowledge”)
 
 
