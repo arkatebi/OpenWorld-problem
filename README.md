@@ -3,10 +3,10 @@
 * The tools developed in this project are to facilitate the research into the 
   impact of incomplete knowledge on the functional predictions of proteins 
   and the evaluation of those predictive models.
-* The toolset has the following tools:
-** A program that creates a table of gene counts for a set of species in 
+* The toolset has the following programs:
+* A program that creates a table of gene counts for a set of species in 
   UniProtKB/SwissProt whose annotations have experimental evidence codes. 
-** A program that creates graphs of the gene counts for those speceis over 
+* A program that creates graphs of the gene counts for those speceis over 
   a series of time points.
 
 ### Contents
