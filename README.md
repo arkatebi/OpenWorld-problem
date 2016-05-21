@@ -10,7 +10,7 @@
   a series of time points.
 
 ### Contents
-1\. [Introduction] ($introduction)
+1\. [Introduction] (#intro)
 
 2\. [Some Informative Sites] (#sites)
 
@@ -33,7 +33,7 @@
 5.2\. [Gene Counts from all Organisms ] (#allOrganisms)
 
 
-<a name="introduction">
+<a name="intro">
 #### Introduction
 The following figure ... 
 
