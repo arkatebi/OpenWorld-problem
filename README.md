@@ -1,9 +1,13 @@
 <a name="title" />
-## Gene Annotations with Exp Evidences in UniProtKB/SwissProt 
-* Creates a table of gene counts for a set of species in UniProtKB/SwissProt 
-  whose annotations have experimental evidence codes. 
-* Creates graphs of the gene counts for those speceis over a series of time 
-  points.
+## Impact of incomplete knowledge on function-predictions and their evaluations. 
+* The tools developed in this project are to facilitate the research into the 
+  impact of incomplete knowledge on the functional predictions of proteins 
+  and the evaluation of those predictive models.
+* The toolset has the following tools:
+** A program that creates a table of gene counts for a set of species in 
+  UniProtKB/SwissProt whose annotations have experimental evidence codes. 
+** A program that creates graphs of the gene counts for those speceis over 
+  a series of time points.
 
 ### Contents
 1\. [Some Informative Sites] (#sites)
