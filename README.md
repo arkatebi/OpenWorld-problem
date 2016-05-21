@@ -35,7 +35,12 @@
 
 <a name="intro">
 #### Introduction
-The following figure ... 
+Models for functional predictions of proteins are developed based on the 
+current state of the functional annotation databases. However, the 
+annotations of most proteins are incomplete. Therefore, the question arises 
+whether the assigned strengths and weaknesses of the predictive models based 
+on current knowledge still hold when additional knowledge become available in 
+the future experiments. The situation can be depicted in the following figure.
 
 ![alt Incomplete Knowledge] (/figures/incomplete-knowledge-1.1.png?raw=true “Incomplete Knowledge”)
 
