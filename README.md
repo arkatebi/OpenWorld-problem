@@ -28,9 +28,9 @@
 
 5\. [Graphical View of Gene Counts] (#graphicalView)
 
-5.1\. [Gene Counts from Homo sapiens (taxon id 9606)] (#hSapiens)
+5.1\. [Gene Counts from all Organisms ] (#year_2010to2016)
 
-5.2\. [Gene Counts from all Organisms ] (#allOrganisms)
+5.2\. [Gene Counts from all Organisms ] (#year_2012to2016)
 
 
 <a name="intro">
@@ -217,13 +217,13 @@ the above input files.
 <a name="graphicalView" />
 #### Graphical View of Gene Counts 
 
-<a name="hSapiens" />
-####  Gene Count from Homo sapiens (taxon id 9606) 
-![alt gene count from homo sapiens] (/figures/geneCount.9606.1.png?raw=true “gene count of human”)
+<a name ="year_2010to2016" />
+### Time points Jan 2010 to May 2016 
+https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2010to2016.md
 
-<a name ="allOrganisms" />
-### Views for all Organisms 
-https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
+<a name ="year_2012to2016" />
+### Time points Jan 2012 to May 2016 
+https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2012to2016.md
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
