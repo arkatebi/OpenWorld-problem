@@ -18,7 +18,7 @@
 
 2.2\. [Experimental Evidence Codes] (#expCode)
 
-3\. [Software Requirements] (#requirements)
+3\. [Requirements to Run the Software] (#requirements)
 
 4\. [Software Usage] (#usage)
 
@@ -84,7 +84,7 @@ cross-reference.
   http://geneontology.org/page/evidence-code-decision-tree  
 
 <a name="requirements" />
-### Requirements
+### Requirements to Run the Software 
 * Python 2.7 
 * Biopython 1.66 or greater 
 
