@@ -1,0 +1,10 @@
+uniprot_sprot.dat.2012_01
+uniprot_sprot.dat.2012_06
+uniprot_sprot.dat.2013_01
+uniprot_sprot.dat.2013_06
+uniprot_sprot.dat.2014_01
+uniprot_sprot.dat.2014_06
+uniprot_sprot.dat.2015_01
+uniprot_sprot.dat.2015_06
+uniprot_sprot.dat.2016_01
+uniprot_sprot.dat.2016_05
