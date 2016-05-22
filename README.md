@@ -219,7 +219,7 @@ the above input files.
 
 <a name="hSapiens" />
 ####  Gene Count from Homo sapiens (taxon id 9606) 
-![alt gene count from homo sapiens] (/figures/genecount.9606.1.png?raw=true “gene count of human”)
+![Alt gene count from homo sapiens] (/figures/genecount.9606.1.png?raw=true “gene count of human”)
 
 <a name ="allOrganisms" />
 ### Views for all Organisms 
