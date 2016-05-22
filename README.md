@@ -205,7 +205,7 @@ The program can also take an output filename prefix as an additional argument
 as shown below. 
 
 ```
-python Plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=sprot_genes.stat.1 -O=geneCount
+python Plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=geneCount.stat.1 -O=geneCount
 ```
 This will behave the same way as it does without the additional argument with 
 the exception that the figure name prefix can be supplied by the user now.
