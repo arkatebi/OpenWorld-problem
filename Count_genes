@@ -63,7 +63,8 @@ class bcolors:
 # Default configuration file name:
 config_filename = '.config' 
 
-output_fn_prefix = 'sprot_genes.stat'
+#output_fn_prefix = 'sprot_genes.stat'
+output_fn_prefix = 'geneCount.stat'
 year_Llimit = 2010
 month_str = ['01','02','03','04','05','06','07','08','09','10','11','12']
 
