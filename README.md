@@ -28,10 +28,9 @@
 
 5\. [Graphical View of Gene Counts] (#graphicalView)
 
-5.1\. [Gene Counts from all Organisms ] (#year_2010to2016)
+5.1\. [Time Points: Jan 2010 to May 2016] (#year_2010to2016)
 
-5.2\. [Gene Counts from all Organisms ] (#year_2012to2016)
-
+5.2\. [Time Points: Jan 2012 to May 2016] (#year_2012to2016)
 
 <a name="intro">
 #### Introduction
@@ -215,14 +214,14 @@ The following section shows the figures produced by running this program with
 the above input files.
 
 <a name="graphicalView" />
-#### Graphical View of Gene Counts 
+### Graphical View of Gene Counts 
 
 <a name ="year_2010to2016" />
-### Time points Jan 2010 to May 2016 
+##### Time points: Jan 2010 to May 2016 
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2010to2016.md
 
 <a name ="year_2012to2016" />
-### Time points Jan 2012 to May 2016 
+##### Time points: Jan 2012 to May 2016 
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2012to2016.md
 
 ### Source Code
