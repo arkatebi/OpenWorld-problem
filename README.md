@@ -131,7 +131,7 @@ you can find in the workspace:
 
 uniprot_sprot.dat.2010_01
 
-The first part is the string uniprot_sprot.dat. 
+The first part is the string (lowercase): uniprot_sprot.dat. 
 and the second part is a string in the format yyyy_mm
 where yyyy is the FOUR digit year and mm is two digit month.
 Also, the program will not accept any year before 2010. 
