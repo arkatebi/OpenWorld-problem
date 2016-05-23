@@ -125,7 +125,7 @@ UniProtKB/SwissProt files are not found in the current directory or the
 workspace, the program will automatically download these files. 
  
 ```
-Note: If you have the files already downloaded, please rename them using  
+Note: if you have the files already downloaded, please rename them using  
 the same naming convention as they are written in the sprot_files.txt which
 you can find in the workspace:
 
