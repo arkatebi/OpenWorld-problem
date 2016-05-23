@@ -133,7 +133,7 @@ uniprot_sprot.dat.2010_01
 
 The first part is the string (lowercase): uniprot_sprot.dat. 
 and the second part is a string in the format yyyy_mm
-where yyyy is a FOUR digit year and mm is a two digit month.
+where yyyy is a FOUR digit year and mm is a TWO digit month.
 Also, the program will not accept any year before 2010.
 ```
 Successful run of this program will create an output file: sprot_genes.stat.1
