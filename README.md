@@ -126,7 +126,7 @@ workspace, the program will automatically download these files.
  
 ```
 Note: If you have the files already downloaded, please rename them using  
-the same naming convention as they written in the sprot_files.txt which 
+the same naming convention as they are written in the sprot_files.txt which
 you can find in the workspace:
 
 uniprot_sprot.dat.2010_01
