@@ -119,7 +119,7 @@ class Count_genes:
                     of FormatChecker module.
         Otherswise, it returns True
         """
-        if not os.path.exists(self.sprot_fname):
+        if not os.path.exists(sprot_fname):
             print bcolors.WARNING + 'UniProtKB/SwissProt file ' + \
                                     basename(sprot_fname) + \
                                     ' does not exist.' + bcolors.ENDC
