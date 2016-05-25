@@ -1,6 +1,6 @@
 <a name="title" />
 ## Impact of incomplete knowledge on function-predictions and the evaluation of the predictive models.
-* The tools developed in this project are to facilitate the research into the 
+* The tools developed in this project are to facilitate my research into the 
   impact of incomplete knowledge on the functional predictions of proteins 
   and the evaluation of the related predictive models. The toolset has the 
   following programs:
