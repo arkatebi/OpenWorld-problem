@@ -163,26 +163,16 @@ This program will create a graph for the gene count of each organism
 that is found in the above step. One can run the program as follows:
 
 ```
-python Plot_geneCounts --input1 filename_listing_species_taxon_ids --input2 filename_listing_sprot_filenames --input3 filename_gene_counts 
-```
-
-input1 is a TWO column text file containing the list of species: the first
-column has the taxon id and the second column has the organism name. input2
-is a list of UniprotKB/SwissProt filenames over a series of time points. 
-input3 is the gene count file generated in the previous step.  
-
-One specific example run with input1 file sp_list.txt, input2 file 
-sprot_files.txt, and input3 file sprot_genes.stat.1:
-
-```
 python Plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=geneCount.stat.1
 ```
 
-This command takes the species list from sp_list.txt file, the time points from
-the filenames listed in the sprot_files.txt file, and gene counts from the 
-sprot_genes.stat.1 file and draw a graph of gene count for each speceis over 
-those time points extracted from sprot_files.txt. For this specific example, it 
-generates the following figure files (one figure for each speceis):
+where the first and the second input files are the same as they are for 
+the Count_genes program in the previous section. The third input file 
+geneCount.stat.1 is the output file from the Count_genes program. 
+
+For these specific input files, the Plot_geneCounts program generates the 
+following figure files (one figure for each speceis):
+
 ```
 geneCount.9606.1.png
 geneCount.10090.1.png
@@ -194,6 +184,7 @@ geneCount.83333.1.png
 geneCount.284812.1.png
 geneCount.44689.1.png
 ```
+
 Repeated run of the program creates the subsequent versions of each figure file. 
 
 The program can also take an output filename prefix as an additional argument 
