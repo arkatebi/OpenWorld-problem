@@ -101,59 +101,42 @@ of organismis over a series of time points. The simplest way to run the
 program:
 
 ```
-python Count_genes --input1 filename_listing_species_taxon_ids --input2 filename_listing_sprot_filenames 
-```
-
-input1 is a TWO column text file containing the list of species to be 
-considered: the first column has the taxon id and the second column has 
-the organism name. input2 is a file containing the UniprotKB/SwissProt 
-filenames over a series of time points. The file file format is one filename
-in each line. Blank lines are allowed. 
-
-One specific example run with input1 file sp_list.txt and input2 file 
-sprot_files.txt:  
-
-```
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt
 ```
 
-This command will extract the species names from the sp_list.txt file
-and the UniprotKB/SwissProt file names from the sprot_files.txt file,
-and then will calculate the gene counts for all species over the 
-UniProtKB/SwissProt files found in the sprot_files.txt file. If the 
-UniProtKB/SwissProt files are not found in the current directory or the 
-workspace, the program will automatically download these files. 
- 
-```
-Note: if you have the files already downloaded, please rename them using  
-the same naming convention as they are written in the sprot_files.txt which
-you can find in the workspace:
+where the first input file, sp_list.txt, is a TWO column text file containing
+the list of species to be considered: the first column has the taxon ids and 
+the second column has the organism names. The second input file, 
+sprot_files.txt, is a file containing the UniprotKB/SwissProt filenames over 
+a series of time points. The file file format is one filename in each line. 
+Blank lines are allowed. However, the filenames listed in this file must 
+follow this specific naming format: uniprot_sprot.dat.2010_01 where 
+the first part uniprot_sprot.dat. is a string in lowercase and the 
+second part is a string in the format yyyy_mm, yyyy being a FOUR-digit 
+year and mm a TWO-digit month. Also, the program will not accept any year 
+before 2010. If the program does not find the files in the current or working 
+directory, it will automatically download them. 
 
-uniprot_sprot.dat.2010_01
-
-The first part is the string (lowercase): uniprot_sprot.dat. 
-and the second part is a string in the format yyyy_mm
-where yyyy is a FOUR digit year and mm is a TWO digit month.
-Also, the program will not accept any year before 2010.
-```
 Successful run of this program will create an output file: sprot_genes.stat.1
-This output has two header lines: first line has the taxonomy id and 
-the second line has BPO, CCO, and MFO names for each taxonomy id. 
-Subsequent lines are for gene counts: one row for each timepoint, 
-containing gene counts for each organism, in the same seqeuence as 
-they are found in the sp_list.txt file. For each organism, the file 
-has THREE columns, for gene counts in BPO, CCO, and MFO ontological 
-categories.
+This output file has two header lines: the first line has the taxonomy id and
+the second line has MFO, BPO, and CCO strings under each taxonomy id to
+indicate the ontological categories in Molecular Function, Biological 
+Process, and Cellular Component, respectively. Subsequent lines are for 
+gene count values: one row for each timepoint, containing gene counts for 
+each organism, in the same seqeuence as they are found in the sp_list.txt 
+file. For each organism, the file has THREE columns, for gene counts in MFO, 
+BPO, and CCO ontological categories.
 
-Repeated run of the program, will create subsequent version of the 
+Repeated run of the program, will create subsequent versions of the 
 output file. 
 
 The program can also take an optional output filename prefix as an 
-additional argument which is shown below: 
+additional argument as shown below: 
 
 ```
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=geneCount.stat
 ```
+
 It will behave the same way as described above. 
 
 ##### Execution time
