@@ -1,13 +1,14 @@
 <a name="title" />
 ## Impact of incomplete knowledge on function-predictions and the evaluation of the predictive models.
-* The tools developed in this project are to facilitate my research into the 
-  impact of incomplete knowledge on the functional predictions of proteins 
-  and the evaluation of the related predictive models. The toolset has the 
-  following programs:
-* A program that creates a table of gene counts for a set of species in 
-  UniProtKB/SwissProt whose annotations have experimental evidence codes. 
-* A program that creates graphs of the gene counts for those speceis over 
+* This is an ongoing project. In this project, I am developing tools to 
+  facilitate my research into the impact of incomplete knowledge on the 
+  functional predictions of proteins and the evaluation of the related 
+  predictive models. Currently, the toolset has the following programs:
+* A program that creates a table of gene counts for a set of species in
+  UniProtKB/SwissProt whose annotations have experimental evidence codes.
+* A program that creates graphs of the gene counts for those speceis over
   a series of time points.
+* More programs will be added as the research continues ...
 
 ### Contents
 1\. [Introduction] (#intro)
