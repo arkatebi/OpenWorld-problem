@@ -117,6 +117,10 @@ additional argument as shown below and will behave the same way.
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=geneCount.stat
 ```
 
+###### Automatic download of the datasets
+If the program does not find the UniProtKB/SwissProt files in the
+current or working directory, it will automatically download them.
+
 ##### File format of the first input file
 The first input file, sp_list.txt, is a TWO-column text file where
 each row corresponds to one species. The first column has the taxon ids
@@ -132,9 +136,6 @@ first part uniprot_sprot.dat. is a string in lowercase and the second
 part is a string in the format yyyy_mm, yyyy being a FOUR-digit year and
 mm a TWO-digit month. Also, the program will not accept any year before 2010.
 
-###### Automatic download of the datasets
-If the program does not find the UniProtKB/SwissProt files in the
-current or working directory, it will automatically download them.
 
 ##### File format of the output file
 The output file, sprot_genes.stat.1, has two header lines: the first line 
