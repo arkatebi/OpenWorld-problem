@@ -202,8 +202,9 @@ as shown below.
 ```
 python Plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=geneCount.stat.1 -O=geneCount
 ```
-This will behave the same way as it does without the additional argument with 
-the exception that the figure name prefix can be supplied by the user now.
+
+This will behave the same way as it does without the additional argument, 
+except that the figure name prefix can be supplied in the latter case.
 
 The following section shows the figures produced by running this program 
 for several sets of data.
