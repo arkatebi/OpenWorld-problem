@@ -121,12 +121,12 @@ python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=geneCount.stat
 If the program does not find the UniProtKB/SwissProt files in the
 current or working directory, it will automatically download them.
 
-##### File format of the first input file
+###### File format of the first input file
 The first input file, sp_list.txt, is a TWO-column text file where
 each row corresponds to one species. The first column has the taxon ids
 and the second column has the organism names.
 
-##### File format of the second input file
+###### File format of the second input file
 The second input file, sprot_files.txt, is a ONE-column text file where
 each line corresponds to a UniprotKB/SwissProt filename at a timepoint.
 The filenames should be listed according to the series of time points.
@@ -137,7 +137,7 @@ part is a string in the format yyyy_mm, yyyy being a FOUR-digit year and
 mm a TWO-digit month. Also, the program will not accept any year before 2010.
 
 
-##### File format of the output file
+###### File format of the output file
 The output file, sprot_genes.stat.1, has two header lines: the first line 
 has the taxonomy ids and the second has MFO, BPO, and CCO strings under 
 each taxonomy id to indicate the ontological categories in Molecular 
