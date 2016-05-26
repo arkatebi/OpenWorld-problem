@@ -117,15 +117,13 @@ additional argument as shown below.
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=geneCount.stat
 ```
 
-##### File Formats
+##### File Format of the first input file
+The first input file, sp_list.txt, is a TWO column text file containing 
+the list of species to be considered: the first column has the taxon ids 
+and the second column has the organism names. 
 
-###### First input file sp_list
-a TWO column text file containing the list of species to be considered: 
-the first column has the taxon ids and 
-the second column has the organism names. 
-
-###### Second input file sprot_files.txt
-The second input file, sprot_files.txt, is a file containing the 
+##### File Format of the second input file
+The second input file, sprot_files.txt, is a file containing the
 UniprotKB/SwissProt filenames over a series of time points. The file file 
 format is one filename in each line. Blank lines are allowed. However, 
 the filenames listed in this file must follow this specific naming 
@@ -136,15 +134,15 @@ the program will not accept any year before 2010. If the program does
 not find the files in the current or working directory, it will 
 automatically download them. 
 
-###### Output file sprot_genes.stat.1
-This has two header lines: the first line has the taxonomy ids and the 
-second has MFO, BPO, and CCO strings under each taxonomy id to indicate 
-the ontological categories in Molecular Function, Biological Process, 
-and Cellular Component, respectively. The subsequent lines are for the 
-gene count values: one row for each timepoint, containing the gene counts 
-for each organism, in the same seqeuence as these organisms are found in 
-the sp_list.txt file. For each organism, the file has THREE columns, for 
-the gene counts in MFO, BPO, and CCO ontological categories.
+##### File Format of the output file 
+The output file, sprot_genes.stat.1, has two header lines: the first line 
+has the taxonomy ids and the second has MFO, BPO, and CCO strings under 
+each taxonomy id to indicate the ontological categories in Molecular 
+Function, Biological Process, and Cellular Component, respectively. The 
+subsequent lines are for the gene count values: one row for each timepoint, 
+containing the gene counts for each organism, in the same seqeuence as these 
+organisms are found in the sp_list.txt file. For each organism, the file has 
+THREE columns, for the gene counts in MFO, BPO, and CCO ontological categories.
 
 ##### Execution time
 The UniProtKB/SwissProt files are large in size (each file several 
