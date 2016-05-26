@@ -166,7 +166,7 @@ operated by Ubuntu 14.04.4 LTS, is as follows:
 The subsequent run of this program would cost only the gene count time.
 
 <a name="genGraphs" />
-#### Generate Graphs for the Gene Counts 
+#### Generate Graphs for Gene Counts
 
 This program will create a graph for the gene count of each organism 
 that is found in the above step. One can run the program as follows:
