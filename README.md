@@ -131,9 +131,9 @@ follow this specific naming format: uniprot_sprot.dat.2010_01 where the
 first part uniprot_sprot.dat. is a string in lowercase and the second 
 part is a string in the format yyyy_mm, yyyy being a FOUR-digit year and 
 mm a TWO-digit month. Also, the program will not accept any year before 2010. 
-###### Automatic download 
-If the program does not find the files in the current or working directory,
-it will automatically download them.
+###### Automatic download of the datasets 
+If the program does not find the UniProtKB/SwissProt files in the 
+current or working directory, it will automatically download them.
 
 ##### File format of the output file 
 The output file, sprot_genes.stat.1, has two header lines: the first line 
