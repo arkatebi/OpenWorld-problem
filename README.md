@@ -95,9 +95,9 @@ The details of the usage description of this software are as follows.
 <a name="genGeneCounts" />
 #### Generate Counts of Genes Annotated with Exp Evidence Codes
 
-This program creates an output file listing the number of genes, whose 
-annotations have experimental evidence codes in the UniProtKB/SwissProt 
-annotation databases, for a set of organisms over a series of time points. 
+This program creates an output file listing the number of genes, whose
+annotations have experimental evidence codes in the UniProtKB/SwissProt
+annotation databases, for a set of organisms over a series of time points.
 One can run this program in the following way:
 
 ```
@@ -107,32 +107,32 @@ python Count_genes -I1=sp_list.txt -I2=sprot_files.txt
 The first input file, sp_list.txt, is a text file listing the species
 to be considered. The second input file, sprot_files.txt, is a text file
 listing the UniprotKB/SwissProt filenames over a series of time
-points. Successful run of this program will create an output file, 
-sprot_genes.stat.1, that will have the gene count values. Repeated run 
+points. Successful run of this program will create an output file,
+sprot_genes.stat.1, that will have the gene count values. Repeated run
 of this program, will create subsequent versions of the output file.
 The program can also take an optional output filename prefix as an
-additional argument as shown below and will behave the same way. 
+additional argument as shown below and will behave the same way.
 
 ```
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=geneCount.stat
 ```
 
 ##### File Format of the first input file
-The first input file, sp_list.txt, is a TWO column text file containing 
-the list of species to be considered: the first column has the taxon ids 
-and the second column has the organism names. 
+The first input file, sp_list.txt, is a TWO column text file listing
+the species to be considered: the first column has the taxon ids
+and the second column has the organism names.
 
 ##### File Format of the second input file
 The second input file, sprot_files.txt, is a file containing the
-UniprotKB/SwissProt filenames over a series of time points. The file file 
-format is one filename in each line. Blank lines are allowed. However, 
-the filenames listed in this file must follow this specific naming 
-format: uniprot_sprot.dat.2010_01 where the first part uniprot_sprot.dat. 
-is a string in lowercase and the second part is a string in the format 
-yyyy_mm, yyyy being a FOUR-digit year and mm a TWO-digit month. Also, 
-the program will not accept any year before 2010. If the program does 
-not find the files in the current or working directory, it will 
-automatically download them. 
+UniprotKB/SwissProt filenames over a series of time points. The file file
+format is one filename in each line. Blank lines are allowed. However,
+the filenames listed in this file must follow this specific naming
+format: uniprot_sprot.dat.2010_01 where the first part uniprot_sprot.dat.
+is a string in lowercase and the second part is a string in the format
+yyyy_mm, yyyy being a FOUR-digit year and mm a TWO-digit month. Also,
+the program will not accept any year before 2010. If the program does
+not find the files in the current or working directory, it will
+automatically download them.
 
 ##### File Format of the output file 
 The output file, sprot_genes.stat.1, has two header lines: the first line 
