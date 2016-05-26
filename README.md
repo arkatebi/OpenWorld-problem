@@ -139,7 +139,7 @@ mm a TWO-digit month. Also, the program will not accept any year before 2010.
 ###### File format of the output file
 The output file, sprot_genes.stat.1, has two header lines: the first line
 has the taxonomy ids and the second has MFO, BPO, and CCO strings under
-each taxonomy id to indicate the ontological categories in Molecular
+each taxonomy id to indicate the ontological categories of Molecular
 Function, Biological Process, and Cellular Component, respectively. The
 subsequent lines are for the gene count values - one row for each timepoint.
 The gene count values on each row are listed in groups, where each group
