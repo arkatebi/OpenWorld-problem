@@ -124,18 +124,19 @@ and the second column has the organism names.
 
 ##### File format of the second input file
 The second input file, sprot_files.txt, is a ONE-column text file where
-each line corresponds to a UniprotKB/SwissProt filename at a timepoint. 
-The filenames should be listed according to the series of time points. 
-Blank lines are allowed. However, the filenames listed in this file must 
-follow this specific naming format: uniprot_sprot.dat.2010_01 where the 
-first part uniprot_sprot.dat. is a string in lowercase and the second 
-part is a string in the format yyyy_mm, yyyy being a FOUR-digit year and 
-mm a TWO-digit month. Also, the program will not accept any year before 2010. 
-###### Automatic download of the datasets 
-If the program does not find the UniProtKB/SwissProt files in the 
+each line corresponds to a UniprotKB/SwissProt filename at a timepoint.
+The filenames should be listed according to the series of time points.
+Blank lines are allowed. However, the filenames listed in this file must
+follow this specific naming format: uniprot_sprot.dat.2010_01 where the
+first part uniprot_sprot.dat. is a string in lowercase and the second
+part is a string in the format yyyy_mm, yyyy being a FOUR-digit year and
+mm a TWO-digit month. Also, the program will not accept any year before 2010.
+
+###### Automatic download of the datasets
+If the program does not find the UniProtKB/SwissProt files in the
 current or working directory, it will automatically download them.
 
-##### File format of the output file 
+##### File format of the output file
 The output file, sprot_genes.stat.1, has two header lines: the first line 
 has the taxonomy ids and the second has MFO, BPO, and CCO strings under 
 each taxonomy id to indicate the ontological categories in Molecular 
