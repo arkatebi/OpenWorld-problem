@@ -118,8 +118,8 @@ python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=geneCount.stat
 ```
 
 ##### File Format of the first input file
-The first input file, sp_list.txt, is a TWO column text file listing
-the species to be considered: the first column has the taxon ids
+The first input file, sp_list.txt, is a TWO-column text file listing
+the species to be considered. The first column has the taxon ids
 and the second column has the organism names.
 
 ##### File Format of the second input file
