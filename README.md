@@ -136,16 +136,16 @@ first part uniprot_sprot.dat. is a string in lowercase and the second
 part is a string in the format yyyy_mm, yyyy being a FOUR-digit year and
 mm a TWO-digit month. Also, the program will not accept any year before 2010.
 
-
 ###### File format of the output file
-The output file, sprot_genes.stat.1, has two header lines: the first line 
-has the taxonomy ids and the second has MFO, BPO, and CCO strings under 
-each taxonomy id to indicate the ontological categories in Molecular 
-Function, Biological Process, and Cellular Component, respectively. The 
-subsequent lines are for the gene count values: one row for each timepoint, 
-containing the gene counts for each organism, in the same seqeuence as these 
-organisms are found in the sp_list.txt file. For each organism, the file has 
-THREE columns, for the gene counts in MFO, BPO, and CCO ontological categories.
+The output file, sprot_genes.stat.1, has two header lines: the first line
+has the taxonomy ids and the second has MFO, BPO, and CCO strings under
+each taxonomy id to indicate the ontological categories in Molecular
+Function, Biological Process, and Cellular Component, respectively. The
+subsequent lines are for the gene count values - one row for each timepoint.
+The gene count values on each row are listed in the groups of THREE, each
+group corresponds to one organism. The order of these organisms are the same
+as they are found in the sp_list.txt file. The THREE gene count values in each
+group for an organism come from BPO, CCO, and MFO ontological categories.
 
 ##### Execution time
 The UniProtKB/SwissProt files are large in size (each file several 
