@@ -145,8 +145,7 @@ subsequent lines are for the gene count values - one row for each timepoint.
 The gene count values on each row are listed in groups, where each group 
 has THREE values corresponding to one specific organism. The order of the 
 organisms are the same as they are found in the sp_list.txt file. The THREE 
-gene count values in each group for an organism come from BPO, CCO, and 
-MFO ontological categories.
+gene count values in each group are BPO, CCO, and MFO ontological categories.
 
 ##### Execution time
 The UniProtKB/SwissProt files are large in size (each file several 
