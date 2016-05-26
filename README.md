@@ -143,10 +143,10 @@ each taxonomy id to indicate the ontological categories in Molecular
 Function, Biological Process, and Cellular Component, respectively. The
 subsequent lines are for the gene count values - one row for each timepoint.
 The gene count values on each row are listed in groups, where each group
-has THREE values corresponding to one specific organism. The order of the
-organisms on a row are the same as they are found in the sp_list.txt file.
-The THREE gene count values in each group are BPO, CCO, and MFO ontological
-categories.
+has THREE values corresponding to one specific organism. The THREE gene 
+count values in each group are for BPO, CCO, and MFO ontological categories. 
+The order of the organisms on a row are the same as they are found in the 
+sp_list.txt file.
 
 ##### Execution time
 The UniProtKB/SwissProt files are large in size (each file several 
