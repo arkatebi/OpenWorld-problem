@@ -111,7 +111,7 @@ points. Successful run of this program will create an output file,
 sprot_genes.stat.1, that will have the gene count values. Repeated run 
 of this program, will create subsequent versions of the output file.
 The program can also take an optional output filename prefix as an
-additional argument as shown below. 
+additional argument as shown below and will behave the same way. 
 
 ```
 python Count_genes -I1=sp_list.txt -I2=sprot_files.txt -O=geneCount.stat
