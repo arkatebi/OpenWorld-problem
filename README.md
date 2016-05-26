@@ -105,12 +105,12 @@ python Count_genes -I1=sp_list.txt -I2=sprot_files.txt
 ```
 
 The first input file, sp_list.txt, is a text file listing the species
-to be considered. The second input file, sprot_files.txt, is a file 
-containing the UniprotKB/SwissProt filenames over a series of time 
+to be considered. The second input file, sprot_files.txt, is a text file
+listing the UniprotKB/SwissProt filenames over a series of time
 points. Successful run of this program will create an output file, 
-sprot_genes.stat.1, that will have the gene count valus. Repeated run 
-of the program, will create subsequent versions of the output file.
-The program can take an optional output filename prefix as an 
+sprot_genes.stat.1, that will have the gene count values. Repeated run 
+of this program, will create subsequent versions of the output file.
+The program can also take an optional output filename prefix as an
 additional argument as shown below. 
 
 ```
