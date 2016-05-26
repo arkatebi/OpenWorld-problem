@@ -93,7 +93,7 @@ cross-reference.
 The details of the usage description of this software are as follows.
 
 <a name="genGeneCounts" />
-#### Generate Counts of Genes Annotated with Exp Evidence Codes
+#### Generate Gene Counts Annotated by Exp Evidence Codes
 
 This program creates an output file listing the number of genes, whose
 annotations have experimental evidence codes in the UniProtKB/SwissProt
