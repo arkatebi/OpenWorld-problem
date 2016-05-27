@@ -29,13 +29,13 @@
 import os
 import sys
 import re
-import ConfigParser as cp
+import configparser as cp
 from collections import OrderedDict
 
 def create_config(config_filename):
     outfile_handle = open(config_filename, 'w')
     outfile_handle.write('[WORKDIR]\n')
-    work_dir_response = raw_input('Provide a path to your working directory (If left blank, defaults to current directory) : ')
+    work_dir_response = input('Provide a path to your working directory (If left blank, defaults to current directory) : ')
     if work_dir_response == '':
         outfile_handle.write('DEFAULT_PATH : .\n') 
     elif work_dir_response.startswith('.') or work_dir_response.startswith('/'):
@@ -83,9 +83,9 @@ def read_config(config_filename):
             if fname == config_filename:
                 fname_ind = 1
         if fname_ind == 0:
-            print 'Configuration file not found'
-            print 'Creating new configuration file ...'
-            print '************************************'
+            print('Configuration file not found')
+            print('Creating new configuration file ...')
+            print('************************************')
             create_config(config_filename) # Creates a configuration file
         break
     # Reads the config file and stores values in a dictionary
@@ -105,6 +105,6 @@ def read_config(config_filename):
     return ConfigParam
 
 if __name__ == '__main__':
-    print (sys.argv[0] + ':')
+    print((sys.argv[0] + ':'))
     print (__doc__)
     sys.exit(0)
