@@ -105,6 +105,6 @@ def read_config(config_filename):
     return ConfigParam
 
 if __name__ == '__main__':
-    print((sys.argv[0] + ':'))
-    print (__doc__)
+    print(sys.argv[0] + ':')
+    print(__doc__)
     sys.exit(0)
