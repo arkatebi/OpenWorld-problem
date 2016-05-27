@@ -58,8 +58,8 @@ def locate_anyfile(infile, work_dir):
         shutil.copy(infile, work_dir)
         print(basename(infile) + ' has been copied to workspace.')
     else:
-        print((infile + ' is NOT available. Quitting ' + inspect.stack() [1][1] + ' Tool ...'))  
-        print ('********************************************************************************')
+        print(infile + ' is NOT available. Quitting ' + inspect.stack() [1][1] + ' Tool ...')
+        print('********************************************************************************')
         sys.exit(1)
     return work_dir + '/' + basename(infile)
 
@@ -70,8 +70,8 @@ def locate_GOAfile(infile, work_dir):
         shutil.copy(infile, work_dir)
         print(basename(infile) + ' has been copied to workspace.')
     else:
-        print((infile + ' is NOT available. Quitting ' + inspect.stack() [1][1] + ' Tool ...'))  
-        print ('********************************************************************************')
+        print(infile + ' is NOT available. Quitting ' + inspect.stack() [1][1] + ' Tool ...')
+        print('********************************************************************************')
         sys.exit(1)
     return work_dir + '/' + basename(infile)
 
@@ -81,7 +81,7 @@ def locate_SwissProtfile(infile, work_dir):
     elif os.path.exists(work_dir + '/' + basename(infile)):
         return work_dir + '/' + basename(infile)
     else:
-        print((infile + ' is NOT available. Quitting ' + inspect.stack() [1][1] + ' Tool ...'))  
+        print(infile + ' is NOT available. Quitting ' + inspect.stack() [1][1] + ' Tool ...')
         print ('*********************************************************************')
         sys.exit(1)
 
@@ -92,6 +92,6 @@ def locate_benchmark_file(infile, work_dir):
       return False
 
 if __name__ == '__main__':
-    print((sys.argv[0] + ':'))
-    print (__doc__)
+    print(sys.argv[0] + ':')
+    print(__doc__)
     sys.exit(0) 
