@@ -67,21 +67,21 @@ def check_args(args_dict,parser):
         if arg == 't1':
             if args_dict[arg] == None:
                 print ('Missing the filename containing the list of species.\n')
-                print (parser.parse_args(['--help']))
+                print((parser.parse_args(['--help'])))
             else:
                 user_dict['t1'] = args_dict[arg]
         elif arg == 't2':
             if args_dict[arg] == None:
-                print ('Missing the filename containing the list of ' + \
-                       'UniprotKB/SwissProt file names.\n')
-                print (parser.parse_args(['--help']))
+                print(('Missing the filename containing the list of ' + \
+                       'UniprotKB/SwissProt file names.\n'))
+                print((parser.parse_args(['--help'])))
             else:
                 user_dict['t2'] = args_dict[arg]
         elif arg == 't3':
             if args_dict[arg] == None:
-                print ('Missing the filename containing the gene counts ' + \
-                      'in list of UniprotKB/SwissProt file names.\n')
-                print (parser.parse_args(['--help']))
+                print(('Missing the filename containing the gene counts ' + \
+                      'in list of UniprotKB/SwissProt file names.\n'))
+                print((parser.parse_args(['--help'])))
             else:
                 user_dict['t3'] = args_dict[arg]
         elif arg == 'outfile':
@@ -107,7 +107,7 @@ def parse_args():
         print ('\n*********************************')
         print ("Invalid Arguments")
         print ('*********************************\n')
-        print (parser.parse_args(['--help']))
+        print((parser.parse_args(['--help'])))
     # Places the user arguments into a dictionary:
     args_dict = extract_args(args) 
     # Checks the consistency of the user args:
@@ -115,6 +115,6 @@ def parse_args():
     return user_dict
 
 if __name__ == '__main__':
-    print (sys.argv[0] + ':')
+    print((sys.argv[0] + ':'))
     print (__doc__)
     sys.exit(0)
