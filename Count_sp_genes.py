@@ -111,6 +111,6 @@ def count_genes_with_EXP_old(fh_sprot, taxon_id, EXP_default=set([])):
     return (exp_bpo_ct, exp_cco_ct, exp_mfo_ct)
 
 if __name__ == '__main__':
-    print((sys.argv[0] + ':'))
+    print(sys.argv[0] + ':')
     print(__doc__)
     sys.exit(0)
