@@ -22,9 +22,9 @@
 import os
 import sys
 from os.path import basename 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 import Config
-import ConfigParser as cp
+import configparser as cp
 
 # Default configuration file name:
 config_filename = '.config' 
@@ -82,9 +82,9 @@ class Download:
                           self.work_dir + '/' + testdata_fname)
                 #os.system('rm ' + self.work_dir + '/' + tar_fname)
             else:
-                print('Downloading ' + download_fname + ' ...')
+                print(('Downloading ' + download_fname + ' ...'))
                 if (not self.download(url, download_fname)): 
-                    print('Downloading failed for ' + download_fname)
+                    print(('Downloading failed for ' + download_fname))
                     continue
                 os.system('gzip -d ' + self.work_dir + '/' + download_fname)
                 os.system('tar -xC ' + self.work_dir + ' -f ' + \
@@ -103,10 +103,10 @@ class Download:
 
     def download(self, url, fname):
         try:
-            response = urllib2.urlopen(url + '/' + fname)
-        except urllib2.HTTPError, err:
+            response = urllib.request.urlopen(url + '/' + fname)
+        except urllib.error.HTTPError as err:
             return False
-        except urllib2.URLError, err:
+        except urllib.error.URLError as err:
             return False
         out_fh = open(self.work_dir + '/' + fname, 'w')
         out_fh.write(response.read())
@@ -114,6 +114,6 @@ class Download:
         return True
 
 if __name__ == '__main__':
-    print (sys.argv[0] + ' :')
+    print((sys.argv[0] + ' :'))
     print(__doc__)
     sys.exit(0)
