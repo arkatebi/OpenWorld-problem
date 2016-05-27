@@ -85,8 +85,8 @@ cross-reference.
 
 <a name="requirements" />
 ### Requirements to Run the Software 
-* Python 2.7 
-* Biopython 1.66 or greater 
+* Python 3.5 or greater
+* Biopython 1.66 or greater
 
 <a name="usage" />
 ### Software Usage 
