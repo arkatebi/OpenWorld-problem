@@ -352,7 +352,7 @@ class Plot_geneCounts:
         return None
 if __name__ == '__main__':
     if len(sys.argv) == 1:
-        print((sys.argv[0] + ':'))
+        print(sys.argv[0] + ':')
         print(__doc__)
     else:
         pg = Plot_geneCounts() # Create an instance of Plot_geneCount class
