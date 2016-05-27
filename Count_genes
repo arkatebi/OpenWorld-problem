@@ -44,7 +44,7 @@ from os.path import basename
 
 import ArgParser_count as ap
 import Config
-import ConfigParser as cp
+import configparser as cp
 import Count_sp_genes as csg
 import Download as dl
 import FormatChecker as fc
@@ -120,20 +120,20 @@ class Count_genes:
         Otherswise, it returns True
         """
         if not os.path.exists(sprot_fname):
-            print bcolors.WARNING + 'UniProtKB/SwissProt file ' + \
+            print((bcolors.WARNING + 'UniProtKB/SwissProt file ' + \
                                     basename(sprot_fname) + \
-                                    ' does not exist.' + bcolors.ENDC
+                                    ' does not exist.' + bcolors.ENDC))
             return False 
         elif os.stat(sprot_fname).st_size == 0:
-            print bcolors.WARNING + 'UniProtKB/SwissProt file ' + \
+            print((bcolors.WARNING + 'UniProtKB/SwissProt file ' + \
                                     basename(sprot_fname) + \
-                                    ' is empty.' + bcolors.ENDC
+                                    ' is empty.' + bcolors.ENDC))
             return False 
         elif not fc.check_sprot_format(open(sprot_fname, 'r')):
-            print bcolors.WARNING + 'File format error: ' + \
-                  basename(sprot_fname) + bcolors.ENDC
-            print bcolors.WARNING + 'File must be in UniProtKB/SwissProt ' + \
-                'format.' + bcolors.ENDC
+            print((bcolors.WARNING + 'File format error: ' + \
+                  basename(sprot_fname) + bcolors.ENDC))
+            print((bcolors.WARNING + 'File must be in UniProtKB/SwissProt ' + \
+                'format.' + bcolors.ENDC))
             return False
         return True 
 
@@ -158,25 +158,25 @@ class Count_genes:
         return (sp_header, ont_header)
 
     def print_prolog(self):
-        print "*************************************************"
-        print "Welcome to Gene Count Tool !!!!!"
-        print "*************************************************\n"
-        print 'Following is a list of user supplied inputs:\n'
+        print( "*************************************************")
+        print("Welcome to Gene Count Tool !!!!!")
+        print("*************************************************\n")
+        print('Following is a list of user supplied inputs:\n')
         for arg in self.parsed_dict:
-            print arg + ': ' + str(self.parsed_dict[arg])
-        print '*********************************************\n'
+            print(arg + ': ' + str(self.parsed_dict[arg]))
+        print('*********************************************\n')
         return None
 
     def print_epilog(self):
         if os.path.exists(self.output_filename):
-            print(bcolors.OKGREEN + 'The following gene count file ' + \
-                                    'is created:' + bcolors.ENDC)
-            print basename(self.output_filename)
+            print((bcolors.OKGREEN + 'The following gene count file ' + \
+                                    'is created:' + bcolors.ENDC))
+            print(basename(self.output_filename))
         else: 
-            print(bcolors.WARNING + 'No gene count file is created ' + \
-                                    'with the given parameters' + bcolors.ENDC)
-        print(bcolors.OKGREEN + 'Thank you for using Gene Count ' + \
-                                'Tool' + bcolors.ENDC)
+            print((bcolors.WARNING + 'No gene count file is created ' + \
+                                    'with the given parameters' + bcolors.ENDC))
+        print((bcolors.OKGREEN + 'Thank you for using Gene Count ' + \
+                                'Tool' + bcolors.ENDC))
         return None
 
     def create_null_geneCount_str(self, sprot_fname):
@@ -198,7 +198,7 @@ class Count_genes:
             # Skip any empty line in the file with the organism name:
             if not (line.strip()):
                 continue
-            print line.strip()
+            print(line.strip())
             geneCount_str += str(0) + '\t' + str(0) + '\t' + str(0) + '\t'
         fh_sp.close()
         geneCount_str = geneCount_str.rstrip() + '\n'
@@ -228,15 +228,15 @@ class Count_genes:
             if not (line.strip()):
                 continue
             taxon_id = line.strip().split('\t')[0]
-            print line.strip()
+            print(line.strip())
             gene_count = csg.count_genes_with_EXP(
                              open(sprot_fname, 'r'),
                              taxon_id,
                              self.ConfigParam['exp_eec'])
 
-            print('Gene count in MFO ontology: ' + str(gene_count['MFO']))
-            print('Gene count in BPO ontology: ' + str(gene_count['BPO']))
-            print('Gene count in CCO ontology: ' + str(gene_count['CCO']))
+            print(('Gene count in MFO ontology: ' + str(gene_count['MFO'])))
+            print(('Gene count in BPO ontology: ' + str(gene_count['BPO'])))
+            print(('Gene count in CCO ontology: ' + str(gene_count['CCO'])))
             geneCount_str += str(gene_count['MFO']) + '\t' + \
                              str(gene_count['BPO']) + '\t' + \
                              str(gene_count['CCO']) + '\t'
@@ -260,26 +260,26 @@ class Count_genes:
         If all above checks are passed, the method returns True
         '''
         if not os.path.exists(self.sprot_filename):
-            print('The following file does not exist: ' + \
-                 basename(self.sprot_filename))
+            print(('The following file does not exist: ' + \
+                 basename(self.sprot_filename)))
             return False
         if os.stat(self.sprot_filename).st_size == 0:
-            print('The following file is empty: ' + \
-                 basename(self.sprot_filename))
+            print(('The following file is empty: ' + \
+                 basename(self.sprot_filename)))
             return False       
 
         fh_fname = open(self.sprot_filename, 'r')
         for line in fh_fname:
             filename_parts = basename(line).strip().split('.')
             if filename_parts[0] != 'uniprot_sprot':
-                print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
-                print('First part of the file name must be the string ' + '"uniprot_sprot"')
+                print(('Given UniProtKB/SwissProt filename: ' + basename(line.strip())))
+                print(('First part of the file name must be the string ' + '"uniprot_sprot"'))
                 print('Program quiting ...')
                 fh_fname.close()
                 return False
             elif filename_parts[1] != 'dat':
-                print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
-                print('Second part of the file name must be the string ' + '"dat"')
+                print(('Given UniProtKB/SwissProt filename: ' + basename(line.strip())))
+                print(('Second part of the file name must be the string ' + '"dat"'))
                 print('Program quiting ...')
                 fh_fname.close()
                 return False
@@ -287,14 +287,14 @@ class Count_genes:
                 yy = filename_parts[2].split('_')[0]
                 mm = filename_parts[2].split('_')[1]
                 if int(yy) < year_Llimit:
-                    print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
-                    print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
+                    print(('Given UniProtKB/SwissProt filename: ' + basename(line.strip())))
+                    print(('Third part of the filename must be in the format: ' + '"yyyy_mm"'))
                     print('And a valid year must be greater than 2009')
                     fh_fname.close()
                     return False
                 if(mm not in month_str):
-                    print('Given UniProtKB/SwissProt filename: ' + basename(line.strip()))
-                    print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
+                    print(('Given UniProtKB/SwissProt filename: ' + basename(line.strip())))
+                    print(('Third part of the filename must be in the format: ' + '"yyyy_mm"'))
                     print('And a valid month must be between 01 and 12.')
                     fh_fname.close()
                     return False
@@ -312,12 +312,12 @@ class Count_genes:
         Otherwise, it returns True.
         '''
         if not os.path.exists(self.species_filename):
-            print('The following file does not exist: ' + \
-                 basename(self.species_filename))
+            print(('The following file does not exist: ' + \
+                 basename(self.species_filename)))
             return False
         if os.stat(self.species_filename).st_size == 0:
-            print('The following file is empty: ' + \
-                 basename(self.species_filename))
+            print(('The following file is empty: ' + \
+                 basename(self.species_filename)))
             return False
 
         fh_fname = open(self.species_filename, 'r')
@@ -325,13 +325,13 @@ class Count_genes:
         taxon_id = header.strip().split('\t')[0]
         species_name = header.strip().split('\t')[1]
         if (not taxon_id == 'Taxon id') or (not species_name == 'Species name'): 
-            print('Incorrect file format: ' + basename(self.species_filename))
+            print(('Incorrect file format: ' + basename(self.species_filename)))
             fh_fname.close()
             return False
         nextLine = fh_fname.readline()
         if not nextLine.strip():
-            print('No species information is found in the file: ' + \
-                   basename(self.species_filename))
+            print(('No species information is found in the file: ' + \
+                   basename(self.species_filename)))
             fh_fname.close()
             return False
         fh_fname.close()
@@ -388,7 +388,7 @@ class Count_genes:
                 continue
             # Retrieve the UniProtKB/SwissProt filename:
             sprot_fname = self.work_dir + '/' + fname.strip()
-            print(basename(sprot_fname))
+            print((basename(sprot_fname)))
             # Check UniProtKB/SwissProt file format:
             # If the SwissProt file is empty or
             # is NOT in correct format,
@@ -411,7 +411,7 @@ class Count_genes:
 
 if __name__ == '__main__':
     if len(sys.argv) == 1:
-        print (sys.argv[0] + ':')
+        print((sys.argv[0] + ':'))
         print(__doc__)
     else:
         cg = Count_genes()     # Create an instance of Count_gene class
