@@ -227,6 +227,7 @@ python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2010to2016.txt -I3=geneCount_20
 ```
 
 The figures can be viewed by following the link below:
+
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2010to2016.md
 
 <a name ="year_2012to2016" />
