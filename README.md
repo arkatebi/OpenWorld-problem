@@ -226,7 +226,7 @@ The following command creates the figures to show the gene counts generated:
 python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2010to2016.txt -I3=geneCount_2010to2016.stat.1 -O=geneCount_2010to2016
 ```
 
-The figures can be viewed by following this link:
+The figures can be viewed by following the link below:
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2010to2016.md
 
 <a name ="year_2012to2016" />
@@ -243,7 +243,7 @@ The following command creates the figures to show the gene counts generated:
 python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2012to2016.txt -I3=geneCount_2012to2016.stat.1 -O=geneCount_2012to2016
 ```
 
-The figures can be viewed by following this link:
+The figures can be viewed by following the link below:
 
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2012to2016.md
 
