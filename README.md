@@ -208,17 +208,45 @@ This will behave the same way as it does without the additional argument,
 except that the figure name prefix can be supplied in the latter case.
 
 The following section shows the figures produced by running this program 
-for several sets of data.
+for two sets of data.
 
 <a name="graphicalView" />
 ### Graphical View of Gene Counts 
 
 <a name ="year_2010to2016" />
-##### Gene Counts: Jan 2010 to May 2016 
+##### Gene Counts: Jan 2010 to May 2016
+The following command creates the gene count file: geneCount_2010to2016.stat.1 
+
+```
+python Count_genes -I1=sp_list.txt -I2=sprot_2010to2016.txt -O=geneCount_2010to2016.stat.1
+```
+The following command creates the figures to show the gene counts generated 
+by this command:
+
+```
+python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2010to2016.txt -I3=geneCount_2010to2016.stat.1 -O=geneCount_2010to2016
+```
+
+The figures can be viewed by following this link:
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2010to2016.md
 
 <a name ="year_2012to2016" />
-##### Gene Counts: Jan 2012 to May 2016 
+##### Gene Counts: Jan 2012 to May 2016
+The following command creates the gene count file: geneCount_2012to2016.stat.1 
+
+```
+python Count_genes -I1=sp_list.txt -I2=sprot_2012to2016.txt -O=geneCount_2012to2016.stat.1
+```
+
+The following command creates the figures to show the gene counts generated 
+by this command:
+
+```
+python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2012to2016.txt -I3=geneCount_2012to2016.stat.1 -O=geneCount_2012to2016
+```
+
+The figures can be viewed by following this link:
+
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount_2012to2016.md
 
 ### Source Code
