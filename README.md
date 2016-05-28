@@ -220,8 +220,7 @@ The following command creates the gene count file: geneCount_2010to2016.stat.1
 ```
 python Count_genes -I1=sp_list.txt -I2=sprot_2010to2016.txt -O=geneCount_2010to2016.stat.1
 ```
-The following command creates the figures to show the gene counts generated 
-by this command:
+The following command creates the figures to show the gene counts generated:
 
 ```
 python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2010to2016.txt -I3=geneCount_2010to2016.stat.1 -O=geneCount_2010to2016
@@ -238,8 +237,7 @@ The following command creates the gene count file: geneCount_2012to2016.stat.1
 python Count_genes -I1=sp_list.txt -I2=sprot_2012to2016.txt -O=geneCount_2012to2016.stat.1
 ```
 
-The following command creates the figures to show the gene counts generated 
-by this command:
+The following command creates the figures to show the gene counts generated:
 
 ```
 python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2012to2016.txt -I3=geneCount_2012to2016.stat.1 -O=geneCount_2012to2016
