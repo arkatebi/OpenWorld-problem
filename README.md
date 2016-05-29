@@ -146,7 +146,7 @@ CCO) under each taxonomy id to indicate the ontological categories of
 Molecular Function, Biological Process, and Cellular Component,
 respectively. The subsequent lines are for the gene count values - one row
 for each timepoint. The gene count values on each row are listed in groups,
-where each group has THREE values corresponding to one specific organism.
+where each group has THREE values corresponding to a specific organism.
 The THREE gene count values in each group are for MFO, BPO, and CCO
 ontological categories, respectively. The order of the organisms on a row
 are the same as they are found in the sp_list.txt file.
