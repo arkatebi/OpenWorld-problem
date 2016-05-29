@@ -27,7 +27,7 @@
 
 4.1\. [Generate Graphs for Gene Counts] (#genGraphs)
 
-5\. [Graphical View of Gene Counts] (#graphicalView)
+5\. [Graphical Views of Gene Counts] (#graphicalView)
 
 5.1\. [Gene Counts: Jan 2010 to May 2016] (#year_2010to2016)
 
