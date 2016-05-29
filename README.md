@@ -23,7 +23,7 @@
 
 4\. [Software Usage] (#usage)
 
-4.1\. [Generate Counts of Genes Annotated with Exp Evidence Codes] (#genGeneCounts)
+4.1\. [Generate Gene Counts Annotated by Exp Evidence Codes] (#genGeneCounts)
 
 4.1\. [Generate Graphs for Gene Counts] (#genGraphs)
 
@@ -35,12 +35,13 @@
 
 <a name="intro">
 #### Introduction
-Models for functional predictions of proteins are developed based on the 
-current state of the functional annotation databases. However, the 
-annotations of most proteins are incomplete. Therefore, the question arises 
-whether the assigned strengths and weaknesses of the predictive models based 
-on current knowledge still hold when additional knowledge becomes available in 
-the future experiments. The situation can be depicted in the following figure.
+Models for functional predictions of proteins are developed based on the
+current state of the functional annotation databases. However, the
+annotations of most proteins are incomplete. Therefore, the question arises
+whether the assigned strengths and weaknesses of the predictive models based
+on the current knowledge still hold when new annotations becomes 
+available through additional experiments. The situation can be depicted in the
+following figure.
 
 ![alt Incomplete Knowledge] (/figures/incomplete-knowledge-1.1.png?raw=true “Incomplete Knowledge”)
 
@@ -110,7 +111,7 @@ to be considered. The second input file, sprot_files.txt, is a text file
 listing the UniprotKB/SwissProt filenames over a series of time
 points. Successful run of this program will create an output file,
 sprot_genes.stat.1, that will have the gene count values. Repeated run
-of this program, will create subsequent versions of the output file.
+of this program will create subsequent versions of the output file.
 The program can also take an optional output filename prefix as an
 additional argument as shown below and will behave the same way.
 
@@ -124,30 +125,31 @@ current or working directory, it will automatically download them.
 
 ###### File format of the first input file
 The first input file, sp_list.txt, is a TWO-column text file where
-each row corresponds to one species. The first column has the taxon ids
-and the second column has the organism names.
+each row corresponds to one species. The first column has the taxonomy 
+ids and the second column has the organism names. Blank lines are allowed.
 
 ###### File format of the second input file
 The second input file, sprot_files.txt, is a ONE-column text file where
 each line corresponds to a UniprotKB/SwissProt filename at a timepoint.
-The filenames should be listed according to the series of time points.
-Blank lines are allowed. However, the filenames listed in this file must
-follow this specific naming format: uniprot_sprot.dat.2010_01 where the
-first part uniprot_sprot.dat. is a string in lowercase and the second
-part is a string in the format yyyy_mm, yyyy being a FOUR-digit year and
-mm a TWO-digit month. Also, the program will not accept any year before 2010.
+The filenames should be listed according to the desired series of valid 
+time points. Blank lines are allowed. However, the filenames listed in 
+this file must follow this specific naming format: 
+uniprot_sprot.dat.2010_01 where the first part uniprot_sprot.dat. is a 
+string in lowercase and the second part is a string in the format yyyy_mm, 
+yyyy being a FOUR-digit year and mm a TWO-digit month. Also, the program 
+will not accept any year before 2010.
 
 ###### File format of the output file
 The output file, sprot_genes.stat.1, has two header lines: the first line
-has the taxonomy ids and the second has MFO, BPO, and CCO strings under
-each taxonomy id to indicate the ontological categories of Molecular
-Function, Biological Process, and Cellular Component, respectively. The
-subsequent lines are for the gene count values - one row for each timepoint.
-The gene count values on each row are listed in groups, where each group
-has THREE values corresponding to one specific organism. The THREE gene
-count values in each group are for BPO, CCO, and MFO ontological categories,
-respectively. The order of the organisms on a row are the same as they are
-found in the sp_list.txt file.
+has the taxonomy ids and the second line has Three strings (MFO, BPO, and 
+CCO) under each taxonomy id to indicate the ontological categories of 
+Molecular Function, Biological Process, and Cellular Component, 
+respectively. The subsequent lines are for the gene count values - one row 
+for each timepoint. The gene count values on each row are listed in groups, 
+where each group has THREE values corresponding to one specific organism. 
+The THREE gene count values in each group are for MFO, BPO, and CCO 
+ontological categories, respectively. The order of the organisms on a row 
+are the same as they are found in the sp_list.txt file.
 
 ##### Execution time
 The UniProtKB/SwissProt files are large in size (each file several 
@@ -164,12 +166,12 @@ operated by Ubuntu 14.04.4 LTS, is as follows:
 * Gene count time for the query species in those target files:
   02 hr, 20 min, and 14 sec.
 
-The subsequent run of this program would cost only the gene count time.
+A subsequent run of this program would cost only the gene count time.
 
 <a name="genGraphs" />
 #### Generate Graphs for Gene Counts
 
-This program will create a graph for the gene count of each organism 
+This program will create a graph of the gene count for each organism 
 that is found in the above step. One can run the program as follows:
 
 ```
@@ -190,8 +192,9 @@ geneCount.3702.1.png
 geneCount.10116.1.png
 geneCount.559292.1.png
 geneCount.9913.1.png
-geneCount.83333.1.png
 geneCount.284812.1.png
+geneCount.83333.1.png
+geneCount.224308.1.png
 geneCount.44689.1.png
 ```
 
@@ -205,7 +208,8 @@ python Plot_geneCounts -I1=sp_list.txt -I2=sprot_files.txt -I3=geneCount.stat.1 
 ```
 
 This will behave the same way as it does without the additional argument, 
-except that the figure name prefix can be supplied in the latter case.
+except that the figure name prefix can be supplied to the program in the 
+latter case.
 
 The following section shows the figures produced by running this program 
 for two sets of data.
