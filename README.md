@@ -1,5 +1,5 @@
 <a name="title" />
-## Impact of incomplete knowledge on function-predictions and the evaluation of the predictive models.
+## Impact of incomplete knowledge on function-prediction and the evaluation of the predictive model.
 * This is an ongoing project. In this project, I am developing tools to 
   facilitate my research into the impact of incomplete knowledge on the 
   functional predictions of proteins and the evaluation of the related 
