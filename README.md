@@ -141,14 +141,14 @@ will not accept any year before 2010.
 
 ###### File format of the output file
 The output file, sprot_genes.stat.1, has two header lines: the first line
-has the taxonomy ids and the second line has Three strings (MFO, BPO, and 
-CCO) under each taxonomy id to indicate the ontological categories of 
-Molecular Function, Biological Process, and Cellular Component, 
-respectively. The subsequent lines are for the gene count values - one row 
-for each timepoint. The gene count values on each row are listed in groups, 
-where each group has THREE values corresponding to one specific organism. 
-The THREE gene count values in each group are for MFO, BPO, and CCO 
-ontological categories, respectively. The order of the organisms on a row 
+has the taxonomy ids and the second line has three strings (MFO, BPO, and
+CCO) under each taxonomy id to indicate the ontological categories of
+Molecular Function, Biological Process, and Cellular Component,
+respectively. The subsequent lines are for the gene count values - one row
+for each timepoint. The gene count values on each row are listed in groups,
+where each group has THREE values corresponding to one specific organism.
+The THREE gene count values in each group are for MFO, BPO, and CCO
+ontological categories, respectively. The order of the organisms on a row
 are the same as they are found in the sp_list.txt file.
 
 ##### Execution time
