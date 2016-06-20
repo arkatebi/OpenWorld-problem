@@ -1,0 +1,514 @@
+#!/usr/bin/env python
+'''
+    This tool count the number of genes for a set of organisms in
+    some UniProtKB/SwissProt files over a series of time points.
+    One can run this program as follows:
+
+       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt
+   
+    The program will use the organisms from the sp_list.txt file
+    and UniProtKB/SwissProt files from the sprot_files.txt file.
+    The description of these input files are as follows:
+
+         sp_list.txt: This file has the list of species: column 1
+            has the taxon ids and column 2 has the taxon names.
+
+        sprot_files.txt: This file has has the SwissProt filenames in the
+            format uniprot_sprot.dat.yyyy_mm for example
+            uniprot_sprot.data.2016_01 for the SwissProt file release in
+            Januray 2016. The program extracts the time points from this file.
+            Also, each entry in this file corresponds to the rows in
+            sprot_genes.stat.1 file.
+
+    The program will generate an output file sprot_genes.stat.1 whose 
+    description is as follows:
+
+        sprot_genes.stat.1: This file has the gene counts.
+            Each row corresponds to the SwissProt file name listed
+            in sprot_files.txt file. For each organism, there are
+            three consecutive columns (for BPO, CCO, and MFO,
+            respectively). The columns corresponds to the species
+            listed in the sp_list.txt file, in the same order.
+    
+    Repeated run of this program will create the subsequent versions of 
+    the output file.
+
+    The program can also be supplied with an output filename prefix:
+
+       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt -O=sprot_genes.stat
+'''
+import os
+import sys
+from os.path import basename 
+from collections import OrderedDict
+from collections import defaultdict 
+
+import ArgParser_count as ap
+import Config
+import configparser as cp
+import Count_sprot_GOterms as csg
+import Download as dl
+import FormatChecker as fc
+import LocateDataset as ld
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+# Default configuration file name:
+config_filename = '.config' 
+
+output_fn_prefix = 'goCount_2010to2016'
+
+class Count_GOterms:
+    def __init__(self):
+        # Collect user arguments into a dictionary:
+        self.parsed_dict = ap.parse_args() 
+
+        # Collect config file entries:
+        self.ConfigParam = Config.read_config(config_filename) 
+        self.work_dir = self.ConfigParam['workdir']
+
+        # Look for workspace, and if none exists create one:
+        if not os.path.exists(self.work_dir):
+            os.makedirs(self.work_dir) # Create work space
+
+        t1 = self.parsed_dict['t1'] # Extract input file name
+        # Locate file for the species list:
+        self.species_filename = ld.locate_anyfile(t1, self.work_dir)
+        t2 = self.parsed_dict['t2'] # Extract input file name
+        # Locate the file for the list of the UniProtKB/SwissProt 
+        # file names over a series of time points:
+        self.sprot_filename = ld.locate_anyfile(t2, self.work_dir)
+
+        # Create output file name for saving gene counts:
+#        self.output_filename = self.create_outfilename() 
+        return None
+
+    def create_outfilename(self, taxon_id):
+        """ 
+        Creates an output filename based on the output file prefix
+        provided by the user and at the end returns the newly
+        created output filename.
+        """
+        if not self.parsed_dict['outfile'] == '':
+            ob = basename(self.parsed_dict['outfile'])
+        else:
+            ob = output_fn_prefix
+        index = 1
+        while os.path.exists(self.work_dir + '/' + ob + '.' + str(taxon_id) + '.' + str(index)):
+            index = index + 1
+        output_filename = self.work_dir + '/' + ob + '.' + str(taxon_id) + '.' + str(index)
+        return output_filename
+
+    def check_sprot_format(self, sprot_fname):
+        """
+        This method exits the Filter program on any of the
+        following conditions:
+            Case 1: if the file is empty
+            Case 2: if the file is NOT in UniProtKB/SwissProt format.
+                    To check this it invokes check_sprot_format method
+                    of FormatChecker module.
+        """
+        if os.stat(sprot_fname).st_size == 0:
+            print(bcolors.WARNING + 'You submitted an empty file: ' + sprot_fname + \
+                  bcolors.ENDC)
+            sys.exit(1)
+        elif not fc.check_sprot_format(open(sprot_fname, 'r')):
+            print(bcolors.WARNING + 'File format error: ' + \
+                  basename(sprot_fname) + bcolors.ENDC)
+            print(bcolors.WARNING + 'File must be in UniProtKB/SwissProt ' + \
+                'format' + bcolors.ENDC)
+            sys.exit(1)
+
+    def create_outfile_header(self):
+        '''
+        This method creates the TWO header lines for the output 
+        file for writing GO term counts for one of the species 
+        over a series of UniProtKB/SwissProt time points.
+        '''
+        tp_header = '\t'
+        ont_header =''
+#        fh_sp = open(self.species_filename, 'r')
+        fh_sp = open(self.sprot_filename, 'r')
+
+        # Read each subsequent line of the sprot filename file 
+        # and construct the two header lines:
+        for line in fh_sp:
+#            sp_header += '\t' + line.strip().split('\t')[0] + '\t\t'
+            tp_header += '\t' + basename(line).strip().split('.dat.')[-1] + '\t\t'
+            ont_header += '\t' + 'MFO' + '\t' + 'BPO' + '\t' + 'CCO'
+        tp_header = tp_header.rstrip() + '\n'
+        ont_header = ont_header.rstrip() + '\n'
+        return (tp_header, ont_header)
+
+    def print_prolog(self):
+        print("*************************************************")
+        print("Welcome to Gene Count Tool !!!!!")
+        print("*************************************************\n")
+        print('Following is a list of user supplied inputs:\n')
+        for arg in self.parsed_dict:
+            print(arg + ': ' + str(self.parsed_dict[arg]))
+        print('*********************************************\n')
+        return None
+
+    def print_epilog(self):
+        if os.path.exists(self.output_filename):
+            print(bcolors.OKGREEN + 'The following gene count file ' + \
+                                    'is created:' + bcolors.ENDC)
+            print(basename(self.output_filename))
+        else: 
+            print(bcolors.WARNING + 'No gene count file is created ' + \
+                                    'with the given parameters' + bcolors.ENDC)
+        print(bcolors.OKGREEN + 'Thank you for using Gene Count ' + \
+                                'Tool' + bcolors.ENDC)
+        return None
+
+    def get_GOterms_over_tp(self, taxon_id, fh_out):
+#        print('Taxon id:' + str(taxon_id))
+        
+        # Initialize dictionaries for storing dictionaries
+        # of GO terms in MFO, BPO, and CCO ontological
+        # categories:
+        tp_mfo = OrderedDict()
+        tp_bpo = OrderedDict()
+        tp_cco = OrderedDict()
+
+        # Create a file handle fh_fn for the file containing the 
+        # list of UniProtKB/SwissProt filenames:
+        fh_fn = open(self.sprot_filename, 'r')
+        # Count the total number of genes with EXP evidence code
+        # for each UniProtKB/SwissProt file:
+        for fname in fh_fn:
+            # Skip any empty line in the file with the file names:
+            if not (fname.strip()):
+                continue
+            # Retrieve the UniProtKB/SwissProt filename:
+            sprot_fname = self.work_dir + '/' + fname.strip()
+#            print basename(sprot_fname)
+            mfo_terms, bpo_terms, cco_terms = csg.count_GOterms_with_EXP(
+                                                  open(sprot_fname, 'r'),
+                                                  taxon_id,
+                                                  self.ConfigParam['exp_eec'])
+            # Extract the time point from the file name:
+            tp = basename(fname).strip().split('.dat.')[-1]
+            tp_mfo[tp] = mfo_terms
+            tp_bpo[tp] = bpo_terms
+            tp_cco[tp] = cco_terms
+#            break
+        fh_fn.close()
+        return (tp_mfo, tp_bpo, tp_cco)
+
+    def count_GOterms_for_species(self):
+        '''
+        This method counts the number of experimentally annotated
+        genes for all speceis in specific UniProtKB/SwissProt file 
+        whose name is supplied by the argument sprot_fname. For each 
+        speceis, the method calls count_genes_with_EXP method to count 
+        the number of experimentally genes for that species in the 
+        SwissProt file.
+        '''
+        # Create TWO header lines for the output file:
+        # tp_header: a string with UniProtKB/SwissProt time points
+        # ont_header: a string with MFO, BPO, CCO for each time point 
+        tp_header, ont_header = self.create_outfile_header()
+
+        # Get a file handle for the species filename:
+        fh_sp = open(self.species_filename, 'r')
+        # Skip the first header line:
+        next(fh_sp)
+        # Calculate gene counts for each species in the
+        # Swissprot file supplied by the file handle:
+        for line in fh_sp:
+            # Skip any empty line in the file containing the organism name:
+            if not (line.strip()):
+                continue
+            # Extract taxon id from the species list file:
+            taxon_id = line.strip().split('\t')[0]
+            # Create an output file name for the current species:
+            output_fname = self.create_outfilename(taxon_id)
+            # Write the TWO header lines to the output file:
+            fh_out = open(output_fname,'w')
+            fh_out.write("%s" % tp_header)
+            fh_out.write("%s" % ont_header)
+            fh_out.flush()
+            # Retrieve GO terms for this species over time points:
+            tp_mfo,tp_bpo,tp_cco = self.get_GOterms_over_tp(taxon_id, fh_out)
+            # tp_mfo:  
+            # tp_bpo: 
+            # tp_cco: 
+
+            # Create tables of gene counts with specific number
+            # of GO annotations over the time points:
+            go_cnt_mfo,go_cnt_bpo,go_cnt_cco = self.create_table(tp_mfo,
+                                                                 tp_bpo,
+                                                                 tp_cco)
+            fh_out.close()
+            break
+        fh_sp.close()
+        return None
+
+    def get_max_GO_count(self, tp_mfo, tp_bpo, tp_cco):
+        '''
+        This method calculates the maximum GO count among the 
+        THREE dictionaries tp_mfo, tp_bpo, and tp_cco. 
+        '''
+        # Initialize max_go_count with zero:
+        max_go_count = 0
+
+        # Create a file handle fh_fn for the file containing the
+        # list of UniProtKB/SwissProt filenames:
+        fh_fn = open(self.sprot_filename, 'r')
+        for fname in fh_fn:
+            # Skip any empty line in the file with the file names:
+            if not (fname.strip()):
+                continue
+            # Retrieve the UniProtKB/SwissProt filename:
+            sprot_fname = self.work_dir + '/' + fname.strip()
+            # Retrieve the time point:
+            tp = basename(fname).strip().split('.dat.')[-1]
+            # Retrieve the dicitonaries for the current time point:
+            mfo_terms = tp_mfo[tp]
+            bpo_terms = tp_bpo[tp]
+            cco_terms = tp_cco[tp]
+            # Initialize a locax max variable m:
+            m = 0
+            # Get the maximum GO list with MFO terms:
+            for k in list(mfo_terms.keys()):
+                if (len(list(mfo_terms[k]))> m):
+                    m = len(list(mfo_terms[k]))
+            # Get the maximum GO list with BPO terms:
+            for k in list(bpo_terms.keys()):
+                if (len(list(bpo_terms[k]))> m):
+                    m = len(list(bpo_terms[k]))
+            # Get the maximum GO list with CCO terms:
+            for k in list(cco_terms.keys()):
+                if (len(list(cco_terms[k]))> m):
+                    m = len(list(cco_terms[k]))
+            if m > max_go_count:
+                max_go_count = m
+        return max_go_count
+
+    def count_genes(self, max_go_count, go_dict):
+        '''
+        This method creates a dictionary: gene_cnt
+        It count the number of genes that are annotated
+        by specific number of GO terms and place that
+        gene count in the dictionary.
+        '''
+        # Initialize a dictionary gene_cnt to store
+        # number of genes that are annotated by specific
+        # number of GO terms:
+        gene_cnt = defaultdict(int)
+        
+        # Initialize a dictionary go_cnt to store number 
+        # of go terms that annotate a specific gene:
+        go_cnt = OrderedDict()
+        for k in list(go_dict.keys()):
+            go_cnt[k] = len(list(go_dict[k]))
+        for go_count_i in range(0, max_go_count+1):
+            # Initialize a variable gene_count_i for gene count with
+            # go_count_i number of GO annotations:
+            gene_count_i = 0
+            # Count the number of genes that have go_count_i
+            # number of GO terms:
+            for k in list(go_cnt.keys()):
+                if go_cnt[k] == go_count_i:
+                    gene_count_i += 1
+            gene_cnt[go_count_i]=gene_count_i
+        return gene_cnt
+
+    def create_table(self, tp_mfo, tp_bpo, tp_cco):
+        '''
+        The definitions of the three input arguments are as follows:
+            tp_mfo:  
+            tp_bpo: 
+            tp_cco: 
+  
+        This method creates THREE dictionaries:
+             go_cnt_mfo
+             go_cnt_bpo
+             go_cnt_cco
+        Each dictionary will contain how many proteins are there
+        with a specific number of GO evidences.
+        '''
+        # Initialize dictionaries to store the number of
+        # genes with specific number of GO evidences:
+        max_go_count = self.get_max_GO_count(tp_mfo, tp_bpo, tp_cco)
+        print(max_go_count)
+        gene_cnt_mfo = defaultdict(list)
+        gene_cnt_bpo = defaultdict(list)
+        gene_cnt_cco = defaultdict(list)
+
+        # Create a file handle fh_fn for the file containing the
+        # list of UniProtKB/SwissProt filenames:
+        fh_fn = open(self.sprot_filename, 'r')
+        for fname in fh_fn:
+            # Skip any empty line in the file with the file names:
+            if not (fname.strip()):
+                continue
+            # Retrieve the UniProtKB/SwissProt filename:
+            sprot_fname = self.work_dir + '/' + fname.strip()
+            #print basename(sprot_fname)
+            tp = basename(fname).strip().split('.dat.')[-1]
+            #print(tp)
+            mfo_terms = tp_mfo[tp]
+            bpo_terms = tp_bpo[tp]
+            cco_terms = tp_cco[tp]
+
+            # Count the number of genes annotated by specific 
+            # number of GO terms n MFO category
+            gene_cnt = self.count_genes(max_go_count, mfo_terms)
+            # Append these gene counts in the corresponding list 
+            # of the relevant dictionary in MFO category: 
+            for go_count_i in range(0, max_go_count+1):
+                gene_cnt_mfo[go_count_i].append(gene_cnt[go_count_i])
+
+            # Count the number of genes annotated by specific 
+            # number of GO terms n BPO category
+            gene_cnt = self.count_genes(max_go_count, bpo_terms)
+            # Append these gene counts in the corresponding list 
+            # of the relevant dictionary in BPO category:
+            for go_count_i in range(0, max_go_count+1):
+                gene_cnt_bpo[go_count_i].append(gene_cnt[go_count_i])
+
+            # Count the number of genes annotated by specific 
+            # number of GO terms n BPO category
+            gene_cnt = self.count_genes(max_go_count, cco_terms)
+            # Append these gene counts in the corresponding list 
+            # of the relevant dictionary in BPO category:
+            for go_count_i in range(0, max_go_count+1):
+                gene_cnt_cco[go_count_i].append(gene_cnt[go_count_i])
+        print(gene_cnt_mfo)
+        print(gene_cnt_bpo)
+        print(gene_cnt_cco)
+        return (gene_cnt_mfo, gene_cnt_bpo, gene_cnt_cco)
+
+    def process_data(self):
+        """
+        This method repeatedly calls count_genes_for_species method 
+        from Count_sp_genes.py module to count the genes that are 
+        EXP validated in BPO, CCO, and MFO category, for all the 
+        SwissProt files. 
+        """
+        # Print the wellcome message and argument list:
+#        self.print_prolog() 
+
+        # Check the existence of data files and download that
+        # are not available:
+
+        # Create an object of Download class:
+        dlObject = dl.Download(self.work_dir, self.sprot_filename)
+        # Run the download_testDataset method which checks and
+        # downloads the data files listed in the self.sprot_filename:
+        dlObject.download_testDataset(open(self.sprot_filename, 'r'))
+
+        self.count_GOterms_for_species()
+#        self.count_GOterms_over_timepoints()
+        raise SystemExit
+
+        # Create TWO header lines for the output file: 
+        # sp_header: a string with species taxon ids
+        # ont_header: a strings with BPO, CCO, MFO for each speceis
+        sp_header, ont_header = self.create_outfile_header()
+
+        # Create a file hanlde fh_out for the output file: 
+        fh_out = open(self.output_filename, 'w')
+
+        # Write the TWO header lines to the output file: 
+        fh_out.write("%s" % sp_header)
+        fh_out.write("%s" % ont_header)
+        fh_out.flush()
+
+        # Create a file handle fh_fn for the file containing the
+        # list of UniProtKB/SwissProt filenames:
+        fh_fn = open(self.sprot_filename, 'r')
+
+        # Count the total number of genes with EXP evidence code 
+        # for each UniProtKB/SwissProt file:
+        for fname in fh_fn:
+            # Skip any empty line in the file with the file names:
+            if not (fname.strip()):
+                continue
+            # Retrieve the UniProtKB/SwissProt filename:
+            sprot_fname = self.work_dir + '/' + fname.strip()
+            # Create a string of gene counts for all species:
+            geneCount_str = self.count_genes_for_species(sprot_fname)
+            fh_out.write("%s" % geneCount_str)
+            fh_out.flush()
+        # Close the open files:
+        fh_fn.close()
+        fh_out.close()
+        # Print summary of running this program:
+        self.print_epilog()
+        return None
+
+    def process_data_old(self):
+        """
+        This method repeatedly calls count_genes_for_species method 
+        from Count_sp_genes.py module to count the genes that are 
+        EXP validated in BPO, CCO, and MFO category, for all the 
+        SwissProt files.
+        """
+        # Print the wellcome message and argument list:
+        self.print_prolog()
+
+        # Check the existence of data files and download that
+        # are not available:
+
+        # Create an object of Download class:
+        dlObject = dl.Download(self.work_dir, self.sprot_filename)
+        # Run the download_testDataset method which checks and
+        # downloads the data files listed in the self.sprot_filename:
+        dlObject.download_testDataset(open(self.sprot_filename, 'r'))
+   
+        # Create TWO header lines for the output file:
+        # sp_header: a string with species taxon ids
+        # ont_header: a strings with BPO, CCO, MFO for each speceis
+        sp_header, ont_header = self.create_outfile_header()
+
+        # Create a file hanlde fh_out for the output file: 
+        fh_out = open(self.output_filename, 'w')
+
+        # Write the TWO header lines to the output file:
+        fh_out.write("%s" % sp_header)
+        fh_out.write("%s" % ont_header)
+        fh_out.flush()
+
+        # Create a file handle fh_fn for the file containing the 
+        # list of UniProtKB/SwissProt filenames:
+        fh_fn = open(self.sprot_filename, 'r')
+
+        # Count the total number of genes with EXP evidence code 
+        # for each UniProtKB/SwissProt file:
+        for fname in fh_fn:
+            # Skip any empty line in the file with the file names:
+            if not (fname.strip()):
+                continue
+            # Retrieve the UniProtKB/SwissProt filename:
+            sprot_fname = self.work_dir + '/' + fname.strip()
+            # Create a string of gene counts for all species:
+            geneCount_str = self.count_genes_for_species(sprot_fname)
+            fh_out.write("%s" % geneCount_str)
+            fh_out.flush()
+        # Close the open files:
+        fh_fn.close()
+        fh_out.close()
+        # Print summary of running this program:
+        self.print_epilog()
+        return None
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print(sys.argv[0] + ':')
+        print(__doc__)
+    else:
+        cg = Count_GOterms()   # Create an instance of Count_GOterms class
+        cg.process_data()      # Process data
+    sys.exit(0)
