@@ -4,7 +4,7 @@
     some UniProtKB/SwissProt files over a series of time points.
     One can run this program as follows:
 
-       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt
+       > python Count_GOterms -I1=sprot_files.txt -I2=sp_list.txt
    
     The program will use the organisms from the sp_list.txt file
     and UniProtKB/SwissProt files from the sprot_files.txt file.
@@ -35,7 +35,7 @@
 
     The program can also be supplied with an output filename prefix:
 
-       > python Count_genes -I1=sprot_files.txt -I2=sp_list.txt -O=sprot_genes.stat
+       > python Count_GOterms -I1=sprot_files.txt -I2=sp_list.txt -O=sprot_genes.stat
 '''
 import os
 import sys
@@ -327,9 +327,10 @@ class Count_GOterms:
     def create_table(self, tp_mfo, tp_bpo, tp_cco):
         '''
         The definitions of the three input arguments are as follows:
-            tp_mfo:  
-            tp_bpo: 
-            tp_cco: 
+            tp_mfo: a dictionary that stores the dictionaries of MFO GO terms
+                    for each protein  
+            tp_bpo: the same as above but for BPO ontological category 
+            tp_cco: the same as above but for CCO ontological category 
   
         This method creates THREE dictionaries:
              go_cnt_mfo
@@ -338,6 +339,7 @@ class Count_GOterms:
         Each dictionary will contain how many proteins are there
         with a specific number of GO evidences.
         '''
+
         # Initialize dictionaries to store the number of
         # genes with specific number of GO evidences:
         max_go_count = self.get_max_GO_count(tp_mfo, tp_bpo, tp_cco)
