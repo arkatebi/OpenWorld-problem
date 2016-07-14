@@ -25,7 +25,9 @@
 
 4.1\. [Generate Gene Counts Annotated by Exp Evidence Codes] (#genGeneCounts)
 
-4.1\. [Generate Graphs for Gene Counts] (#genGraphs)
+4.2\. [Generate Graphs for Gene Counts] (#genGraphs)
+
+4.3\. [Generate Training Sequences] (#genTrainingSet)
 
 5\. [Graphical Views of Gene Counts] (#graphicalView)
 
@@ -211,8 +213,57 @@ This will behave the same way as it does without the additional argument,
 except that the figure name prefix can be supplied to the program in the 
 latter case.
 
-The following section shows the figures produced by running this program 
-for two sets of data.
+<a name="genTrainingSet" />
+#### Generate Training Sequences 
+
+This program will extract the sequences of the proteins that have 
+experimental evidence codes in the UniProt/SwissProt file: 
+
+```
+python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01
+
+```
+The input file uniprot_sprot.dat.2010_01 is the UniProt/SwissProt file 
+where the sequences will be extracted from. The program generates the 
+following two output files: 
+
+```
+uniprot_sprot.dat.2010_01.tfa.1
+uniprot_sprot.dat.2010_01.tfa.1.map
+```
+The first ouput file has the extracted training sequences in the FASTA 
+file format. The id for each sequence is constructed from a program 
+generating string and the SwissProt protein name. The second output 
+file records the mapping between the program generated string and 
+the SwissProt protein name.
+
+The program can also be used to extract sequences for a specific organism:
+
+```
+python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
+```
+
+This will generate the following two output files: 
+
+```
+uniprot_sprot.dat.2010_01.tfa.9606.1
+uniprot_sprot.dat.2010_01.tfa.9606.1.map
+```
+
+This program can also take an optional output file name: 
+
+```
+python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606 -O=trainingSet.9606
+```
+This will create the following two output files:
+
+```
+trainingSet.9606.1
+trainingSet.9606.1.map
+```
+
+Repeated run of the program creates the subsequent versions of each figure file. 
+
 
 <a name="graphicalView" />
 ### Graphical View of Gene Counts 
