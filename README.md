@@ -217,23 +217,24 @@ latter case.
 #### Generate Training Sequences 
 
 This program will extract the sequences of the proteins that have 
-experimental evidence codes in the UniProt/SwissProt file: 
+experimental evidence codes in a UniProt/SwissProt file: 
 
 ```
 python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01
 
 ```
 The input file uniprot_sprot.dat.2010_01 is the UniProt/SwissProt file 
-where the sequences will be extracted from. The program generates the 
-following two output files: 
+where the sequences are extracted from. The program generates the
+following two output files:
 
 ```
 uniprot_sprot.dat.2010_01.tfa.1
 uniprot_sprot.dat.2010_01.tfa.1.map
 ```
+
 The first ouput file has the extracted training sequences in the FASTA 
 file format. The id for each sequence is constructed from a program 
-generating string and the SwissProt protein name. The second output 
+generated string and the SwissProt name of the protein. The second output 
 file records the mapping between the program generated string and 
 the SwissProt protein name.
 
@@ -255,14 +256,15 @@ This program can also take an optional output file name:
 ```
 python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606 -O=trainingSet.9606
 ```
-This will create the following two output files:
+
+This creates the following two output files:
 
 ```
 trainingSet.9606.1
 trainingSet.9606.1.map
 ```
 
-Repeated run of the program creates the subsequent versions of each figure file. 
+Repeated run of the program creates the subsequent versions of each out file. 
 
 
 <a name="graphicalView" />
