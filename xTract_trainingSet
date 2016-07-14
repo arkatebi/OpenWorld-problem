@@ -1,0 +1,224 @@
+#!/usr/bin/env python
+'''
+    xTract_trainingSeq program accepts the following three inputs:
+           (1) a UniProtKB/swissProt file 
+           (2) an optional taxon id and 
+           (3) an optional output file name 
+    
+    This program extracts the protein sequences from the UniProtKB/SwissProt 
+    file that are experimentally annotated and writes them to the output file.
+   
+    When the taxon id is NOT given, it will extract the training sequences 
+    for all species. In case the taxon id is given by the user, the program 
+    will extract the sequences for the organism for that specific organism 
+    only.
+    When the output file name is NOT given, it will construct an output file
+    name by combining a portion of the UniProtKB/SwissProt file name (and the 
+    taxon id if it is supplied by the user). 
+     
+    How to run this program?
+    Mode 1: 
+        For some input file uniprot_sprot.dat.2010_01
+
+       > python xTract_trainingSet -I1=uniprot_sprot.dat.2014_09 
+  
+    Two output files will be created:
+        A file with training sequences: uniprot_sprot.dat.2014_09.tfa.1
+        A target id and protein name mapping file:
+            uniprot_sprot.dat.2014_09.tfa.1.map
+            This will contain the mapping of target sequence ids and protein
+            names.
+    Mode 2:
+        For some input file uniprot_sprot.dat.2010_01 and taxon id 9606
+
+       > python xTract_trainingSet -I1=uniprot_sprot.dat.2014_09 -G=9606
+  
+    Two output files will be created:
+        A target sequence file: uniprot_sprot.dat.2014_09.559292.tfa.1
+            This will contain the target sequences specific to the organism
+            55929.
+        A target id and protein name mapping file:
+            uniprot_sprot.dat.2014_09.559292.tfa.1.map
+            This will contain the mapping of target sequence ids and protein
+            names.
+'''
+import os
+import sys
+from os.path import basename 
+
+import configparser as cp
+import shutil
+import subprocess
+
+import ArgParser_xTract_trainingSet as ap
+import Config
+import xTract_sp_trainingSet as xt
+import FormatChecker as fc
+import LocateDataset as ld
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+# Default configuration file name:
+config_filename = '.cafarc' 
+
+class xTract_trainingSeq: 
+    def __init__(self):
+        # Collect user arguments into a dictionary:
+        self.parsed_dict = ap.parse_args()
+
+        # Collect config file entries:
+        self.ConfigParam = Config.read_config(config_filename) 
+        self.work_dir = self.ConfigParam['workdir']
+
+        # Look for workspace, and if none exists create one:
+        if not os.path.exists(self.work_dir):
+            os.makedirs(self.work_dir) # Create work space
+
+        t1 = self.parsed_dict['t1'] # Extract input file name
+        # Locate the input file:
+        self.t1_input_file = ld.locate_SwissProtfile(t1, self.work_dir)
+        # Create output file name for target sequences:
+        self.output_filename = self.create_outfilename() 
+
+        # Create output file name for mapping between SwissProt 
+        # protein name and sequence id in the target sequence 
+        # file:
+        self.output_map_filename = self.output_filename + '.map'
+        return None
+
+    def create_iterator(self, infile):
+        """ 
+        Creates and returns an iterator object for an input a UniProt-GOA
+        file along with a list of all field names contained in the
+        UniProt-GOA file.
+        """
+        infile_handle = open(infile, 'r')
+        iter_handle = GOA.gafiterator(infile_handle)
+        for ingen in iter_handle:
+            if len(ingen) == 17:
+                GAFFIELDS = GOA.GAF20FIELDS
+                break
+            else:
+                GAFFIELDS = GOA.GAF10FIELDS
+                break
+        infile_handle = open(infile, 'r')
+        iter_handle = GOA.gafiterator(infile_handle)
+        return iter_handle, GAFFIELDS
+
+    def create_outfilename(self):
+        """ 
+        Creates an output filename based on the output file prefix
+        provided by the user and at the end returns the newly
+        created output filename.
+        """
+        if not self.parsed_dict['outfile'] == '':
+            ob = basename(self.parsed_dict['outfile'])
+        else: # if output file name is NOT supplied, construct one:
+            if not basename(self.parsed_dict['g']):
+                ob = basename(self.parsed_dict['t1']) + '.tfa'
+            else: # if taxon id is supplied 
+                ob = basename(self.parsed_dict['t1']) + '.%s.tfa' \
+                          % basename(self.parsed_dict['g'])
+                # output file name is constructed by appending '.taxon id.tfa'
+                # as an extension
+        index = 1
+        while os.path.exists(self.work_dir + '/' + ob + '.' + str(index)):
+            index = index + 1
+        output_filename = self.work_dir + '/' + ob + '.' + str(index)
+        return output_filename
+
+    def print_prolog(self):
+        print ("*************************************************")
+        print ("Running Training Sequence Generatin Tool !!!!!")
+        print ('Following is a list of user supplied inputs:')
+        for arg in self.parsed_dict:
+            print (arg + ': ' + str(self.parsed_dict[arg]))
+        print ('*********************************************\n')
+        return None
+
+    def print_epilog(self, target_count):
+        if(os.path.exists(self.output_filename) or
+           os.path.exists(self.output_map_filename)):
+           print(bcolors.OKGREEN + 'The following output files are created: ' +
+                 bcolors.ENDC)
+           if os.path.exists(self.output_filename):
+                print('    Training sequence file: ' + \
+                       basename(self.output_filename))
+           if os.path.exists(self.output_map_filename):
+                print('    Training sequence id to protein name map file: ' + \
+                       basename(self.output_map_filename))
+           print('    Note: ' + str(target_count) + \
+                 ' training sequences generated')
+        else:
+            print(bcolors.WARNING + 'No output file is created with the ' + \
+                   'given input parameters' + bcolors.ENDC)
+        print(bcolors.OKGREEN + 'Thank you for using Training Sequence Generation Tool' + \
+               bcolors.ENDC)
+        return None
+
+    def check_sprot_format(self, sprot_fname):
+        """
+        This method exits the xTract_trainingSeq program on any of the
+        following conditions:
+            Case 1: if the file is empty
+            Case 2: if the file is NOT in UniProtKB/SwissProt format.
+                    To check this it invokes check_sprot_format method
+                    of FormatChecker module.
+        """
+        if os.stat(sprot_fname).st_size == 0:
+            print(bcolors.WARNING + 'You submitted an empty file: ' + sprot_fname + \
+                  bcolors.ENDC)
+            sys.exit(1)
+        elif not fc.check_sprot_format(open(sprot_fname, 'r')):
+            print(bcolors.WARNING + 'File format error: ' + \
+                  basename(sprot_fname) + bcolors.ENDC)
+            print(bcolors.WARNING + 'File must be in UniProtKB/SwissProt ' + \
+                'format' + bcolors.ENDC)
+            sys.exit(1)
+
+    def process_data(self):
+        """
+        This method invokes other methods to perform all tasks related
+        to training sequence generation.
+        """
+        # Print the wellcome message:
+        self.print_prolog()
+
+        # Check UniProtKB/SwissProt file format: 
+        self.check_sprot_format(self.t1_input_file)
+
+        # Filter out the target sequences from the UniProtKB/SwissProt file:
+        print('Filtering training sequences from ' + \
+               basename(self.t1_input_file) + ' ...')
+
+        if not basename(self.parsed_dict['g']):
+            target_count = xt.all_species_filter(open(self.t1_input_file, 'r'),
+                                         open(self.output_filename, 'w'),
+                                         open(self.output_map_filename, 'w'),
+                                         self.ConfigParam['exp_eec'])
+        else: 
+            target_count = xt.species_filter(open(self.t1_input_file, 'r'),
+                                         self.parsed_dict['g'],
+                                         open(self.output_filename, 'w'),
+                                         open(self.output_map_filename, 'w'),
+                                              self.ConfigParam['exp_eec'])
+        # Print the summary of running this program:
+        self.print_epilog(target_count)
+        return None
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print(sys.argv[0] + ':')
+        print(__doc__)
+    else:
+        fd = xTract_trainingSeq() # Create an instance of Filter class
+        fd.process_data() # Process data and filter out target sequences
+    sys.exit(0)
