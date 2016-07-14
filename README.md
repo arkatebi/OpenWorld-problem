@@ -266,7 +266,6 @@ trainingSet.9606.1.map
 
 Repeated run of the program creates the subsequent versions of each out file. 
 
-
 <a name="graphicalView" />
 ### Graphical View of Gene Counts 
 
