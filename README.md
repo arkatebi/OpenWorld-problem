@@ -27,7 +27,7 @@
 
 4.2\. [Generate Graphs for Gene Counts] (#genGraphs)
 
-4.3\. [Generate Training Sequences] (#genTrainingSet)
+4.3\. [Generate Training Set] (#genTrainingSet)
 
 5\. [Graphical Views of Gene Counts] (#graphicalView)
 
@@ -214,7 +214,7 @@ except that the figure name prefix can be supplied to the program in the
 latter case.
 
 <a name="genTrainingSet" />
-#### Generate Training Sequences 
+#### Generate Training Set 
 
 This program will extract the sequences of the proteins that have 
 experimental evidence codes in a UniProt/SwissProt file: 
