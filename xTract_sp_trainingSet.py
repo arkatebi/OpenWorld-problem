@@ -45,7 +45,90 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import SwissProt as sp
 
-def all_species_filter(fh_sprot, fh_targets,
+def filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
+                                  ontType, EXP_default=set([])):
+    # Initializes the target_id:
+    target_id = int("1"+"0000001")
+
+    outseq_list = []
+
+    # Counts total number of sequences 
+    # in the sprot file related to the the taxonomy id taxon_id:
+    seqCount = 0
+
+    # Counts total number of sequences in the sprot file related 
+    # to the the taxonomy id taxon_id whose annotations have EXP 
+    # evidence:
+    seqCount_exp = 0
+
+    for rec in sp.parse(fh_sprot):
+        # Selects records that are related to a specific
+        # taxonomy id taxon_id:
+        #if taxon_id in rec.taxonomy_id:
+            exp_code = False 
+            seqCount += 1
+            # Going over the list of GO information:
+            for crossRef in rec.cross_references: 
+                # Consider the cross_reference entries 
+                # that relate to GO DB:
+                if crossRef[0] == 'GO':
+                    goList = [crossRef[1], 
+                             (crossRef[3].split(':'))[0], 
+                             crossRef[2][0]]
+                    #print (goList[2])
+                    #print(ontType)
+                    #sys.exit(0)
+                    if goList[2] == ontType and \
+                       (crossRef[3].split(':'))[0] in EXP_default:
+                        exp_code = True
+                        break
+            # If the protein has no EXP evidence,
+            # write the sequence to the output file:
+            #if not exp_code:
+            if exp_code:
+                outseq = SeqRecord(Seq(rec.sequence),
+                                   id="T"+str(target_id),
+                                   description = "%s" %
+                                   (rec.accessions[0]))
+                outseq_list = [outseq]
+                # Write out the sequence:
+                SeqIO.write(outseq_list,fh_targets, "fasta")
+                mapStr = "T" + str(target_id) + '\t' + \
+                               str(rec.accessions[0]) + '\n'
+                # Write out the mapping (target id -> protein name):
+                fh_map.write("%s" % mapStr)
+                target_id += 1
+                seqCount_exp += 1
+    return seqCount_exp
+
+def create_trainingSet(fh_sprot,
+                       trainingFile_LK_mfo_handle, 
+                       trainingFile_LK_mfo_map_handle,
+                       trainingFile_LK_bpo_handle,
+                       trainingFile_LK_bpo_map_handle,
+                       trainingFile_LK_cco_handle,
+                       trainingFile_LK_cco_map_handle,
+                       EXP_default=set([])):
+
+    print('Creating training set for MFO ontology ..')
+    filter_trainingSet_allSpecies(fh_sprot,
+                       trainingFile_LK_mfo_handle,
+                       trainingFile_LK_mfo_map_handle,
+                       'F', EXP_default)
+
+    print('Creating training set for BPO ontology ..')
+    filter_trainingSet_allSpecies(fh_sprot,
+                       trainingFile_LK_bpo_handle,
+                       trainingFile_LK_bpo_map_handle,
+                       'P', EXP_default)
+
+    print('Creating training set for CCO ontology ..')
+    filter_trainingSet_allSpecies(fh_sprot,
+                       trainingFile_LK_cco_handle,
+                       trainingFile_LK_cco_map_handle,
+                       'C', EXP_default)
+
+def all_species_filter_old(fh_sprot, fh_targets,
                    fh_map, EXP_default=set([])):
     # Initializes the target_id:
     #target_id = int(taxon_id+"0000001")
