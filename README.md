@@ -277,7 +277,7 @@ trainingSet.9606.tfa_LK_cco.1
 trainingSet.9606.tfa_LK_cco.1.map
 ```
 
-Repeated run of the program creates the subsequent versions of each out file. 
+Repeated run of the program creates the subsequent versions of each output file. 
 
 <a name="graphicalView" />
 ### Graphical View of Gene Counts 
