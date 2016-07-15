@@ -225,18 +225,23 @@ python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01
 ```
 The input file uniprot_sprot.dat.2010_01 is the UniProt/SwissProt file 
 where the sequences are extracted from. The program generates the
-following two output files:
+following six output files - two files for each ontological category:
 
 ```
-uniprot_sprot.dat.2010_01.tfa.1
-uniprot_sprot.dat.2010_01.tfa.1.map
+uniprot_sprot.dat.2010_01.tfa_LK_mfo.1
+uniprot_sprot.dat.2010_01.tfa_LK_mfo.1.map
+uniprot_sprot.dat.2010_01.tfa_LK_bpo.1
+uniprot_sprot.dat.2010_01.tfa_LK_bpo.1.map
+uniprot_sprot.dat.2010_01.tfa_LK_cco.1
+uniprot_sprot.dat.2010_01.tfa_LK_cco.1.map
 ```
 
 The first ouput file has the extracted training sequences in the FASTA 
-file format. The id for each sequence is constructed from a program 
-generated string and the SwissProt name of the protein. The second output 
-file records the mapping between the program generated string and 
-the SwissProt protein name.
+file format for MFO ontology. The id for each sequence is constructed from 
+a program generated string and the SwissProt name of the protein. The 
+second output file records the mapping between the program generated string 
+and the SwissProt protein name, corresponding to the entires in the first file.
+Subsequent files are for BPO and CCO ontological categories.
 
 The program can also be used to extract sequences for a specific organism:
 
@@ -244,24 +249,32 @@ The program can also be used to extract sequences for a specific organism:
 python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
 ```
 
-This will generate the following two output files: 
+This will generate the following output files:
 
 ```
-uniprot_sprot.dat.2010_01.tfa.9606.1
-uniprot_sprot.dat.2010_01.tfa.9606.1.map
+uniprot_sprot.dat.2010_01.9606.tfa_LK_mfo.1
+uniprot_sprot.dat.2010_01.9606.tfa_LK_mfo.1.map
+uniprot_sprot.dat.2010_01.9606.tfa_LK_bpo.1
+uniprot_sprot.dat.2010_01.9606.tfa_LK_bpo.1.map
+uniprot_sprot.dat.2010_01.9606.tfa_LK_cco.1
+uniprot_sprot.dat.2010_01.9606.tfa_LK_cco.1.map
 ```
 
 This program can also take an optional output file name: 
 
 ```
-python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606 -O=trainingSet.9606
+python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606 -O=trainingSet
 ```
 
 This creates the following two output files:
 
 ```
-trainingSet.9606.1
-trainingSet.9606.1.map
+trainingSet.9606.tfa_LK_mfo.1
+trainingSet.9606.tfa_LK_mfo.1.map
+trainingSet.9606.tfa_LK_bpo.1
+trainingSet.9606.tfa_LK_bpo.1.map
+trainingSet.9606.tfa_LK_cco.1
+trainingSet.9606.tfa_LK_cco.1.map
 ```
 
 Repeated run of the program creates the subsequent versions of each out file. 
