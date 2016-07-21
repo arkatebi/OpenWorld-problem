@@ -29,6 +29,8 @@
 
 4.3\. [Generate Training Set] (#genTrainingSet)
 
+4.4\. [Generate Test Set] (#genTestSet)
+
 5\. [Graphical Views of Gene Counts] (#graphicalView)
 
 5.1\. [Gene Counts: Jan 2010 to May 2016] (#year_2010to2016)
@@ -240,7 +242,7 @@ The first ouput file has the extracted training sequences in the FASTA
 file format for MFO ontology. The id for each sequence is constructed from 
 a program generated string and the SwissProt name of the protein. The 
 second output file records the mapping between the program generated string 
-and the SwissProt protein name, corresponding to the entires in the first file.
+and the SwissProt protein name, corresponding to the entries in the first file.
 Subsequent files are for BPO and CCO ontological categories.
 
 The program can also be used to extract sequences for a specific organism:
@@ -275,6 +277,76 @@ trainingSet.9606.tfa_LK_bpo.1
 trainingSet.9606.tfa_LK_bpo.1.map
 trainingSet.9606.tfa_LK_cco.1
 trainingSet.9606.tfa_LK_cco.1.map
+```
+
+Repeated run of the program creates the subsequent versions of each output file. 
+
+<a name="genTestSet" />
+#### Generate Test Set 
+
+This program will extract the sequences of the proteins that do not have 
+experimental evidence codes in a UniProt/SwissProt at time t1 but gained 
+experimental evidence codes at time t2: 
+
+```
+python xTest_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01
+
+```
+The first input file uniprot_sprot.dat.2010_01 is the UniProt/SwissProt 
+file at t1 and the second input file uniprot_sprot.dat.2011_01 is the 
+UniProt/SwissProt at time t2. The name of a SwissProt file should have 
+the format: a file name prefix followed by the exact string .dat. 
+followed by the time string (in yyyy_mm format). The program generates 
+the following six output files - two files for each ontological category:
+
+```
+uniprot_sprot.dat.2010_01-2011_01.tfa_LK_mfo.1
+uniprot_sprot.dat.2010_01-2011_01.tfa_LK_mfo.1.map
+uniprot_sprot.dat.2010_01-2011_01.tfa_LK_bpo.1
+uniprot_sprot.dat.2010_01-2011_01.tfa_LK_bpo.1.map
+uniprot_sprot.dat.2010_01-2011_01.tfa_LK_cco.1
+uniprot_sprot.dat.2010_01-2011_01.tfa_LK_cco.1.map
+```
+
+The first ouput file has the extracted test sequences in the FASTA 
+file format for MFO ontology. The id for each sequence is constructed from 
+a program generated string and the SwissProt name of the protein. The 
+second output file records the mapping between the program generated string 
+and the SwissProt protein name, corresponding to the entries in the first file.
+Subsequent files are for BPO and CCO ontological categories.
+
+The program can also be used to extract sequences for a specific organism:
+
+```
+python2 xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606
+```
+
+This will generate the following output files:
+
+```
+uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_mfo.1
+uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_mfo.1.map
+uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_bpo.1
+uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_bpo.1.map
+uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_cco.1
+uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_cco.1.map
+```
+
+This program can also take an optional output file name: 
+
+```
+python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=testSet
+```
+
+This creates the following two output files:
+
+```
+testSet.9606.tfa_LK_mfo.1
+testSet.9606.tfa_LK_mfo.1.map
+testSet.9606.tfa_LK_bpo.1
+testSet.9606.tfa_LK_bpo.1.map
+testSet.9606.tfa_LK_cco.1
+testSet.9606.tfa_LK_cco.1.map
 ```
 
 Repeated run of the program creates the subsequent versions of each output file. 
