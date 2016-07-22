@@ -284,19 +284,19 @@ Repeated run of the program creates the subsequent versions of each output file.
 <a name="genTestSet" />
 #### Generate Test Set 
 
-This program will extract the sequences of the proteins that do not have 
-experimental evidence codes in a UniProt/SwissProt at time t1 but gained 
-experimental evidence codes at time t2: 
+This program will extract the sequences of the proteins whose annotations 
+did not have experimental evidence codes in a UniProt/SwissProt file at time 
+t1 but gained experimental evidence codes at time t2: 
 
 ```
-python xTest_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01
+python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01
 
 ```
 The first input file uniprot_sprot.dat.2010_01 is the UniProt/SwissProt 
 file at t1 and the second input file uniprot_sprot.dat.2011_01 is the 
-UniProt/SwissProt at time t2. The name of a SwissProt file should have 
+UniProt/SwissProt file at time t2. The name of a SwissProt file should have 
 the format: a file name prefix followed by the exact string .dat. 
-followed by the time string (in yyyy_mm format). The program generates 
+followed by the time stamp (in yyyy_mm format). The program generates 
 the following six output files - two files for each ontological category:
 
 ```
@@ -335,7 +335,7 @@ uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_cco.1.map
 This program can also take an optional output file name: 
 
 ```
-python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=testSet
+python2 xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=testSet
 ```
 
 This creates the following two output files:
