@@ -242,10 +242,11 @@ The first ouput file has the extracted training sequences in the FASTA
 file format for MFO ontology. The id for each sequence is constructed from 
 a program generated string and the SwissProt name of the protein. The 
 second output file records the mapping between the program generated string 
-and the SwissProt protein name, corresponding to the entries in the first file.
-Subsequent files are for BPO and CCO ontological categories.
+and the SwissProt protein name, corresponding to the entries in the first 
+file. Subsequent files are for BPO and CCO ontological categories.
 
-The program can also be used to extract sequences for a specific organism:
+The program can also be used to extract training sequences for a specific 
+organism:
 
 ```
 python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
@@ -268,7 +269,7 @@ This program can also take an optional output file name:
 python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606 -O=trainingSet
 ```
 
-This creates the following two output files:
+This will create the following output files:
 
 ```
 trainingSet.9606.tfa_LK_mfo.1
