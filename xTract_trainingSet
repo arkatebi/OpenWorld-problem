@@ -4,42 +4,34 @@
            (1) a UniProtKB/swissProt file 
            (2) an optional taxon id and 
            (3) an optional output file name 
-    
     This program extracts the protein sequences from the UniProtKB/SwissProt 
     file that are experimentally annotated and writes them to the output 
     files in MFO, BPO, and CCO ontological categories.
-   
     When the taxon id is NOT given, it will extract the training sequences 
     for all species. In case the taxon id is given by the user, the program 
-    will extract the sequences for the organism for that specific organism 
+    will extract the sequences for the organism specified by the taxon id 
     only.
-
     When the output file name is NOT given, it will construct an output file
     name by combining a portion of the UniProtKB/SwissProt file name (and the 
     taxon id if it is supplied by the user). 
-     
     How to run this program?
-    Mode 1: 
-        For some input file uniprot_sprot.dat.2010_01
-
-       > python xTract_trainingSet -I1=uniprot_sprot.dat.2014_09 
-  
+    Mode 1: extract sequences for all species from some input file 
+            uniprot_sprot.dat.2010_01
+       > python xTract_trainingSet -I1=uniprot_sprot.dat.2014_09
     Six output files will be created:
         Three files with training sequences in MFO, BPO, and CCO 
-        ontological groups: 
+        ontological groups:
             uniprot_sprot.dat.2010_01.tfa_LK_mfo.1
             uniprot_sprot.dat.2010_01.tfa_LK_bpo.1
             uniprot_sprot.dat.2010_01.tfa_LK_cco.1
-        Three corresponding target id and protein name mapping files:
+        Three corresponding test sequence id and protein name mapping files:
             uniprot_sprot.dat.2010_01.tfa_LK_mfo.1.map
             uniprot_sprot.dat.2010_01.tfa_LK_bpo.1.map
             uniprot_sprot.dat.2010_01.tfa_LK_cco.1.map
-    Mode 2:
-        For some input file uniprot_sprot.dat.2010_01 and taxon id 9606
-
+    Mode 2: extract sequences for a specific species from some input file 
+            uniprot_sprot.dat.2010_01 and taxon id 9606
        > python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
-  
-    Three fasta files and the three map files will be created:
+    Three fasta files and three map files will be created:
             uniprot_sprot.dat.2010_01.9606.tfa_LK_mfo.1
             uniprot_sprot.dat.2010_01.9606.tfa_LK_bpo.1
             uniprot_sprot.dat.2010_01.9606.tfa_LK_cco.1
