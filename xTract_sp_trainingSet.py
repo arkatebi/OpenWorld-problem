@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 '''
-    This module has the following four methods. The difference between 
-    them is all_species_filter works on all species and species_filter
-    works on a specific species.
+    This module has the following methods. Two methods 
+    create_trainingSet_allSpecies and create_trainingSet_allSpecies 
+    are the entry points for these modules. One can invoke the 
+    first method to generate training sequences for all species 
+    and the second one to generate the training sequences for a 
+    specific species. 
 
     create_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_mfo_handle, 
@@ -16,20 +19,6 @@
         to generate training sequences on each of three ontologies:
         MFO, BPO, and CCO. 
    
-    filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
-                                  ontType, EXP_default=set([])):
-        This method takes five input arguments:
-            (1) a uniprot-swissProt file handle,
-            (2) an output file handle for writing target sequences,
-            (3) an output file handle for writing the mapping between
-                target id and protein name, and
-            (4) the ontology type, and 
-            (5) the set of EXP codes.
-        If the function finds a protein whose annotation is supported by
-        any EXP evidence code, it writes the protein sequence for that
-        protein to the output file. It also writes the mapping of target
-        id and protein name to the map file.
-
     create_trainingSet_singleSpecies(fh_sprot, taxon_id,
                        trainingFile_LK_mfo_handle,
                        trainingFile_LK_mfo_map_handle,
@@ -43,11 +32,26 @@
         the training sequences for specific species defined by the 
         parameter taxon_id. 
 
+    filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
+                                  ontType, EXP_default=set([])):
+        This method takes five input arguments:
+            (1) a uniprot-swissProt file handle,
+            (2) an output file handle for writing the training sequences,
+            (3) an output file handle for writing the mapping between
+                training sequence id and the protein name,
+            (4) the ontology type, and 
+            (5) the set of EXP codes.
+        If the function finds a protein whose annotation is supported by
+        any EXP evidence code, it writes the protein sequence for that
+        protein to the output file. It also writes the mapping of training  
+        sequence id and the protein name to the map file.
+
     filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
                                   ontType, EXP_default=set([])):
 
        This method is similar to filter_trainingSet_allSpecies but works 
        on only a specific species defined by the parameter taxon_id. 
+
 '''
 import sys
 from Bio import SeqIO
@@ -136,6 +140,7 @@ def create_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_cco_handle,
                        trainingFile_LK_cco_map_handle,
                        'C', EXP_default)
+    return None
 
 def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
                                   ontType, EXP_default=set([])):
@@ -203,17 +208,20 @@ def create_trainingSet_singleSpecies(fh_sprot, taxon_id,
                        trainingFile_LK_mfo_map_handle,
                        'F', EXP_default)
     print('Creating training set for BPO ontology ..')
+    # Repositioning the reference point at the beginning of the file:
     fh_sprot.seek(0)
     filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
                        trainingFile_LK_bpo_handle,
                        trainingFile_LK_bpo_map_handle,
                        'P', EXP_default)
     print('Creating training set for CCO ontology ..')
+    # Repositioning the reference point at the beginning of the file:
     fh_sprot.seek(0)
     filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
                        trainingFile_LK_cco_handle,
                        trainingFile_LK_cco_map_handle,
                        'C', EXP_default)
+    return None
 
 if __name__ == '__main__':
     print (sys.argv[0] + ':')
