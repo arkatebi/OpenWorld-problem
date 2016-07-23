@@ -128,18 +128,26 @@ def create_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_mfo_handle,
                        trainingFile_LK_mfo_map_handle,
                        'F', EXP_default)
+    trainingFile_LK_mfo_handle.flush()
+    trainingFile_LK_mfo_map_handle.flush()
+
     print('Creating training set for BPO ontology ..')
     fh_sprot.seek(0)
     filter_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_bpo_handle,
                        trainingFile_LK_bpo_map_handle,
                        'P', EXP_default)
+    trainingFile_LK_bpo_handle.flush()
+    trainingFile_LK_bpo_map_handle.flush()
+
     print('Creating training set for CCO ontology ..')
     fh_sprot.seek(0)
     filter_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_cco_handle,
                        trainingFile_LK_cco_map_handle,
                        'C', EXP_default)
+    trainingFile_LK_cco_handle.flush()
+    trainingFile_LK_cco_map_handle.flush()
     return None
 
 def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
