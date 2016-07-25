@@ -30,11 +30,11 @@ def collect_args():
     This method collects the user supplied arguments and returns them 
     at the end.
     """
-    parser = argparse.ArgumentParser(description='Generate a set of training ' + \
-        'sequences by filtering them out from a UniProt-SwissProt file.')
+    parser = argparse.ArgumentParser(description='Generate a prediction scores ' + \
+        'by using Blast model.')
     parser.add_argument('-I1', '--input1', help=' Specifies path to a ' + \
         'blast results file. This opton is mandatory.')
-    parser.add_argument('-I2', '--input2', help=' Specifies path to a ' + \
+    parser.add_argument('-I2', '--input2', help=' Specifies path to an ' + \
         'OBO file. This opton is mandatory.')
     parser.add_argument('-O', '--output', default='', help='Provides user ' + \
         'an option to specify an output filename prefix. When not ' + \
