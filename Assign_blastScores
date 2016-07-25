@@ -7,8 +7,12 @@
     How to run this program?
     Mode 1: 
        > python Assign_blastScores -I1=blast_results.txt -I2=gene_ontology_edit.obo.2014-06-01 
+    It will create an output file blast_predictions.1
+
     Mode 2: 
-       > python Assign_blastScores -I1=blast_results.txt -I2=gene_ontology_edit.obo.2014-06-01 -O=blast_scores.txt
+       > python Assign_blastScores -I1=blast_results.txt -I2=gene_ontology_edit.obo.2014-06-01 -O=blast_predictions
+
+
 '''
 import os
 import sys
