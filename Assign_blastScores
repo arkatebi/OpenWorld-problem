@@ -1,21 +1,22 @@
 #!/usr/bin/env python
 '''
-    Assign_blastScores program accepts the following three inputs:
-           (1) a blast results file 
+    This tool parses the blast result and assigns scores by implementing
+    the BLAST model. It accepts the following three inputs:
+           (1) a blast result file
            (2) an OBO file
-           (3) an optional output file name to store blast scores 
-    How to run this program?
-    Mode 1: 
-       > python Assign_blastScores -I1=blast_results.txt -I2=gene_ontology_edit.obo.2014-06-01 
+           (3) an optional output file name to store the blast scores
+    How to run this tool?
+    Mode 1:
+       > python Assign_blastScores -I1=blast_result.txt -I2=gene_ontology_edit.obo.2014-06-01
     It will create an output file blast_predictions.1
-
     Mode 2: 
-       > python Assign_blastScores -I1=blast_results.txt -I2=gene_ontology_edit.obo.2014-06-01 -O=blast_predictions
+       > python Assign_blastScores -I1=blast_result.txt -I2=gene_ontology_edit.obo.2014-06-01 -O=blast_predictions
 '''
 import os
 import sys
 from os.path import basename 
 
+from Bio.Blast import NCBIStandalone as ncbis
 from Ontology.IO import OboIO
 
 import configparser as cp
@@ -58,8 +59,8 @@ class Assign_blastScores:
 
         #t1 = self.parsed_dict['t1'] # Extract input file name
         #print(self.parsed_dict.keys())
-        blast_results_fname = self.parsed_dict['blast_results'] # Extract input file name
-        self.blast_results_fname = ld.locate_anyfile(blast_results_fname, self.work_dir)
+        blast_result_fname = self.parsed_dict['blast_result'] # Extract input file name
+        self.blast_result_fname = ld.locate_anyfile(blast_result_fname, self.work_dir)
         obo_fname = self.parsed_dict['obo_file'] # Extract input file name
         self.obo_fname = ld.locate_anyfile(obo_fname, self.work_dir)
 
@@ -168,12 +169,27 @@ class Assign_blastScores:
                 'format' + bcolors.ENDC)
             sys.exit(1)
 
+    def import_blast_result(self, blast_result_fname): 
+        '''
+        This method reads the blast result and extracts the 
+        useful information for BLAST model. 
+        '''    
+        print('Inside the import_blast_result() method')
+        print(blast_result_fname)
+        #parser = ncbis.BlastParser()
+        #result = parser.parse(open(blast_result_fname)) 
+        #print(result.version)
+        #print(result.alignments)
+        sys.exit(0)
+        return None    
+
     def build_ontology_annotation(self, obo_fname): 
         '''
         This method builds a directed acyclic graphi (DAG) as an 
         object of OntologyGraph class from a plain-text OBO file 
         and returns the DAG object.
         '''    
+        print('Inside the build_ontology_annotation() method')
         # Create an OboReader object:
         obo_parser = OboIO.OboReader(open(obo_fname))
         # Obtain an instance of OntologyGraph class by invoking 
@@ -194,6 +210,8 @@ class Assign_blastScores:
         """
         # Print the wellcome message:
         self.print_prolog()
+        # Import blast result:
+        self.import_blast_result(self.blast_result_fname)
         # Create ontogloyg graph object:
         og = self.build_ontology_annotation(self.obo_fname)
         ancestors = og.get_ancestors('GO:0000001')
