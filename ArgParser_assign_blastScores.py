@@ -47,7 +47,7 @@ def extract_args(args):
      and returns the constructed dictionary at the end.
     """
     args_dict = OrderedDict() 
-    args_dict['blast_results'] = args.input1
+    args_dict['blast_result'] = args.input1
     args_dict['obo_file'] = args.input2
     args_dict['outfile'] = args.output
     return args_dict
@@ -60,12 +60,12 @@ def check_args(args_dict,parser):
     """
     user_dict = OrderedDict() 
     for arg in args_dict:
-        if arg == 'blast_results':
+        if arg == 'blast_result':
             if args_dict[arg] == None:
-                print ('Missing blast results file\n')
+                print ('Missing blast result file\n')
                 print (parser.parse_args(['--help']))
             else:
-                user_dict['blast_results'] = args_dict[arg]
+                user_dict['blast_result'] = args_dict[arg]
         elif arg == 'obo_file':
             if args_dict[arg] == None:
                 print ('Missing OBO file\n')
