@@ -249,7 +249,7 @@ The program can also be used to extract training sequences for a specific
 organism:
 
 ```
-python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
+python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
 ```
 
 This will generate the following output files:
@@ -266,7 +266,7 @@ uniprot_sprot.dat.2010_01.9606.tfa_LK_cco.1.map
 This program can also take an optional output file name: 
 
 ```
-python2 xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606 -O=trainingSet
+python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606 -O=trainingSet
 ```
 
 This will create the following output files:
@@ -321,7 +321,7 @@ respectively.
 The program can also be used to extract sequences for a specific organism:
 
 ```
-python2 xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606
+python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606
 ```
 
 This will generate the following output files:
@@ -338,7 +338,7 @@ uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_cco.1.map
 This program can also take an optional output file name: 
 
 ```
-python2 xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=testSet
+python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=testSet
 ```
 
 This will create the following output files:
