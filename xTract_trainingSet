@@ -24,10 +24,13 @@
             uniprot_sprot.dat.2010_01.tfa_LK_mfo.1
             uniprot_sprot.dat.2010_01.tfa_LK_bpo.1
             uniprot_sprot.dat.2010_01.tfa_LK_cco.1
-        Three corresponding test sequence id and protein name mapping files:
+        Three corresponding map files:
             uniprot_sprot.dat.2010_01.tfa_LK_mfo.1.map
             uniprot_sprot.dat.2010_01.tfa_LK_bpo.1.map
             uniprot_sprot.dat.2010_01.tfa_LK_cco.1.map
+        Each map file will have three types of information: 
+           Sequence id, protein name, and list of GO terms that have EXP evidence.
+
     Mode 2: extract sequences for a specific species from some input file 
             uniprot_sprot.dat.2010_01 and taxon id 9606
        > python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
@@ -211,7 +214,7 @@ class xTract_trainingSeq:
                                              open(self.trSet_LK_cco, 'w'),
                                              open(self.trSet_LK_cco_map, 'w'),
                                              self.ConfigParam['exp_eec'])
-        else: # Extract for specific organism 
+        else: # Extract for specific organism
             xt.create_trainingSet_singleSpecies(open(self.t1_input_file, 'r'),
                                              self.parsed_dict['g'],
                                              open(self.trSet_LK_mfo, 'w'),
