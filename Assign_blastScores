@@ -16,6 +16,7 @@ import os
 import sys
 from os.path import basename 
 from collections import defaultdict
+import math
 
 #from Bio.Blast import NCBIStandalone as ncbis
 
@@ -108,7 +109,7 @@ class Assign_blastScores:
         output_filename = self.work_dir + '/' + ob + '.' + str(index)
         return output_filename
 
-    def print_prolog(self):
+    def __print_prolog(self):
         print ("*************************************************")
         print ("Running Assign_blastScore Tool!!!!!")
         print ('Following is a list of user supplied inputs:')
@@ -117,7 +118,7 @@ class Assign_blastScores:
         print ('*********************************************\n')
         return None
 
-    def print_epilog(self):
+    def __print_epilog(self):
         print(bcolors.OKGREEN + 'The following output files are created: ' +
               bcolors.ENDC)
         if os.path.exists(self.trSet_LK_mfo) and os.path.exists(self.trSet_LK_mfo_map):
@@ -136,26 +137,6 @@ class Assign_blastScores:
                bcolors.ENDC)
         return None
 
-    def check_sprot_format(self, sprot_fname):
-        """
-        This method exits the xTract_trainingSeq program on any of the
-        following conditions:
-            Case 1: if the file is empty
-            Case 2: if the file is NOT in UniProtKB/SwissProt format.
-                    To check this it invokes check_sprot_format method
-                    of FormatChecker module.
-        """
-        if os.stat(sprot_fname).st_size == 0:
-            print(bcolors.WARNING + 'You submitted an empty file: ' + sprot_fname + \
-                  bcolors.ENDC)
-            sys.exit(1)
-        elif not fc.check_sprot_format(open(sprot_fname, 'r')):
-            print(bcolors.WARNING + 'File format error: ' + \
-                  basename(sprot_fname) + bcolors.ENDC)
-            print(bcolors.WARNING + 'File must be in UniProtKB/SwissProt ' + \
-                'format' + bcolors.ENDC)
-            sys.exit(1)
-
     def __import_blast_result(self, blast_result_dict): 
         '''
         This method reads the blast result and extracts the 
@@ -165,8 +146,8 @@ class Assign_blastScores:
         for line in fh_bresult:
             fields = line.strip().split('\t')
             blast_result_dict[fields[0]].add(tuple(fields[1:len(fields)]))
-        for k in blast_result_dict.keys():
-            print('>'+k +'\n', '\n'.join(str(t) for t in blast_result_dict[k]))
+        #for k in blast_result_dict.keys():
+        #    print('>'+k +'\n', '\n'.join(str(t) for t in blast_result_dict[k]))
         return blast_result_dict
 
     def __import_trainingGOterms(self, trainingGOterm_dict):
@@ -175,12 +156,11 @@ class Assign_blastScores:
             fields=line.strip().split('\t')
             for gt in fields[2].split(','):
                 trainingGOterm_dict[gt].add(fields[0])
-            #break
-        for gt,tp in trainingGOterm_dict.items():
-            print(gt + '\t' + ','.join([str(e) for e in tp]))
+        #for gt,tp in trainingGOterm_dict.items():
+        #    print(gt + '\t' + ','.join([str(e) for e in tp]))
         return trainingGOterm_dict
 
-    def build_ontology_annotation(self, obo_fname): 
+    def __build_ontology_annotation(self, obo_fname): 
         '''
         This method builds a directed acyclic graphi (DAG) as an 
         object of OntologyGraph class from a plain-text OBO file 
@@ -194,28 +174,29 @@ class Assign_blastScores:
         og = obo_parser.read()
         return og    
 
-    def __calculate_blast_score(self, q, Sv, blast_result_dict): 
+    def __calculate_q2v_score(self, q, Sv, blast_result_dict): 
         '''
         q: the query sequence.
         Sv: the subset of training sequences that are experimentally
             annotated with the GO term v.
         blast_result_dict: the dictionary that contains the blast
-            results. Keys are the query sequences. For each query
-            sequence, the values represent blast results in the
-            following format: the set of tuples where each
-            tuple has the following format
+            results. Keys are the query sequences. Values are the 
+            blast results. For each query sequence, the values 
+            represent blast results in the following format: the 
+            set of tuples where each tuple has the following format
             (training sequence id, qseqid, sseqid, evalue, length,
             pident, nident). See details in Blast help.
         This method assigns a score to the association between a query
         sequence q and a GO term v and returns the score. The score is the
-        maximum evalue from the subset of blast results between the query
+        maximum E-value from the subset of blast results between the query
         sequence and Sv.
         '''
-        print('Sv: '+str(Sv))
-        score=0
+        #print('Sv: '+str(Sv))
+        score=0.00
         for tp in blast_result_dict[q]: 
             #print(tp)
-            if tp[0].strip() in Sv and score < float(tp[3]):
+            if tp[0].strip() in Sv and float(score) < float(tp[3]):
+                #score = format(math.log(float(tp[3])), '.2f') 
                 score = tp[3]
         return score
 
@@ -223,7 +204,7 @@ class Assign_blastScores:
         '''
         This method scores the target sequences based on BLAST model
         ( Jiang Y et al, ECCB 2014 Vol 30).
-        '''    
+        '''
         fh_targets=open(self.target_fname, 'r')
         for line in fh_targets:
             q=line.strip().split('\t')[0]
@@ -231,10 +212,10 @@ class Assign_blastScores:
             for v in trainingGOterm_dict.keys():
                 #v = 'GO:0005080'
                 Sv=trainingGOterm_dict[v]
-                score=self.__calculate_blast_score(q,Sv,blast_result_dict)
+                score=self.__calculate_q2v_score(q,Sv,blast_result_dict)
                 print(q+'\t'+v+'\t'+str(score))
                 #break
-            break
+            #break
         return None
 
     def process_data(self):
@@ -243,7 +224,7 @@ class Assign_blastScores:
         to training sequence generation.
         """
         # Print the wellcome message:
-        self.print_prolog()
+        self.__print_prolog()
         # Import blast result:
         # Create a dictionary to store the blast results as
         # a set of tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident) 
@@ -262,17 +243,12 @@ class Assign_blastScores:
         sys.exit(0)
 
         # Create ontogloyg graph object:
-        og = self.build_ontology_annotation(self.obo_fname)
+        og = self.__build_ontology_annotation(self.obo_fname)
         ancestors = og.get_ancestors('GO:0000001')
         print(ancestors)
 
-        # Check UniProtKB/SwissProt file format: 
-        # self.check_sprot_format(self.t1_input_file)
-
-        self.model_blast()         
-
         # Print the summary of running this program:
-        #self.print_epilog()
+        #self.__print_epilog()
         return None
 
 if __name__ == '__main__':
@@ -280,6 +256,6 @@ if __name__ == '__main__':
         print(sys.argv[0] + ':')
         print(__doc__)
     else:
-        fd = Assign_blastScores() # Create an instance of Assign_blastScores class
-        fd.process_data() # Process data and assign blast scores 
+        ab = Assign_blastScores() # Create an instance of Assign_blastScores class
+        ab.process_data() # Process data and assign blast scores 
     sys.exit(0)
