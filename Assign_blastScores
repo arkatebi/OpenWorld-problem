@@ -15,8 +15,10 @@
 import os
 import sys
 from os.path import basename 
+from collections import defaultdict
 
-from Bio.Blast import NCBIStandalone as ncbis
+#from Bio.Blast import NCBIStandalone as ncbis
+
 from Ontology.IO import OboIO
 
 import configparser as cp
@@ -59,10 +61,16 @@ class Assign_blastScores:
 
         #t1 = self.parsed_dict['t1'] # Extract input file name
         #print(self.parsed_dict.keys())
+
+        self.target_fname = self.work_dir + '/' + 'testSet.9606_mfo' 
+        self.training_fname = self.work_dir + '/' + 'trainingSet.9606_mfo'
+        self.trGOterm_fname = self.work_dir + '/' + 'trainingSet.9606_mfo.map'
+
         blast_result_fname = self.parsed_dict['blast_result'] # Extract input file name
         self.blast_result_fname = ld.locate_anyfile(blast_result_fname, self.work_dir)
         obo_fname = self.parsed_dict['obo_file'] # Extract input file name
         self.obo_fname = ld.locate_anyfile(obo_fname, self.work_dir)
+
 
         return None
 
@@ -101,25 +109,6 @@ class Assign_blastScores:
             index = index + 1
         output_filename = self.work_dir + '/' + ob + '.' + str(index)
         return output_filename
-
-    def create_iterator(self, infile):
-        """ 
-        Creates and returns an iterator object for an input a UniProt-GOA
-        file along with a list of all field names contained in the
-        UniProt-GOA file.
-        """
-        infile_handle = open(infile, 'r')
-        iter_handle = GOA.gafiterator(infile_handle)
-        for ingen in iter_handle:
-            if len(ingen) == 17:
-                GAFFIELDS = GOA.GAF20FIELDS
-                break
-            else:
-                GAFFIELDS = GOA.GAF10FIELDS
-                break
-        infile_handle = open(infile, 'r')
-        iter_handle = GOA.gafiterator(infile_handle)
-        return iter_handle, GAFFIELDS
 
     def print_prolog(self):
         print ("*************************************************")
@@ -169,19 +158,27 @@ class Assign_blastScores:
                 'format' + bcolors.ENDC)
             sys.exit(1)
 
-    def import_blast_result(self, blast_result_fname): 
+    def import_blast_result(self, blast_result_dict): 
         '''
         This method reads the blast result and extracts the 
         useful information for BLAST model. 
         '''    
-        print('Inside the import_blast_result() method')
-        print(blast_result_fname)
-        #parser = ncbis.BlastParser()
-        #result = parser.parse(open(blast_result_fname)) 
-        #print(result.version)
-        #print(result.alignments)
-        sys.exit(0)
-        return None    
+        fh_bresult = open(self.blast_result_fname, 'r') 
+        for line in fh_bresult:
+            fields = line.strip().split('\t')
+            blast_result_dict[fields[0]].add(tuple(fields[1:len(fields)]))
+        for k in blast_result_dict.keys():
+            print(k +'\t', '\n'.join(str(t) for t in blast_result_dict[k]))
+        return blast_result_dict    
+
+    def import_trainingGOterms(self, trainingGOterm_dict):
+        fh_trGOterms = open(self.trGOterm_fname, 'r')
+        for line in fh_trGOterms:
+            fields=line.strip().split('\t')
+            trainingGOterm_dict[fields[0]]=fields[2]
+        #for k in trainingGOterm_dict.keys():
+        #    print(k + '\t' + trainingGOterm_dict[k])
+        return trainingGOterm_dict
 
     def build_ontology_annotation(self, obo_fname): 
         '''
@@ -197,8 +194,11 @@ class Assign_blastScores:
         og = obo_parser.read()
         return og    
 
-    def model_blast(self): 
-        
+    def score_targets(self, blast_result_dict, trainingGOterm_dict):
+    '''
+    This method scores the target sequences based on BLAST model
+    ( Jiang Y et al, ECCB 2014 Vol 30).
+    '''    
         print('inside model_blast method')
 
         return None
@@ -211,7 +211,22 @@ class Assign_blastScores:
         # Print the wellcome message:
         self.print_prolog()
         # Import blast result:
-        self.import_blast_result(self.blast_result_fname)
+        # Create a dictionary to store the blast results as
+        # a set of tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident) 
+        blast_result_dict = defaultdict(set) 
+        # Import blast resutls and save in the dictionary: 
+        self.import_blast_result(blast_result_dict)
+
+        # Create a dictionary to store the GO terms
+        # related to training sequences:  
+        trainingGOterm_dict = defaultdict(set)
+        self.import_trainingGOterms(trainingGOterm_dict)
+
+        # Score the target sequences based 
+        self.score_targets(blast_result_dict, trainingGOterm_dict)
+
+        sys.exit(0)
+
         # Create ontogloyg graph object:
         og = self.build_ontology_annotation(self.obo_fname)
         ancestors = og.get_ancestors('GO:0000001')
