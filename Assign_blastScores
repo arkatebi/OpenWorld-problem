@@ -54,7 +54,6 @@ class Assign_blastScores:
         self.ConfigParam = Config.read_config(config_filename) 
         self.work_dir = self.ConfigParam['workdir']
 
-
         # Look for workspace, and if none exists create one:
         if not os.path.exists(self.work_dir):
             os.makedirs(self.work_dir) # Create work space
@@ -62,7 +61,7 @@ class Assign_blastScores:
         #t1 = self.parsed_dict['t1'] # Extract input file name
         #print(self.parsed_dict.keys())
 
-        self.target_fname = self.work_dir + '/' + 'testSet.9606_mfo' 
+        self.target_fname = self.work_dir + '/' + 'testSet.9606_mfo.map' 
         self.training_fname = self.work_dir + '/' + 'trainingSet.9606_mfo'
         self.trGOterm_fname = self.work_dir + '/' + 'trainingSet.9606_mfo.map'
 
@@ -70,7 +69,6 @@ class Assign_blastScores:
         self.blast_result_fname = ld.locate_anyfile(blast_result_fname, self.work_dir)
         obo_fname = self.parsed_dict['obo_file'] # Extract input file name
         self.obo_fname = ld.locate_anyfile(obo_fname, self.work_dir)
-
 
         return None
 
@@ -162,16 +160,27 @@ class Assign_blastScores:
         '''
         This method reads the blast result and extracts the 
         useful information for BLAST model. 
-        '''    
+        ''' 
         fh_bresult = open(self.blast_result_fname, 'r') 
         for line in fh_bresult:
             fields = line.strip().split('\t')
             blast_result_dict[fields[0]].add(tuple(fields[1:len(fields)]))
         for k in blast_result_dict.keys():
-            print(k +'\t', '\n'.join(str(t) for t in blast_result_dict[k]))
-        return blast_result_dict    
+            print('>'+k +'\n', '\n'.join(str(t) for t in blast_result_dict[k]))
+        return blast_result_dict
 
     def import_trainingGOterms(self, trainingGOterm_dict):
+        fh_trGOterms = open(self.trGOterm_fname, 'r')
+        for line in fh_trGOterms:
+            fields=line.strip().split('\t')
+            for gt in fields[2].split(','):
+                trainingGOterm_dict[gt].add(fields[0])
+            #break
+        for gt,tp in trainingGOterm_dict.items():
+            print(gt + '\t' + ','.join([str(e) for e in tp]))
+        return trainingGOterm_dict
+
+    def import_trainingGOterms_old(self, trainingGOterm_dict):
         fh_trGOterms = open(self.trGOterm_fname, 'r')
         for line in fh_trGOterms:
             fields=line.strip().split('\t')
@@ -195,12 +204,17 @@ class Assign_blastScores:
         return og    
 
     def score_targets(self, blast_result_dict, trainingGOterm_dict):
-    '''
-    This method scores the target sequences based on BLAST model
-    ( Jiang Y et al, ECCB 2014 Vol 30).
-    '''    
-        print('inside model_blast method')
-
+        '''
+        This method scores the target sequences based on BLAST model
+        ( Jiang Y et al, ECCB 2014 Vol 30).
+        '''    
+        fh_targets=open(self.target_fname, 'r')
+        for line in fh_targets:
+            q=line.strip().split('\t')[0]
+            for v in trainingGOterm_dict.keys(): 
+                print(q +'\t' + v)
+                break
+            break
         return None
 
     def process_data(self):
@@ -222,7 +236,7 @@ class Assign_blastScores:
         trainingGOterm_dict = defaultdict(set)
         self.import_trainingGOterms(trainingGOterm_dict)
 
-        # Score the target sequences based 
+        # Score the target sequences 
         self.score_targets(blast_result_dict, trainingGOterm_dict)
 
         sys.exit(0)
