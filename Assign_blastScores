@@ -17,6 +17,7 @@ import sys
 from os.path import basename 
 from collections import defaultdict
 import math
+import numpy as np
 
 #from Bio.Blast import NCBIStandalone as ncbis
 
@@ -27,7 +28,6 @@ import shutil
 import subprocess
 
 import ArgParser_assign_blastScores as ap
-
 import Config
 import xTract_sp_trainingSet as xt
 import FormatChecker as fc
@@ -45,6 +45,8 @@ class bcolors:
 
 # Default configuration file name:
 config_filename = '.cafarc' 
+
+MAX_RSCORE = 500
 
 class Assign_blastScores: 
     def __init__(self):
@@ -174,31 +176,28 @@ class Assign_blastScores:
         og = obo_parser.read()
         return og    
 
-    def __calculate_q2v_score(self, q, Sv, blast_result_dict): 
+    def __calculate_logEvalues(self, Sv, blast_result_q): 
         '''
         q: the query sequence.
         Sv: the subset of training sequences that are experimentally
             annotated with the GO term v.
-        blast_result_dict: the dictionary that contains the blast
-            results. Keys are the query sequences. Values are the 
-            blast results. For each query sequence, the values 
-            represent blast results in the following format: the 
-            set of tuples where each tuple has the following format
-            (training sequence id, qseqid, sseqid, evalue, length,
+        blast_result_q: the subset of blast results between query 
+           sequence q and Sv. The blast result is in the following 
+           format: the set of tuples where each tuple has the following 
+           format (training sequence id, qseqid, sseqid, evalue, length,
             pident, nident). See details in Blast help.
-        This method assigns a score to the association between a query
-        sequence q and a GO term v and returns the score. The score is the
-        maximum E-value from the subset of blast results between the query
-        sequence and Sv.
+        This method calculates the log of E-values obtained from blast_result_q
+        and then returns this array of E-values.
         '''
-        #print('Sv: '+str(Sv))
-        score=0.00
-        for tp in blast_result_dict[q]: 
-            #print(tp)
-            if tp[0].strip() in Sv and float(score) < float(tp[3]):
-                #score = format(math.log(float(tp[3])), '.2f') 
-                score = tp[3]
-        return score
+        logEvalues = np.zeros((len(blast_result_q),1))
+        ind=0
+        for tp in blast_result_q:
+            # Pick up only the results that match with Sv
+            if tp[0].strip() in Sv:
+                #logEvalues[ind][0] = format(math.log(float(tp[3])), '.2f')
+                logEvalues[ind][0] = format(math.log(float(tp[3])), '.2f')
+                ind+=1
+        return logEvalues 
 
     def __score_targets(self, blast_result_dict, trainingGOterm_dict):
         '''
@@ -209,11 +208,21 @@ class Assign_blastScores:
         for line in fh_targets:
             q=line.strip().split('\t')[0]
             #q='T96060000001'
+            #q='T96060000003'
+            #print("Query protein: %s"%q)
+            #print(blast_result_dict[q])
             for v in trainingGOterm_dict.keys():
                 #v = 'GO:0005080'
                 Sv=trainingGOterm_dict[v]
-                score=self.__calculate_q2v_score(q,Sv,blast_result_dict)
-                print(q+'\t'+v+'\t'+str(score))
+                #print("%s > %s"%(v,Sv))
+                #score=self.__calculate_q2v_score(q,Sv,blast_result_dict)
+                logEvalues=self.__calculate_logEvalues(Sv, blast_result_dict[q])
+                #print(logEvalues)
+                mScore = 0
+                if len(logEvalues)>0:
+                    mScore = max(logEvalues)
+                if (float(mScore)>0.0):
+                    print("%s\t%s\t%.2f" %(q, v, mScore[0]))
                 #break
             #break
         return None
@@ -224,7 +233,7 @@ class Assign_blastScores:
         to training sequence generation.
         """
         # Print the wellcome message:
-        self.__print_prolog()
+        #self.__print_prolog()
         # Import blast result:
         # Create a dictionary to store the blast results as
         # a set of tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident) 
