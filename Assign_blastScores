@@ -47,6 +47,7 @@ class bcolors:
 config_filename = '.cafarc' 
 
 MAX_RSCORE = 500
+E_VALUE_CUTOFF = 1.0
 
 class Assign_blastScores: 
     def __init__(self):
@@ -64,14 +65,36 @@ class Assign_blastScores:
         #t1 = self.parsed_dict['t1'] # Extract input file name
         #print(self.parsed_dict.keys())
 
-        self.target_fname = self.work_dir + '/' + 'testSet.9606_mfo.map' 
+        self.target_fname = self.work_dir + '/' + 'testSet.9606_mfo.map_1'
         self.training_fname = self.work_dir + '/' + 'trainingSet.9606_mfo'
-        self.trGOterm_fname = self.work_dir + '/' + 'trainingSet.9606_mfo.map'
+        self.GOterm_fname = self.work_dir + '/' + 'trainingSet.9606_mfo.map'
 
         blast_result_fname = self.parsed_dict['blast_result'] # Extract input file name
         self.blast_result_fname = ld.locate_anyfile(blast_result_fname, self.work_dir)
         obo_fname = self.parsed_dict['obo_file'] # Extract input file name
         self.obo_fname = ld.locate_anyfile(obo_fname, self.work_dir)
+
+
+        # Initialize dictionaries:
+        # Create query id dictionary. Keys: the query sequence ids, 
+        # Value for each key: 1
+        self.query_id_dict = {}
+
+        # Create target id and training id map dictionary:
+        # Keys: the target sequence ids
+        # Value for each key: the set of training sequence ids whose
+        #       E-value is less than E_VALUE_CUTOFF:
+        self.training_id_dict = defaultdict(set)
+
+        # Create a dictionary to store the GO terms related to training 
+        # sequences. Keys: GO terms related to the valid training sequences
+        # Value for each key: the training sequences whose functions are 
+        #       defined by that GO term:
+        self.GOterm_dict = defaultdict(set)
+
+        # Create a dictionary to store the blast results as a set of
+        # tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident)
+        self.blast_result_dict = defaultdict(set) 
 
         return None
 
@@ -139,7 +162,84 @@ class Assign_blastScores:
                bcolors.ENDC)
         return None
 
-    def __import_blast_result(self, blast_result_dict): 
+
+    def __import_query_ids(self):
+        '''
+        This method imports the query sequence ids from the target sequence 
+        file. It saves the ids in the dictionary self.query_id_dict. 
+        '''
+        fh_query = open(self.target_fname, 'r')
+        for line in fh_query:
+            fields = line.strip().split('\t')
+            self.query_id_dict[fields[0]]=1
+        print('>', ','.join(str(t) for t in self.query_id_dict.keys()))
+        return None 
+
+    def __import_training_ids(self):
+        '''
+        This method imports the training ids from the blast results that
+        are related to query ids and also the corresponding Evalue is
+        less than E_VLAUE_CUTOFF.
+        '''
+        fh_bresult = open(self.blast_result_fname, 'r')
+        for line in fh_bresult:
+            fields = line.strip().split('\t')
+            if ((fields[0] in self.query_id_dict.keys()) and \
+                float(fields[2]) < float(E_VALUE_CUTOFF)):
+                self.training_id_dict[fields[0]].add(fields[1])
+                #print(fields[0] + '\t' + fields[1] + '\t' + fields[2])
+    def __print_training_ids(self):
+        for k in self.training_id_dict.keys():
+            print('>'+k +'\t', ','.join(str(t) for t in self.training_id_dict[k]))
+        return None
+
+    def __import_GOterms(self):
+        '''
+        This method imports the GO terms from the training ids and GO term map 
+        file. It imports only those GO terms who are used to define the training 
+        sequences related to the query sequences. The GO terms are saved in the 
+        dictionary self.GOterm_dict whose
+            keys: the GO terms
+            value for each key: the set of training sequence ids whose 
+                functions are defined by the GO term.   
+        '''
+        fh_trGOterms = open(self.GOterm_fname, 'r')
+        for line in fh_trGOterms:
+            fields=line.strip().split('\t')
+            for gt in fields[2].split(','):
+                # Checks whether the current training sequence id is 
+                # in the dictionary:  
+                found = False
+                for qs in self.training_id_dict.keys(): 
+                    #print(qs)
+                    #print(qs +'\t', ','.join(self.training_id_dict[qs]))
+                    if fields[0] in self.training_id_dict[qs]:
+                        found = True
+                # If the training sequence id is in the dictionary, 
+                # add it to the dictionary corresponding to the GO term:
+                if found: 
+                    self.GOterm_dict[gt].add(fields[0])
+                    #print(gt + '\t', ','.join(self.GOterm_dict[gt]))
+                #break
+            #break
+        return None 
+
+    def __print_GOterms(self):
+        for gt,tp in self.GOterm_dict.items():
+            print(gt + '\t' + ','.join([str(e) for e in tp]))
+        return None 
+
+    def __import_GOterms_old(self, GOterm_dict):
+        fh_trGOterms = open(self.GOterm_fname, 'r')
+        for line in fh_trGOterms:
+            fields=line.strip().split('\t')
+            for gt in fields[2].split(','):
+                GOterm_dict[gt].add(fields[0])
+        #for gt,tp in GOterm_dict.items():
+        #    print(gt + '\t' + ','.join([str(e) for e in tp]))
+        return GOterm_dict
+
+    def __import_blast_result(self): 
         '''
         This method reads the blast result and extracts the 
         useful information for BLAST model. 
@@ -147,20 +247,13 @@ class Assign_blastScores:
         fh_bresult = open(self.blast_result_fname, 'r') 
         for line in fh_bresult:
             fields = line.strip().split('\t')
-            blast_result_dict[fields[0]].add(tuple(fields[1:len(fields)]))
-        #for k in blast_result_dict.keys():
-        #    print('>'+k +'\n', '\n'.join(str(t) for t in blast_result_dict[k]))
-        return blast_result_dict
+            self.blast_result_dict[fields[0]].add(tuple(fields[1:len(fields)]))
+        return None 
 
-    def __import_trainingGOterms(self, trainingGOterm_dict):
-        fh_trGOterms = open(self.trGOterm_fname, 'r')
-        for line in fh_trGOterms:
-            fields=line.strip().split('\t')
-            for gt in fields[2].split(','):
-                trainingGOterm_dict[gt].add(fields[0])
-        #for gt,tp in trainingGOterm_dict.items():
-        #    print(gt + '\t' + ','.join([str(e) for e in tp]))
-        return trainingGOterm_dict
+    def __print_blast_result(self): 
+        for k in self.blast_result_dict.keys():
+            print('>'+k +'\n', '\n'.join(str(t) for t in self.blast_result_dict[k]))
+        return None
 
     def __build_ontology_annotation(self, obo_fname): 
         '''
@@ -195,11 +288,12 @@ class Assign_blastScores:
             # Pick up only the results that match with Sv
             if tp[0].strip() in Sv:
                 #logEvalues[ind][0] = format(math.log(float(tp[3])), '.2f')
-                logEvalues[ind][0] = format(math.log(float(tp[3])), '.2f')
+                #print (tp[1])
+                logEvalues[ind][0] = format(-1*math.log(float(tp[1])), '.2f')
                 ind+=1
         return logEvalues 
 
-    def __score_targets(self, blast_result_dict, trainingGOterm_dict):
+    def __score_targets(self):
         '''
         This method scores the target sequences based on BLAST model
         ( Jiang Y et al, ECCB 2014 Vol 30).
@@ -207,16 +301,15 @@ class Assign_blastScores:
         fh_targets=open(self.target_fname, 'r')
         for line in fh_targets:
             q=line.strip().split('\t')[0]
-            #q='T96060000001'
+            q='T96060000001'
             #q='T96060000003'
             #print("Query protein: %s"%q)
             #print(blast_result_dict[q])
-            for v in trainingGOterm_dict.keys():
+            for v in self.GOterm_dict.keys():
                 #v = 'GO:0005080'
-                Sv=trainingGOterm_dict[v]
+                Sv=self.GOterm_dict[v]
                 #print("%s > %s"%(v,Sv))
-                #score=self.__calculate_q2v_score(q,Sv,blast_result_dict)
-                logEvalues=self.__calculate_logEvalues(Sv, blast_result_dict[q])
+                logEvalues=self.__calculate_logEvalues(Sv, self.blast_result_dict[q])
                 #print(logEvalues)
                 mScore = 0
                 if len(logEvalues)>0:
@@ -227,27 +320,61 @@ class Assign_blastScores:
             #break
         return None
 
+    def __score_targets_old(self, blast_result_dict, GOterm_dict):
+        '''
+        This method scores the target sequences based on BLAST model
+        ( Jiang Y et al, ECCB 2014 Vol 30).
+        '''
+        fh_targets=open(self.target_fname, 'r')
+        for line in fh_targets:
+            q=line.strip().split('\t')[0]
+            q='T96060000001'
+            #q='T96060000003'
+            #print("Query protein: %s"%q)
+            #print(blast_result_dict[q])
+            for v in GOterm_dict.keys():
+                #v = 'GO:0005080'
+                Sv=GOterm_dict[v]
+                #print("%s > %s"%(v,Sv))
+                logEvalues=self.__calculate_logEvalues(Sv, blast_result_dict[q])
+                print(logEvalues)
+                mScore = 0
+                if len(logEvalues)>0:
+                    mScore = max(logEvalues)
+                if (float(mScore)>0.0):
+                    print("%s\t%s\t%.2f" %(q, v, mScore[0]))
+                #break
+            #break
+        return None
+
+
     def process_data(self):
-        """
+        '''
         This method invokes other methods to perform all tasks related
         to training sequence generation.
-        """
+        '''
         # Print the wellcome message:
         #self.__print_prolog()
-        # Import blast result:
-        # Create a dictionary to store the blast results as
-        # a set of tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident) 
-        blast_result_dict = defaultdict(set) 
-        # Import blast resutls and save in the dictionary: 
-        self.__import_blast_result(blast_result_dict)
 
-        # Create a dictionary to store the GO terms
-        # related to training sequences:  
-        trainingGOterm_dict = defaultdict(set)
-        self.__import_trainingGOterms(trainingGOterm_dict)
+        # Import the query ids: 
+        self.__import_query_ids()
+        
+        # Import the training ids related to the query ids from 
+        # the blast results:
+        self.__import_training_ids()
+        self.__print_training_ids()
+
+        # Import GO terms related to the imported training ids:
+        self.__import_GOterms()
+        self.__print_GOterms()
+
+        # Import blast resutls and save in the dictionary: 
+        self.__import_blast_result()
+        self.__print_blast_result()
 
         # Score the target sequences 
-        self.__score_targets(blast_result_dict, trainingGOterm_dict)
+        self.__score_targets()
+
 
         sys.exit(0)
 
