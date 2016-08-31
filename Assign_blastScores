@@ -87,8 +87,8 @@ class Assign_blastScores:
         # (1) Create query id dictionary from the query sequence map file 
               # Keys: the query sequence ids 
               # Value for each key: 1
-        self.query_id_dict = {}
-        self.__import_query_ids()
+        self.target_id_dict = {}
+        self.__import_target_ids()
         # (2) Create training id dictionary from the blast result file
               # Keys: the target sequence ids
               # Value for each key: the set of training sequence ids
@@ -179,16 +179,19 @@ class Assign_blastScores:
                bcolors.ENDC)
         return None
 
-    def __import_query_ids(self):
+    def __import_target_ids(self):
         '''
         This method imports the query sequence ids from the target sequence 
-        file. It saves the ids in the dictionary self.query_id_dict. 
+        file. It saves the ids in the dictionary self.target_id_dict. 
         '''
         fh_query = open(self.target_fname, 'r')
         for line in fh_query:
             fields = line.strip().split('\t')
-            self.query_id_dict[fields[0]]=1
-        #print('>', ','.join(str(t) for t in self.query_id_dict.keys()))
+            self.target_id_dict[fields[0]]=1
+        return None 
+
+    def __print_target_ids(self):
+        print('>', ','.join(str(t) for t in self.target_id_dict.keys()))
         return None 
 
     def __import_training_ids(self):
@@ -203,11 +206,8 @@ class Assign_blastScores:
         fh_bresult = open(self.blast_result_fname, 'r')
         for line in fh_bresult:
             fields = line.strip().split('\t')
-            #if ((fields[0] in self.query_id_dict.keys()) and \
-            #    float(fields[2]) < float(E_VALUE_MAX)):
-            if (fields[0] in self.query_id_dict.keys()): 
+            if (fields[0] in self.target_id_dict.keys()): 
                 self.training_id_dict[fields[0]].add(fields[1])
-                #print(fields[0] + '\t' + fields[1] + '\t' + fields[2])
 
     def __print_training_ids(self):
         for k in self.training_id_dict.keys():
@@ -240,14 +240,12 @@ class Assign_blastScores:
                 # training sequence ids that showed up in the blast results:
                 found = False
                 for qs in self.training_id_dict.keys():
-                    #print(qs +'\t', ','.join(self.training_id_dict[qs]))
                     if training_seq_id in self.training_id_dict[qs]:
                         found = True
                 # If the training sequence id is in the dictionary,
                 # add it to the dictionary corresponding to the GO term:
                 if found:
                     self.GOterm_dict[gt].add(training_seq_id)
-                    #print(gt + '\t', ','.join(self.GOterm_dict[gt]))
                 #break
             #break
         fh_trGOterms.close()
@@ -257,16 +255,6 @@ class Assign_blastScores:
         for gt,tp in self.GOterm_dict.items():
             print(gt + '\t' + ','.join([str(e) for e in tp]))
         return None 
-
-    def __import_GOterms_old(self, GOterm_dict):
-        fh_trGOterms = open(self.GOterm_fname, 'r')
-        for line in fh_trGOterms:
-            fields=line.strip().split('\t')
-            for gt in fields[2].split(','):
-                GOterm_dict[gt].add(fields[0])
-        #for gt,tp in GOterm_dict.items():
-        #    print(gt + '\t' + ','.join([str(e) for e in tp]))
-        return GOterm_dict
 
     def __import_blast_results(self): 
         '''
@@ -320,8 +308,6 @@ class Assign_blastScores:
         '''
         logEvalues = np.zeros((len(blast_result_q),1))
         ind=0
-        #print(Sv)
-        #print(blast_result_q)
         for tp in blast_result_q:
             # Pick up only the results that match with Sv
             training_seq_id = tp[0].strip()
@@ -352,14 +338,10 @@ class Assign_blastScores:
             q=line.strip().split('\t')[0]
             #q='T96060000001'
             #q='T96060000003'
-            #print("Query protein: %s"%q)
-            #print(blast_result_dict[q])
             for v in self.GOterm_dict.keys():
                 #v = 'GO:0042802'
                 Sv=self.GOterm_dict[v]
-                #print("%s > %s"%(v,Sv))
                 logEvalues=self.__calculate_logEvalues(Sv, self.blast_result_dict[q])
-                #print(logEvalues)
                 mScore = 0
                 nScore = 0
                 if len(logEvalues)>0:
@@ -385,6 +367,7 @@ class Assign_blastScores:
         # Print the wellcome message:
         #self.__print_prolog()
 
+        #self.__print_target_ids()
         #self.__print_training_ids()
         #self.__print_GOterms()
         #self.__print_blast_results()
