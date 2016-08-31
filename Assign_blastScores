@@ -82,31 +82,29 @@ class Assign_blastScores:
 
 
         # Initialize the necessary data structures (dictionaries):
-        # Create query id dictionary. Keys: the query sequence ids, 
-        # Value for each key: 1
+        # (1) Create query id dictionary. Keys: the query sequence ids, 
+              # Value for each key: 1
         self.query_id_dict = {}
         # Import the query ids: 
         self.__import_query_ids() 
-
-        # Create target id and training id map dictionary:
-        # Keys: the target sequence ids
-        # Value for each key: the set of training sequence ids whose
-        #       E-value is less than E_VALUE_CUTOFF:
+        # (2) Create target id and training id map dictionary:
+              # Keys: the target sequence ids
+              # Value for each key: the set of training sequence ids
+              #       whose E-value is less than E_VALUE_MAX:
         self.training_id_dict = defaultdict(set)
-        # Import the training ids related to the query ids from 
+        # Import the training ids related to the query ids from
         # the blast results:
         self.__import_training_ids()
-
-        # Create a dictionary to store the GO terms related to training 
-        # sequences. Keys: GO terms related to the valid training sequences
-        # Value for each key: the training sequences whose functions are 
-        #       defined by that GO term:
+        # (3) Create a dictionary to store the GO terms related to training
+              # sequences.
+              # Keys: GO terms related to the training sequences
+              # Value for each key: the training sequences whose functions are
+              #       defined by that GO term:
         self.GOterm_dict = defaultdict(set)
         # Import GO terms related to the imported training ids:
         self.__import_GOterms()
-
-        # Create a dictionary to store the blast results as a set of
-        # tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident)
+        # (4) Create a dictionary to store the blast results as a set of
+              # tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident)
         self.blast_result_dict = defaultdict(set) 
         # Import blast resutls and save in the dictionary: 
         self.__import_blast_result()
