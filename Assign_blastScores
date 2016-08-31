@@ -87,7 +87,8 @@ class Assign_blastScores:
         self.query_id_dict = {}
         # Import the query ids: 
         self.__import_query_ids() 
-        # (2) Create target id and training id map dictionary:
+        # (2) Create target id and training id map dictionary form 
+              # the blast_results:
               # Keys: the target sequence ids
               # Value for each key: the set of training sequence ids
               #       whose E-value is less than E_VALUE_MAX:
@@ -106,9 +107,8 @@ class Assign_blastScores:
         # (4) Create a dictionary to store the blast results as a set of
               # tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident)
         self.blast_result_dict = defaultdict(set) 
-        # Import blast resutls and save in the dictionary: 
+        # Import blast resutls and save in the dictionary:
         self.__import_blast_result()
-
         return None
 
         # Create output file names to store training sequences:
@@ -196,8 +196,9 @@ class Assign_blastScores:
         fh_bresult = open(self.blast_result_fname, 'r')
         for line in fh_bresult:
             fields = line.strip().split('\t')
-            if ((fields[0] in self.query_id_dict.keys()) and \
-                float(fields[2]) < float(E_VALUE_MAX)):
+            #if ((fields[0] in self.query_id_dict.keys()) and \
+            #    float(fields[2]) < float(E_VALUE_MAX)):
+            if (fields[0] in self.query_id_dict.keys()): 
                 self.training_id_dict[fields[0]].add(fields[1])
                 #print(fields[0] + '\t' + fields[1] + '\t' + fields[2])
     def __print_training_ids(self):
