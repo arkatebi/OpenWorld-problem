@@ -46,8 +46,14 @@ class bcolors:
 # Default configuration file name:
 config_filename = '.cafarc' 
 
+# MAX_RSCORE is set to 500 (to be consistent with the Matlab 
+# implmentation by Jiang Y):
 MAX_RSCORE = 500
-E_VALUE_CUTOFF = 1.0
+# Set E-value cut off by two values: E_VALUE_MAX and E_VALUE_MIN:
+# E_VALUE_MAX is set 1.0 according to Jiang Y et al, ECCB 2014 Vol 30:
+E_VALUE_MAX = 1.0
+# E_VALUE_MIN is set by invoking sys.float_info.min system call:
+E_VALUE_MIN = sys.float_info.min
 
 class Assign_blastScores: 
     def __init__(self):
@@ -75,26 +81,35 @@ class Assign_blastScores:
         self.obo_fname = ld.locate_anyfile(obo_fname, self.work_dir)
 
 
-        # Initialize dictionaries:
+        # Initialize the necessary data structures (dictionaries):
         # Create query id dictionary. Keys: the query sequence ids, 
         # Value for each key: 1
         self.query_id_dict = {}
+        # Import the query ids: 
+        self.__import_query_ids() 
 
         # Create target id and training id map dictionary:
         # Keys: the target sequence ids
         # Value for each key: the set of training sequence ids whose
         #       E-value is less than E_VALUE_CUTOFF:
         self.training_id_dict = defaultdict(set)
+        # Import the training ids related to the query ids from 
+        # the blast results:
+        self.__import_training_ids()
 
         # Create a dictionary to store the GO terms related to training 
         # sequences. Keys: GO terms related to the valid training sequences
         # Value for each key: the training sequences whose functions are 
         #       defined by that GO term:
         self.GOterm_dict = defaultdict(set)
+        # Import GO terms related to the imported training ids:
+        self.__import_GOterms()
 
         # Create a dictionary to store the blast results as a set of
         # tuples (TRseq, qseqid, sseqid, evalue, lenght, pident, nident)
         self.blast_result_dict = defaultdict(set) 
+        # Import blast resutls and save in the dictionary: 
+        self.__import_blast_result()
 
         return None
 
@@ -162,7 +177,6 @@ class Assign_blastScores:
                bcolors.ENDC)
         return None
 
-
     def __import_query_ids(self):
         '''
         This method imports the query sequence ids from the target sequence 
@@ -185,7 +199,7 @@ class Assign_blastScores:
         for line in fh_bresult:
             fields = line.strip().split('\t')
             if ((fields[0] in self.query_id_dict.keys()) and \
-                float(fields[2]) < float(E_VALUE_CUTOFF)):
+                float(fields[2]) < float(E_VALUE_MAX)):
                 self.training_id_dict[fields[0]].add(fields[1])
                 #print(fields[0] + '\t' + fields[1] + '\t' + fields[2])
     def __print_training_ids(self):
@@ -287,16 +301,25 @@ class Assign_blastScores:
         for tp in blast_result_q:
             # Pick up only the results that match with Sv
             if tp[0].strip() in Sv:
-                #logEvalues[ind][0] = format(math.log(float(tp[3])), '.2f')
-                #print (tp[1])
-                logEvalues[ind][0] = format(-1*math.log(float(tp[1])), '.2f')
+                e_value = tp[1]
+                # It will ignore entries whose E-value is greater than E_VALUE_MAX:
+                if (float(e_value) < E_VALUE_MAX and \
+                    float(e_value) <= E_VALUE_MIN):
+                    # Set score to MAX_RSCORE when E-value is less
+                    # than/equal to E_VALUE_MIN:
+                    logEvalues[ind][0] = MAX_RSCORE
+                elif (float(e_value) < E_VALUE_MAX and \
+                      float(e_value) > E_VALUE_MIN):
+                    # Set score to log(E-value) when E-value is greater
+                    # than E_VALUE_MIN:
+                    logEvalues[ind][0] = format(-1*math.log(float(e_value)), '.2f')
                 ind+=1
         return logEvalues 
 
     def __score_targets(self):
         '''
         This method scores the target sequences based on BLAST model
-        ( Jiang Y et al, ECCB 2014 Vol 30).
+        (Jiang Y et al, ECCB 2014 Vol 30).
         '''
         fh_targets=open(self.target_fname, 'r')
         for line in fh_targets:
@@ -356,20 +379,8 @@ class Assign_blastScores:
         # Print the wellcome message:
         #self.__print_prolog()
 
-        # Import the query ids: 
-        self.__import_query_ids()
-        
-        # Import the training ids related to the query ids from 
-        # the blast results:
-        self.__import_training_ids()
         self.__print_training_ids()
-
-        # Import GO terms related to the imported training ids:
-        self.__import_GOterms()
         self.__print_GOterms()
-
-        # Import blast resutls and save in the dictionary: 
-        self.__import_blast_result()
         self.__print_blast_result()
 
         # Score the target sequences 
