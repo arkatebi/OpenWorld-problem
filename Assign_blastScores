@@ -80,6 +80,7 @@ class Assign_blastScores:
         obo_fname = self.parsed_dict['obo_file'] # Extract input file name
         self.obo_fname = ld.locate_anyfile(obo_fname, self.work_dir)
 
+        self.score_fname =  self.work_dir + '/' + 'testSet.9606_mfo.scores.txt'
 
         # Initialize the necessary data structures (dictionaries):
         # (1) Create query id dictionary from the query sequence map file 
@@ -90,14 +91,16 @@ class Assign_blastScores:
         # (2) Create training id dictionary from the blast result file
               # Keys: the target sequence ids
               # Value for each key: the set of training sequence ids
+              #       that are retrieved from the blast results.
+              # It creates a mapping such as (q, Sq).
         self.training_id_dict = defaultdict(set)
         self.__import_training_ids()
-        # (3) Create a GO term dictionary from the training sequence and GO 
-              # term map file to store the GO terms related to training
-              # sequences.
+        # (3) Create a GO term dictionary from the map file between training
+              # sequence ids and GO terms to store the GO terms related to
+              # training sequences.
               # Keys: GO terms related to the training sequences
-              # Value for each key: the training sequence ids whose functions are
-              #       defined by that GO term
+              # Value for each key: the training sequence ids whose functions
+              #       are defined by the GO term used as the key
         self.GOterm_dict = defaultdict(set)
         self.__import_GOterms()
         # (4) Create a dictionary to store the blast results 
@@ -105,10 +108,9 @@ class Assign_blastScores:
               # Value for each key: the set of tuples 
               # (TRseq, qseqid, sseqid, evalue, length, pident, nident) 
               # from the blast results related to the query/target sequence id 
-              # denoted by the key
+              # used as the key
         self.blast_result_dict = defaultdict(set) 
         self.__import_blast_results()
-
 
         return None
 
@@ -185,14 +187,17 @@ class Assign_blastScores:
         for line in fh_query:
             fields = line.strip().split('\t')
             self.query_id_dict[fields[0]]=1
-        print('>', ','.join(str(t) for t in self.query_id_dict.keys()))
+        #print('>', ','.join(str(t) for t in self.query_id_dict.keys()))
         return None 
 
     def __import_training_ids(self):
         '''
-        This method imports the training ids from the blast results that
-        are related to query ids and also the corresponding Evalue is
-        less than E_VLAUE_CUTOFF.
+        This method imports the training sequence ids from the blast results 
+        that are related to the query sequence ids:
+              # Keys: query/target sequence ids
+              # Value for each key: the set of training sequence ids
+              #       that are retrieved from the blast results
+              # it creates a mapping such as (q, Sq)
         '''
         fh_bresult = open(self.blast_result_fname, 'r')
         for line in fh_bresult:
@@ -209,34 +214,41 @@ class Assign_blastScores:
 
     def __import_GOterms(self):
         '''
-        This method imports the GO terms from the training ids and GO term map 
-        file. It imports only those GO terms who are used to define the training 
-        sequences related to the query sequences. The GO terms are saved in the 
-        dictionary self.GOterm_dict whose
-            keys: the GO terms
-            value for each key: the set of training sequence ids whose 
-                functions are defined by the GO term.   
+        This method imports the GO terms from the map file between the 
+        training ids and GO terms. It imports only those GO terms that 
+        are used to define the training sequences related to the query 
+        sequences. The GO terms are saved in the dictionary 
+        self.GOterm_dict whose
+            Keys: the GO term ids
+            Value for each key: the set of training sequence ids whose
+                functions are defined by the GO term used as the key.
         '''
+        # Open the map file between training sequence id and GO term:
+        # column 1: training sequence id
+        # column 2: protein name of the training sequence
+        # column 3: comma separated GO terms that define the function of
+        #           the protein
         fh_trGOterms = open(self.GOterm_fname, 'r')
         for line in fh_trGOterms:
-            fields=line.strip().split('\t')
+            fields = line.strip().split('\t')
+            training_seq_id = fields[0]
             for gt in fields[2].split(','):
                 # Checks whether the current training sequence id is 
-                # in the dictionary:  
+                # in the dictionary (training_id_dict) whose keys are the 
+                # training sequence ids that showed up in the blast results:
                 found = False
-                for qs in self.training_id_dict.keys(): 
-                    #print(qs)
+                for qs in self.training_id_dict.keys():
                     #print(qs +'\t', ','.join(self.training_id_dict[qs]))
-                    if fields[0] in self.training_id_dict[qs]:
+                    if training_seq_id in self.training_id_dict[qs]:
                         found = True
-                # If the training sequence id is in the dictionary, 
+                # If the training sequence id is in the dictionary,
                 # add it to the dictionary corresponding to the GO term:
-                if found: 
-                    self.GOterm_dict[gt].add(fields[0])
+                if found:
+                    self.GOterm_dict[gt].add(training_seq_id)
                     #print(gt + '\t', ','.join(self.GOterm_dict[gt]))
                 #break
             #break
-        return None 
+        return None
 
     def __print_GOterms(self):
         for gt,tp in self.GOterm_dict.items():
@@ -327,10 +339,11 @@ class Assign_blastScores:
         This method scores the target sequences based on BLAST model
         (Jiang Y et al, ECCB 2014 Vol 30).
         '''
+        fh_scores = open(self.score_fname, 'w')
         fh_targets=open(self.target_fname, 'r')
         for line in fh_targets:
             q=line.strip().split('\t')[0]
-            q='T96060000001'
+            #q='T96060000001'
             #q='T96060000003'
             #print("Query protein: %s"%q)
             #print(blast_result_dict[q])
@@ -345,37 +358,14 @@ class Assign_blastScores:
                     mScore = max(logEvalues)
                 if (float(mScore)>0.0):
                     print("%s\t%s\t%.2f" %(q, v, mScore[0]))
+                    outstr = str(q) + '\t' + str(v) + '\t' + \
+                             str("%.2f"%mScore[0]) + '\n'
+                    fh_scores.write("%s"%outstr) 
                 #break
             #break
+        fh_scores.close() 
+        fh_targets.close()
         return None
-
-    def __score_targets_old(self, blast_result_dict, GOterm_dict):
-        '''
-        This method scores the target sequences based on BLAST model
-        ( Jiang Y et al, ECCB 2014 Vol 30).
-        '''
-        fh_targets=open(self.target_fname, 'r')
-        for line in fh_targets:
-            q=line.strip().split('\t')[0]
-            q='T96060000001'
-            #q='T96060000003'
-            #print("Query protein: %s"%q)
-            #print(blast_result_dict[q])
-            for v in GOterm_dict.keys():
-                #v = 'GO:0005080'
-                Sv=GOterm_dict[v]
-                #print("%s > %s"%(v,Sv))
-                logEvalues=self.__calculate_logEvalues(Sv, blast_result_dict[q])
-                print(logEvalues)
-                mScore = 0
-                if len(logEvalues)>0:
-                    mScore = max(logEvalues)
-                if (float(mScore)>0.0):
-                    print("%s\t%s\t%.2f" %(q, v, mScore[0]))
-                #break
-            #break
-        return None
-
 
     def process_data(self):
         '''
@@ -385,9 +375,9 @@ class Assign_blastScores:
         # Print the wellcome message:
         #self.__print_prolog()
 
-        self.__print_training_ids()
-        self.__print_GOterms()
-        self.__print_blast_results()
+        #self.__print_training_ids()
+        #self.__print_GOterms()
+        #self.__print_blast_results()
 
         # Score the target sequences 
         self.__score_targets()
