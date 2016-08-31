@@ -71,7 +71,7 @@ class Assign_blastScores:
         #t1 = self.parsed_dict['t1'] # Extract input file name
         #print(self.parsed_dict.keys())
 
-        self.target_fname = self.work_dir + '/' + 'testSet.9606_mfo.map_1'
+        self.target_fname = self.work_dir + '/' + 'testSet.9606_mfo.map'
         self.training_fname = self.work_dir + '/' + 'trainingSet.9606_mfo'
         self.GOterm_fname = self.work_dir + '/' + 'trainingSet.9606_mfo.map'
 
@@ -80,6 +80,7 @@ class Assign_blastScores:
         obo_fname = self.parsed_dict['obo_file'] # Extract input file name
         self.obo_fname = ld.locate_anyfile(obo_fname, self.work_dir)
 
+        # Output file name: 
         self.score_fname =  self.work_dir + '/' + 'testSet.9606_mfo.scores.txt'
 
         # Initialize the necessary data structures (dictionaries):
@@ -207,6 +208,7 @@ class Assign_blastScores:
             if (fields[0] in self.query_id_dict.keys()): 
                 self.training_id_dict[fields[0]].add(fields[1])
                 #print(fields[0] + '\t' + fields[1] + '\t' + fields[2])
+
     def __print_training_ids(self):
         for k in self.training_id_dict.keys():
             print('>'+k +'\t', ','.join(str(t) for t in self.training_id_dict[k]))
@@ -248,6 +250,7 @@ class Assign_blastScores:
                     #print(gt + '\t', ','.join(self.GOterm_dict[gt]))
                 #break
             #break
+        fh_trGOterms.close()
         return None
 
     def __print_GOterms(self):
@@ -280,6 +283,7 @@ class Assign_blastScores:
         for line in fh_bresult:
             fields = line.strip().split('\t')
             self.blast_result_dict[fields[0]].add(tuple(fields[1:len(fields)]))
+        fh_bresult.close()
         return None 
 
     def __print_blast_results(self): 
@@ -316,9 +320,12 @@ class Assign_blastScores:
         '''
         logEvalues = np.zeros((len(blast_result_q),1))
         ind=0
+        #print(Sv)
+        #print(blast_result_q)
         for tp in blast_result_q:
             # Pick up only the results that match with Sv
-            if tp[0].strip() in Sv:
+            training_seq_id = tp[0].strip()
+            if training_seq_id in Sv:
                 e_value = tp[1]
                 # It will ignore entries whose E-value is greater than E_VALUE_MAX:
                 if (float(e_value) < E_VALUE_MAX and \
@@ -348,19 +355,22 @@ class Assign_blastScores:
             #print("Query protein: %s"%q)
             #print(blast_result_dict[q])
             for v in self.GOterm_dict.keys():
-                #v = 'GO:0005080'
+                #v = 'GO:0042802'
                 Sv=self.GOterm_dict[v]
                 #print("%s > %s"%(v,Sv))
                 logEvalues=self.__calculate_logEvalues(Sv, self.blast_result_dict[q])
                 #print(logEvalues)
                 mScore = 0
+                nScore = 0
                 if len(logEvalues)>0:
                     mScore = max(logEvalues)
-                if (float(mScore)>0.0):
-                    print("%s\t%s\t%.2f" %(q, v, mScore[0]))
+                    # Normalize the mScore by MAX_RSCORE:
+                    nScore = mScore/MAX_RSCORE 
+                if (float(nScore)>0.0):
+                    print("%s\t%s\t%.2f" %(q, v, nScore[0]))
                     outstr = str(q) + '\t' + str(v) + '\t' + \
-                             str("%.2f"%mScore[0]) + '\n'
-                    fh_scores.write("%s"%outstr) 
+                             str("%.2f"%nScore[0]) + '\n'
+                    fh_scores.write("%s"%outstr)
                 #break
             #break
         fh_scores.close() 
