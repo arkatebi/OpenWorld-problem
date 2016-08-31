@@ -103,11 +103,13 @@ class Assign_blastScores:
         # (4) Create a dictionary to store the blast results 
               # Keys: the query/target sequence ids
               # Value for each key: the set of tuples 
-              # (TRseq, qseqid, sseqid, evalue, lenght, pident, nident) 
+              # (TRseq, qseqid, sseqid, evalue, length, pident, nident) 
               # from the blast results related to the query/target sequence id 
               # denoted by the key
         self.blast_result_dict = defaultdict(set) 
-        self.__import_blast_result()
+        self.__import_blast_results()
+
+
         return None
 
         # Create output file names to store training sequences:
@@ -251,10 +253,16 @@ class Assign_blastScores:
         #    print(gt + '\t' + ','.join([str(e) for e in tp]))
         return GOterm_dict
 
-    def __import_blast_result(self): 
+    def __import_blast_results(self): 
         '''
-        This method reads the blast result and extracts the 
-        useful information for BLAST model. 
+        This method reads the blast result to extract the 
+        useful information for BLAST model and populate 
+        the corresponding data structure blast_result_dict:
+            # Keys: the query/target sequence ids
+            # Value for each key: the set of tuples
+            # (TRseq, qseqid, sseqid, evalue, length, pident, nident)
+            # from the blast results related to the query/target sequence id
+            # denoted by the key
         ''' 
         fh_bresult = open(self.blast_result_fname, 'r') 
         for line in fh_bresult:
@@ -262,7 +270,7 @@ class Assign_blastScores:
             self.blast_result_dict[fields[0]].add(tuple(fields[1:len(fields)]))
         return None 
 
-    def __print_blast_result(self): 
+    def __print_blast_results(self): 
         for k in self.blast_result_dict.keys():
             print('>'+k +'\n', '\n'.join(str(t) for t in self.blast_result_dict[k]))
         return None
@@ -379,15 +387,14 @@ class Assign_blastScores:
 
         self.__print_training_ids()
         self.__print_GOterms()
-        self.__print_blast_result()
+        self.__print_blast_results()
 
         # Score the target sequences 
         self.__score_targets()
 
-
         sys.exit(0)
 
-        # Create ontogloyg graph object:
+        # Create ontogloy graph object:
         og = self.__build_ontology_annotation(self.obo_fname)
         ancestors = og.get_ancestors('GO:0000001')
         print(ancestors)
