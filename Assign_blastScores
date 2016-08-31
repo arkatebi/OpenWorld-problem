@@ -214,6 +214,10 @@ class Assign_blastScores:
             print('>'+k +'\t', ','.join(str(t) for t in self.training_id_dict[k]))
         return None
 
+    def __print_training_id(self, q):
+        print('>'+q +'\t', ','.join(str(t) for t in self.training_id_dict[q]))
+        return None
+
     def __import_GOterms(self):
         '''
         This method imports the GO terms from the map file between the 
@@ -250,10 +254,12 @@ class Assign_blastScores:
             #break
         fh_trGOterms.close()
         return None
-
     def __print_GOterms(self):
         for gt,tp in self.GOterm_dict.items():
             print(gt + '\t' + ','.join([str(e) for e in tp]))
+        return None 
+    def __print_GOterm(self, gt):
+        print(gt + '\t' + ','.join([str(e) for e in  self.GOterm_dict[gt]]))
         return None 
 
     def __import_blast_results(self): 
@@ -337,9 +343,11 @@ class Assign_blastScores:
         for line in fh_targets:
             q=line.strip().split('\t')[0]
             #q='T96060000001'
+            #q='T96060000002'
             #q='T96060000003'
             for v in self.GOterm_dict.keys():
                 #v = 'GO:0042802'
+                #v = 'GO:0004725'
                 Sv=self.GOterm_dict[v]
                 logEvalues=self.__calculate_logEvalues(Sv, self.blast_result_dict[q])
                 mScore = 0
@@ -347,11 +355,11 @@ class Assign_blastScores:
                 if len(logEvalues)>0:
                     mScore = max(logEvalues)
                     # Normalize the mScore by MAX_RSCORE:
-                    nScore = mScore/MAX_RSCORE 
-                if (float(nScore)>0.0):
-                    print("%s\t%s\t%.2f" %(q, v, nScore[0]))
+                    nScore = round(float(mScore/MAX_RSCORE),2)
+                if (float(nScore)>0.00):
+                    #print("%s\t%s\t%.2f" %(q, v, nScore))
                     outstr = str(q) + '\t' + str(v) + '\t' + \
-                             str("%.2f"%nScore[0]) + '\n'
+                             str("%.2f"%nScore) + '\n'
                     fh_scores.write("%s"%outstr)
                 #break
             #break
@@ -364,12 +372,15 @@ class Assign_blastScores:
         This method invokes other methods to perform all tasks related
         to training sequence generation.
         '''
+        #q='T96060000002'
+        #gt = 'GO:0004725'
         # Print the wellcome message:
         #self.__print_prolog()
 
         #self.__print_target_ids()
-        #self.__print_training_ids()
-        #self.__print_GOterms()
+        #self.__print_training_id(q)
+        #self.__print_GOterms(v)
+        #self.__print_GOterm(gt)
         #self.__print_blast_results()
 
         # Score the target sequences 
