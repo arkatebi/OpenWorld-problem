@@ -58,7 +58,7 @@ MAX_RSCORE = 500
 E_VALUE_MAX = 1.0
 # E_VALUE_MIN is set by invoking sys.float_info.min system call:
 E_VALUE_MIN = sys.float_info.min
-
+# Default output file name prefix:
 DEFAULT_OUT_FNAME = 'blast_prediction_scores'
 
 class Assign_blastScores: 
