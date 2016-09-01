@@ -32,10 +32,12 @@ def collect_args():
     """
     parser = argparse.ArgumentParser(description='Generate a prediction scores ' + \
         'by using Blast model.')
-    parser.add_argument('-I1', '--input1', help=' Specifies path to a ' + \
+    parser.add_argument('-I1', '--input1', help=' Specifies path to the ' + \
+        'target protein id file. This opton is mandatory.')
+    parser.add_argument('-I2', '--input2', help=' Specifies path to the ' + \
+        'training protein id and GO term map file. This opton is mandatory.')
+    parser.add_argument('-I3', '--input3', help=' Specifies path to a ' + \
         'blast results file. This opton is mandatory.')
-    parser.add_argument('-I2', '--input2', help=' Specifies path to an ' + \
-        'OBO file. This opton is mandatory.')
     parser.add_argument('-O', '--output', default='', help='Provides user ' + \
         'an option to specify an output filename prefix. When not ' + \
         'specified, the program will create an output file name.')
@@ -47,8 +49,9 @@ def extract_args(args):
      and returns the constructed dictionary at the end.
     """
     args_dict = OrderedDict() 
-    args_dict['blast_result'] = args.input1
-    args_dict['obo_file'] = args.input2
+    args_dict['target_fname'] = args.input1
+    args_dict['GOterm_fname'] = args.input2
+    args_dict['blast_result'] = args.input3
     args_dict['outfile'] = args.output
     return args_dict
     
@@ -60,19 +63,24 @@ def check_args(args_dict,parser):
     """
     user_dict = OrderedDict() 
     for arg in args_dict:
-        if arg == 'blast_result':
+        if arg == 'target_fname':
+            if args_dict[arg] == None:
+                print ('Missing target protein id list file\n')
+                print (parser.parse_args(['--help']))
+            else:
+                user_dict['target_fname'] = args_dict[arg]
+        elif arg == 'GOterm_fname':
+            if args_dict[arg] == None:
+                print ('Missing training protein id and GO term map file\n')
+                print (parser.parse_args(['--help']))
+            else:
+                user_dict['GOterm_fname'] = args_dict[arg]
+        elif arg == 'blast_result':
             if args_dict[arg] == None:
                 print ('Missing blast result file\n')
                 print (parser.parse_args(['--help']))
             else:
                 user_dict['blast_result'] = args_dict[arg]
-        elif arg == 'obo_file':
-            if args_dict[arg] == None:
-                print ('Missing OBO file\n')
-                print (parser.parse_args(['--help']))
-            else:
-                user_dict['obo_file'] = args_dict[arg]
-
         elif arg == 'outfile':
             user_dict[arg] = args_dict[arg]
     return user_dict
