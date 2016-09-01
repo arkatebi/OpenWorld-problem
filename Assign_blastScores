@@ -342,8 +342,9 @@ class Assign_blastScores:
         self.__print_prolog()
 
         #self.__print_target_ids()
+        #self.__print_training_ids()
         #self.__print_training_id(q)
-        #self.__print_GOterms(v)
+        #self.__print_GOterms()
         #self.__print_GOterm(gt)
         #self.__print_blast_results()
 
