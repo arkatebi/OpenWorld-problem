@@ -113,17 +113,16 @@ class Assign_blastScores:
         self.blast_result_dict = defaultdict(set) 
         self.__import_blast_results()
 
-        return None
-
         # Create output file names to store training sequences:
-        self.trSet_LK_mfo = self.create_outfilename('LK_mfo')
-        self.trSet_LK_bpo = self.create_outfilename('LK_bpo')
-        self.trSet_LK_cco = self.create_outfilename('LK_cco')
+        #self.trSet_LK_mfo = self.create_outfilename('LK_mfo')
+        #self.trSet_LK_bpo = self.create_outfilename('LK_bpo')
+        #self.trSet_LK_cco = self.create_outfilename('LK_cco')
 
         # Create output file name for mapping between SwissProt 
-        self.trSet_LK_mfo_map = self.trSet_LK_mfo + '.map'
-        self.trSet_LK_bpo_map = self.trSet_LK_bpo + '.map' 
-        self.trSet_LK_cco_map = self.trSet_LK_cco + '.map'
+        #self.trSet_LK_mfo_map = self.trSet_LK_mfo + '.map'
+        #self.trSet_LK_bpo_map = self.trSet_LK_bpo + '.map' 
+        #self.trSet_LK_cco_map = self.trSet_LK_cco + '.map'
+        return None
 
     def create_outfilename(self, ontType):
         """ 
@@ -386,12 +385,10 @@ class Assign_blastScores:
         # Score the target sequences 
         self.__score_targets()
 
-        sys.exit(0)
-
         # Create ontogloy graph object:
-        og = self.__build_ontology_annotation(self.obo_fname)
-        ancestors = og.get_ancestors('GO:0000001')
-        print(ancestors)
+        #og = self.__build_ontology_annotation(self.obo_fname)
+        #ancestors = og.get_ancestors('GO:0000001')
+        #print(ancestors)
 
         # Print the summary of running this program:
         #self.__print_epilog()
