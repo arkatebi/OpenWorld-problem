@@ -1,16 +1,22 @@
 #!/usr/bin/env python
 '''
-    This tool parses the blast result and assigns scores by implementing
-    the BLAST model. It accepts the following three inputs:
-           (1) a blast result file
-           (2) an OBO file
-           (3) an optional output file name to store the blast scores
+    This tool parses the blast result and assigns function prediction scores 
+    to a set of target proteins according to the the BLAST model. It accepts 
+    the following three inputs and an optional output filename:
+           (1) a target protein id file
+           (2) a map file between training protein ids and related GO terms
+           (3) a blast result file
+           (3) an optional output file name to store the prediction scores
     How to run this tool?
-    Mode 1:
-       > python Assign_blastScores -I1=blast_result.txt -I2=gene_ontology_edit.obo.2014-06-01
-    It will create an output file blast_predictions.1
-    Mode 2: 
+    Mode 1: output filename is supplied in addition to the input files -
+       > python Assign_blastScores -I1=testSet.9606_mfo.map -I2=trainingSet.9606_mfo.map -I3=testSet.9606_mfo-blast-results.txt 
+                                   -O=testSet.9606_mfo.scores.txt
+    It will save the blast scores in the output file testSet.9606_mfo.scores.txt.1
+    Mode 2: output file name is NOT supplied - 
        > python Assign_blastScores -I1=blast_result.txt -I2=gene_ontology_edit.obo.2014-06-01 -O=blast_predictions
+       > python Assign_blastScores -I1=testSet.9606_mfo.map -I2=trainingSet.9606_mfo.map -I3=testSet.9606_mfo-blast-results.txt
+    It will save the blast scores in the output file blast_prediction_scores.1
+    Repeated run of the program will create subsequent versions of the output file. 
 '''
 import os
 import sys
@@ -19,17 +25,12 @@ from collections import defaultdict
 import math
 import numpy as np
 
-#from Bio.Blast import NCBIStandalone as ncbis
-
-from Ontology.IO import OboIO
-
 import configparser as cp
 import shutil
 import subprocess
 
 import ArgParser_assign_blastScores as ap
 import Config
-import xTract_sp_trainingSet as xt
 import FormatChecker as fc
 import LocateDataset as ld
 
@@ -55,6 +56,8 @@ E_VALUE_MAX = 1.0
 # E_VALUE_MIN is set by invoking sys.float_info.min system call:
 E_VALUE_MIN = sys.float_info.min
 
+DEFAULT_OUT_FNAME = 'blast_prediction_scores'
+
 class Assign_blastScores: 
     def __init__(self):
         # Collect user arguments into a dictionary:
@@ -68,20 +71,17 @@ class Assign_blastScores:
         if not os.path.exists(self.work_dir):
             os.makedirs(self.work_dir) # Create work space
 
-        #t1 = self.parsed_dict['t1'] # Extract input file name
-        #print(self.parsed_dict.keys())
-
-        self.target_fname = self.work_dir + '/' + 'testSet.9606_mfo.map'
-        self.training_fname = self.work_dir + '/' + 'trainingSet.9606_mfo'
-        self.GOterm_fname = self.work_dir + '/' + 'trainingSet.9606_mfo.map'
-
+        # Obtain the user supplied data file names:
+        target_fname = self.parsed_dict['target_fname'] # Extract input file name
+        self.target_fname = ld.locate_anyfile(target_fname, self.work_dir)
+        GOterm_fname = self.parsed_dict['GOterm_fname'] # Extract input file name
+        self.GOterm_fname = ld.locate_anyfile(GOterm_fname, self.work_dir)
         blast_result_fname = self.parsed_dict['blast_result'] # Extract input file name
         self.blast_result_fname = ld.locate_anyfile(blast_result_fname, self.work_dir)
-        obo_fname = self.parsed_dict['obo_file'] # Extract input file name
-        self.obo_fname = ld.locate_anyfile(obo_fname, self.work_dir)
 
-        # Output file name: 
-        self.score_fname =  self.work_dir + '/' + 'testSet.9606_mfo.scores.txt'
+        # Obtain the user supplied output file name or assign it to the 
+        # default output file name:
+        self.score_fname = self.create_outfilename()
 
         # Initialize the necessary data structures (dictionaries):
         # (1) Create query id dictionary from the query sequence map file 
@@ -112,38 +112,18 @@ class Assign_blastScores:
               # used as the key
         self.blast_result_dict = defaultdict(set) 
         self.__import_blast_results()
-
-        # Create output file names to store training sequences:
-        #self.trSet_LK_mfo = self.create_outfilename('LK_mfo')
-        #self.trSet_LK_bpo = self.create_outfilename('LK_bpo')
-        #self.trSet_LK_cco = self.create_outfilename('LK_cco')
-
-        # Create output file name for mapping between SwissProt 
-        #self.trSet_LK_mfo_map = self.trSet_LK_mfo + '.map'
-        #self.trSet_LK_bpo_map = self.trSet_LK_bpo + '.map' 
-        #self.trSet_LK_cco_map = self.trSet_LK_cco + '.map'
         return None
 
-    def create_outfilename(self, ontType):
+    def create_outfilename(self):
         """ 
         Creates an output filename based on the output file prefix
         provided by the user and at the end returns the newly
         created output filename.
         """
         if not self.parsed_dict['outfile'] == '':
-            if not basename(self.parsed_dict['g']):
-                ob = basename(self.parsed_dict['outfile']) + '.tfa_' + ontType
-            else:
-                ob = basename(self.parsed_dict['outfile']) + '.%s.tfa_' \
-                          % basename(self.parsed_dict['g']) + ontType
+            ob = basename(self.parsed_dict['outfile'])
         else: # if output file name is NOT supplied, construct one:
-            if not basename(self.parsed_dict['g']):
-                ob = basename(self.parsed_dict['t1']) + '.tfa_' + ontType
-            else: # if taxon id is supplied
-                ob = basename(self.parsed_dict['t1']) + '.%s.tfa_' \
-                          % basename(self.parsed_dict['g']) + ontType
-                # output file name is constructed by appending '.taxon id.tfa'
-                # as an extension
+            ob = DEFAULT_OUT_FNAME
         index = 1
         while os.path.exists(self.work_dir + '/' + ob + '.' + str(index)):
             index = index + 1
@@ -160,22 +140,14 @@ class Assign_blastScores:
         return None
 
     def __print_epilog(self):
-        print(bcolors.OKGREEN + 'The following output files are created: ' +
-              bcolors.ENDC)
-        if os.path.exists(self.trSet_LK_mfo) and os.path.exists(self.trSet_LK_mfo_map):
-            print('    MFO-Training sequence file and the corresponding map file: ')
-            print('         ' + basename(self.trSet_LK_mfo))
-            print('         ' + basename(self.trSet_LK_mfo_map))
-        if os.path.exists(self.trSet_LK_bpo) and os.path.exists(self.trSet_LK_bpo_map):
-            print('    BPO-Training sequence file and the corresponding map file: ')
-            print('         ' + basename(self.trSet_LK_bpo))
-            print('         ' + basename(self.trSet_LK_bpo_map))
-        if os.path.exists(self.trSet_LK_cco) and os.path.exists(self.trSet_LK_cco_map):
-            print('    CCO-Training sequence file and the corresponding map file: ')
-            print('         ' + basename(self.trSet_LK_cco))
-            print('         ' + basename(self.trSet_LK_cco_map))
-        print(bcolors.OKGREEN + 'Thank you for using Training Sequence Generation Tool' + \
-               bcolors.ENDC)
+        if os.path.exists(self.score_fname):
+            print(bcolors.OKGREEN + 'BLAST predictiosns are saved in the ' +\
+                                    'following output file: ' + \
+                  bcolors.ENDC)
+            print('         ' + basename(self.score_fname))
+        else:
+            print(bcolors.WARNING + 'No BLAST prediction output file ' +\
+                                    'is created' + bcolors.ENDC)
         return None
 
     def __import_target_ids(self):
@@ -253,10 +225,12 @@ class Assign_blastScores:
             #break
         fh_trGOterms.close()
         return None
+
     def __print_GOterms(self):
         for gt,tp in self.GOterm_dict.items():
             print(gt + '\t' + ','.join([str(e) for e in tp]))
         return None 
+
     def __print_GOterm(self, gt):
         print(gt + '\t' + ','.join([str(e) for e in  self.GOterm_dict[gt]]))
         return None 
@@ -283,20 +257,6 @@ class Assign_blastScores:
         for k in self.blast_result_dict.keys():
             print('>'+k +'\n', '\n'.join(str(t) for t in self.blast_result_dict[k]))
         return None
-
-    def __build_ontology_annotation(self, obo_fname): 
-        '''
-        This method builds a directed acyclic graphi (DAG) as an 
-        object of OntologyGraph class from a plain-text OBO file 
-        and returns the DAG object.
-        '''    
-        print('Inside the build_ontology_annotation() method')
-        # Create an OboReader object:
-        obo_parser = OboIO.OboReader(open(obo_fname))
-        # Obtain an instance of OntologyGraph class by invoking 
-        # read method of OboReader class:
-        og = obo_parser.read()
-        return og    
 
     def __calculate_logEvalues(self, Sv, blast_result_q): 
         '''
@@ -374,7 +334,7 @@ class Assign_blastScores:
         #q='T96060000002'
         #gt = 'GO:0004725'
         # Print the wellcome message:
-        #self.__print_prolog()
+        self.__print_prolog()
 
         #self.__print_target_ids()
         #self.__print_training_id(q)
@@ -382,16 +342,10 @@ class Assign_blastScores:
         #self.__print_GOterm(gt)
         #self.__print_blast_results()
 
-        # Score the target sequences 
+        # Score the target sequences: 
         self.__score_targets()
-
-        # Create ontogloy graph object:
-        #og = self.__build_ontology_annotation(self.obo_fname)
-        #ancestors = og.get_ancestors('GO:0000001')
-        #print(ancestors)
-
         # Print the summary of running this program:
-        #self.__print_epilog()
+        self.__print_epilog()
         return None
 
 if __name__ == '__main__':
