@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 '''
-    This tool parses the blast result and assigns function prediction scores
-    to a set of target proteins according to the the BLAST model. It accepts
-    the following three inputs and an optional output filename prefix:
+    This tool parses the blast results obtained by blasting the test sequences
+    against the training sequences and assigns function prediction scores
+    to the associations between target proteins and the GO terms that define
+    the function of the training sequences according to the the BLAST model.
+    It accepts the following three inputs and an optional prefix for an output 
+    filename:
            (1) a target protein id file
            (2) a map file between training protein ids and related GO terms
            (3) a blast result file
