@@ -120,8 +120,10 @@ class Assign_blastScores:
     def create_outfilename(self):
         """ 
         Creates an output filename based on the output file prefix
-        provided by the user and at the end returns the newly
-        created output filename.
+        provided by the user. If the user does not supply such a file name 
+        prefix, the method uses DEFAULT_OUT_FNAME as the prefix and creates 
+        a file name based on it. Finally, it returns the created 
+        output filename.
         """
         if not self.parsed_dict['outfile'] == '':
             ob = basename(self.parsed_dict['outfile'])
@@ -144,8 +146,8 @@ class Assign_blastScores:
 
     def __print_epilog(self):
         if os.path.exists(self.score_fname):
-            print(bcolors.OKGREEN + 'BLAST predictiosns are saved in the ' +\
-                                    'following output file: ' + \
+            print(bcolors.OKGREEN + 'BLAST predictiosn scores are saved ' +\
+                                    'in the following output file: ' + \
                   bcolors.ENDC)
             print('         ' + basename(self.score_fname))
         else:
