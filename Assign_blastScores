@@ -15,10 +15,11 @@
                                    -O=testSet.9606_mfo.scores.txt
     It will save the blast scores in the output file testSet.9606_mfo.scores.txt.1
     Mode 2: output file name is NOT supplied - 
-       > python Assign_blastScores -I1=blast_result.txt -I2=gene_ontology_edit.obo.2014-06-01 -O=blast_predictions
-       > python Assign_blastScores -I1=testSet.9606_mfo.map -I2=trainingSet.9606_mfo.map -I3=testSet.9606_mfo-blast-results.txt
+       > python Assign_blastScores -I1=testSet.9606_mfo.map \
+                                   -I2=trainingSet.9606_mfo.map \
+                                   -I3=testSet.9606_mfo-blast-results.txt
     It will save the blast scores in the output file blast_prediction_scores.1
-    Repeated run of the program will create subsequent versions of the output file. 
+    Repeated run of the program will create subsequent versions of the output file.
 '''
 import os
 import sys
