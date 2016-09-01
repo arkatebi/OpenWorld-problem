@@ -30,13 +30,14 @@ def collect_args():
     This method collects the user supplied arguments and returns them 
     at the end.
     """
-    parser = argparse.ArgumentParser(description='Generate a prediction scores ' + \
-        'by using Blast model.')
+    parser = argparse.ArgumentParser(description='Generate prediction scores ' + \
+        'according to BLAST model.')
     parser.add_argument('-I1', '--input1', help=' Specifies path to the ' + \
         'target protein id file. This opton is mandatory.')
     parser.add_argument('-I2', '--input2', help=' Specifies path to the ' + \
-        'training protein id and GO term map file. This opton is mandatory.')
-    parser.add_argument('-I3', '--input3', help=' Specifies path to a ' + \
+        'map fiel between training protein ids and GO terms. ' + \
+        'This opton is mandatory.')
+    parser.add_argument('-I3', '--input3', help=' Specifies path to the ' + \
         'blast results file. This opton is mandatory.')
     parser.add_argument('-O', '--output', default='', help='Provides user ' + \
         'an option to specify an output filename prefix. When not ' + \
