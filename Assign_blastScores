@@ -2,11 +2,11 @@
 '''
     This tool parses the blast result and assigns function prediction scores 
     to a set of target proteins according to the the BLAST model. It accepts 
-    the following three inputs and an optional output filename:
+    the following three inputs and an optional output filename prefix:
            (1) a target protein id file
            (2) a map file between training protein ids and related GO terms
            (3) a blast result file
-           (3) an optional output file name prefix to save the prediction scores
+           (4) an optional output file name prefix to save the prediction scores
     How to run this tool?
     Mode 1: output filename is supplied in addition to the input files -
        > python Assign_blastScores -I1=testSet.9606_mfo.map \
