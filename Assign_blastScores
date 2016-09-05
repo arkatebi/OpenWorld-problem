@@ -31,6 +31,7 @@ from os.path import basename
 from collections import defaultdict
 import math
 import numpy as np
+from Ontology.IO import OboIO
 
 import configparser as cp
 import shutil
@@ -53,6 +54,10 @@ class bcolors:
 
 # Default configuration file name:
 config_filename = '.cafarc' 
+
+# Ontology file name:
+#OBO_FNAME = 'gene_ontology_edit.obo.2014-06-01'
+OBO_FNAME = 'gene_ontology_edit.obo.2016-09-02'
 
 # MAX_RSCORE is set to 500 (to be consistent with the Matlab 
 # implmentation by Jiang Y):
@@ -78,6 +83,9 @@ class Assign_blastScores:
         if not os.path.exists(self.work_dir):
             os.makedirs(self.work_dir) # Create work space
 
+        # Obtain gene ontology file name:
+        self.obo_fname = self.work_dir + '/' + basename(OBO_FNAME)
+
         # Obtain the user supplied data file names:
         target_fname = self.parsed_dict['target_fname'] # Extract input file name
         self.target_fname = ld.locate_anyfile(target_fname, self.work_dir)
@@ -89,6 +97,9 @@ class Assign_blastScores:
         # Obtain the user supplied output file name or assign it to the 
         # default output file name:
         self.score_fname = self.create_outfilename()
+
+        # Obtain obsolete GO terms:
+        self.obsolete_GOterm_dict = {}
 
         # Initialize the necessary data structures (dictionaries):
         # (1) Create query id dictionary from the query sequence map file 
@@ -331,8 +342,19 @@ class Assign_blastScores:
                     fh_scores.write("%s"%outstr)
                 #break
             #break
-        fh_scores.close() 
+        fh_scores.close()
         fh_targets.close()
+        return None
+
+    def __import_obsolete_GOterms(self):
+        '''
+        This method imports the obsolete GO terms.
+        '''
+        go_graph = OboIO.OboReader(open(self.obo_fname)).read()
+        for node in go_graph.nodes:
+            n = go_graph.nodes[node]
+            if 'obsolete' in n.data.name:
+                print(n)
         return None
 
     def process_data(self):
@@ -353,9 +375,13 @@ class Assign_blastScores:
         #self.__print_blast_results()
 
         # Score the target sequences: 
-        self.__score_targets()
+        #self.__score_targets()
+
+        # Score the target sequences: 
+        self.__import_obsolete_GOterms()
+
         # Print the summary of running this program:
-        self.__print_epilog()
+        #self.__print_epilog()
         return None
 
 if __name__ == '__main__':
