@@ -154,13 +154,12 @@ def filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
                         goTerms.add(goList[0])
                         exp_code = True
                         #break
-            # If the protein has no EXP evidence,
-            # write the sequence to the output file:
-            #if not exp_code:
+            # If the protein's annotation has any EXP evidence,
+            # write the sequence and the mapping to the output files:
             if exp_code:
                 goTerms = ','.join(list(goTerms))
                 outseq = SeqRecord(Seq(rec.sequence),
-                                   id="T"+str(target_id),
+                                   id="TR"+str(target_id),
                                    description = "%s" %
                                    (rec.accessions[0]))
                 outseq_list = [outseq]
@@ -168,7 +167,7 @@ def filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
                 SeqIO.write(outseq_list,fh_targets, "fasta")
                 #mapStr = "T" + str(target_id) + '\t' + \
                 #               str(rec.accessions[0]) + '\n'
-                mapStr = "T" + str(target_id) + '\t' + \
+                mapStr = "TR" + str(target_id) + '\t' + \
                                str(rec.accessions[0]) + '\t' + \
                                goTerms + '\n'
                 # Write out the mapping (target id -> protein name):
@@ -228,7 +227,7 @@ def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
     seqCount_exp = 0
 
     for rec in sp.parse(fh_sprot):
-        # Selects records that are related to a specific
+        # Select records that are related to a specific
         # taxonomy id taxon_id:
         if taxon_id in rec.taxonomy_id:
             exp_code = False 
@@ -247,20 +246,19 @@ def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
                         goTerms.add(goList[0])
                         exp_code = True
                         #break
-            # If the protein has no EXP evidence,
-            # write the sequence to the output file:
-            #if not exp_code:
+            # If the protein's annotation has any EXP evidences,
+            # write the sequence and the mapping to the output files:
             if exp_code:
                 goTerms = ','.join(list(goTerms))
                 #print(goTerms)
                 outseq = SeqRecord(Seq(rec.sequence),
-                                   id="T"+str(target_id),
+                                   id="TR"+str(target_id),
                                    description = "%s" %
                                    (rec.accessions[0]))
                 outseq_list = [outseq]
                 # Write out the sequence:
                 SeqIO.write(outseq_list,fh_targets, "fasta")
-                mapStr = "T" + str(target_id) + '\t' + \
+                mapStr = "TR" + str(target_id) + '\t' + \
                                str(rec.accessions[0]) + '\t' + \
                                goTerms + '\n'
                 # Write out the mapping (target id -> protein name):
