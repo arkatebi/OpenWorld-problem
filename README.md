@@ -286,9 +286,9 @@ output file.
 <a name="genTestSet" />
 #### Generate Test Set 
 
-This program will extract the sequences of the proteins whose annotations 
-did not have experimental evidence codes UniProt/SwissProt database at time 
-t1 but gained experimental evidence codes at time t2: 
+This program will extract the sequences of the proteins whose annotations
+did not have experimental evidence codes in UniProt/SwissProt database at time
+t1 but gained experimental evidence codes at time t2:
 
 ```
 python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01
