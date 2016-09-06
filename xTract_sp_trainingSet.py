@@ -59,62 +59,6 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import SwissProt as sp
 
-def filter_trainingSet_allSpecies_old(fh_sprot, fh_targets, fh_map,
-                                  ontType, EXP_default=set([])):
-    # Initializes the target_id:
-    target_id = int("1"+"0000001")
-
-    outseq_list = []
-
-    # Counts total number of sequences 
-    # in the sprot file related to the the taxonomy id taxon_id:
-    seqCount = 0
-
-    # Counts total number of sequences in the sprot file related 
-    # to the the taxonomy id taxon_id whose annotations have EXP 
-    # evidence:
-    seqCount_exp = 0
-
-    for rec in sp.parse(fh_sprot):
-        # Selects records that are related to a specific
-        # taxonomy id taxon_id:
-        #if taxon_id in rec.taxonomy_id:
-            exp_code = False 
-            seqCount += 1
-            # Going over the list of GO information:
-            for crossRef in rec.cross_references: 
-                # Consider the cross_reference entries 
-                # that relate to GO DB:
-                if crossRef[0] == 'GO':
-                    goList = [crossRef[1], 
-                             (crossRef[3].split(':'))[0], 
-                             crossRef[2][0]]
-                    #print (goList[2])
-                    #print(ontType)
-                    #sys.exit(0)
-                    if goList[2] == ontType and \
-                       (crossRef[3].split(':'))[0] in EXP_default:
-                        exp_code = True
-                        break
-            # If the protein has no EXP evidence,
-            # write the sequence to the output file:
-            #if not exp_code:
-            if exp_code:
-                outseq = SeqRecord(Seq(rec.sequence),
-                                   id="T"+str(target_id),
-                                   description = "%s" %
-                                   (rec.accessions[0]))
-                outseq_list = [outseq]
-                # Write out the sequence:
-                SeqIO.write(outseq_list,fh_targets, "fasta")
-                mapStr = "T" + str(target_id) + '\t' + \
-                               str(rec.accessions[0]) + '\n'
-                # Write out the mapping (target id -> protein name):
-                fh_map.write("%s" % mapStr)
-                target_id += 1
-                seqCount_exp += 1
-    return seqCount_exp
-
 def filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
                                   ontType, EXP_default=set([])):
     # Initializes the target_id:
@@ -213,6 +157,15 @@ def create_trainingSet_allSpecies(fh_sprot,
 
 def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
                                   ontType, EXP_default=set([])):
+    '''
+    This method filters out all the sequences from a UniProtKB/SwissProt
+    file for the proteins whose annotations have experimental evidences. 
+    It writes the sequences to an output file in the FASTA format where 
+    in the FASTA identifier line it gives the protein name a unique 
+    (within the file) identifier. Also, it also writes the identifier, 
+    protein name, and all the GO terms that define the function of the 
+    protein to a map file. 
+    '''
     # Initializes the target_id:
     target_id = int(taxon_id+"0000001")
     outseq_list = []
@@ -261,58 +214,6 @@ def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
                 mapStr = "TR" + str(target_id) + '\t' + \
                                str(rec.accessions[0]) + '\t' + \
                                goTerms + '\n'
-                # Write out the mapping (target id -> protein name):
-                fh_map.write("%s" % mapStr)
-                target_id += 1
-                seqCount_exp += 1
-    return seqCount_exp
-
-def filter_trainingSet_singleSpecies_old(fh_sprot, taxon_id, fh_targets, fh_map,
-                                  ontType, EXP_default=set([])):
-    # Initializes the target_id:
-    target_id = int(taxon_id+"0000001")
-    outseq_list = []
-
-    # Counts total number of sequences 
-    # in the sprot file related to the the taxonomy id taxon_id:
-    seqCount = 0
-
-    # Counts total number of sequences in the sprot file related 
-    # to the the taxonomy id taxon_id whose annotations have EXP 
-    # evidence:
-    seqCount_exp = 0
-
-    for rec in sp.parse(fh_sprot):
-        # Selects records that are related to a specific
-        # taxonomy id taxon_id:
-        if taxon_id in rec.taxonomy_id:
-            exp_code = False 
-            seqCount += 1
-            # Going over the list of GO information:
-            for crossRef in rec.cross_references: 
-                # Consider the cross_reference entries 
-                # that relate to GO DB:
-                if crossRef[0] == 'GO':
-                    goList = [crossRef[1], # GO term
-                             (crossRef[3].split(':'))[0], # Evidence code
-                             crossRef[2][0]] # Ontology symbol
-                    if goList[2] == ontType and \
-                       (crossRef[3].split(':'))[0] in EXP_default:
-                        exp_code = True
-                        break
-            # If the protein has no EXP evidence,
-            # write the sequence to the output file:
-            #if not exp_code:
-            if exp_code:
-                outseq = SeqRecord(Seq(rec.sequence),
-                                   id="T"+str(target_id),
-                                   description = "%s" %
-                                   (rec.accessions[0]))
-                outseq_list = [outseq]
-                # Write out the sequence:
-                SeqIO.write(outseq_list,fh_targets, "fasta")
-                mapStr = "T" + str(target_id) + '\t' + \
-                               str(rec.accessions[0]) + '\n'
                 # Write out the mapping (target id -> protein name):
                 fh_map.write("%s" % mapStr)
                 target_id += 1
