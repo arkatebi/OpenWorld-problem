@@ -49,7 +49,7 @@ impact the performance evaluation of the predictive model A?
 The following figure shows the time points for collecting the training and 
 evaluation sets. 
 
-![alt Experiment Design] (/figures/experiment-design-1.2.png?raw=true “Experiment Design”)
+![alt Experiment Design] (/figures/experiment-design-1.3.png?raw=true “Experiment Design”)
 
 <a name="requirements" />
 ### Requirements
