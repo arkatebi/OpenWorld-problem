@@ -1,14 +1,12 @@
 <a name="title" />
 ## Impact of 'Open World Assumption' on evaluation of predictive model
-* This is an ongoing project. In this project, I am developing tools to 
-  facilitate my research into the impact of incomplete knowledge on the 
-  functional predictions of proteins and the evaluation of the related 
-  predictive models. Currently, the toolset has the following programs:
-* A program that creates a table of gene counts for a set of species in
-  UniProtKB/SwissProt whose annotations have experimental evidence codes.
-* A program that creates graphs of the gene counts for those speceis over
-  a series of time points.
-* More programs will be added as the research continues ...
+* The open-world problem arises from the open-world assumption: 'the 
+  absence of evidence does not amount to the evidence of absence'.
+* In this project, I investigate this problem by taking the advantage 
+  of the curated growth of the protein annotation database, 
+  UniProtKB/SwissProt.
+* I update this repository with the new tools that I develop to 
+  facilitate the research. 
 
 ### Contents
 1\. [Introduction] (#intro)
