@@ -87,7 +87,7 @@ cross-reference.
   http://geneontology.org/page/evidence-code-decision-tree  
 
 <a name="requirements" />
-### Requirements to Run the Software 
+### Requirements
 * Python 3.5 or greater
 * Biopython 1.66 or greater
 
