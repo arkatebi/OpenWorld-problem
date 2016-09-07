@@ -17,11 +17,11 @@
 
 4\. [Gene Count Statistics] (#geneCounts)
 
-5\. [Software Usage] (#usage)
+5\. [Generate Training and Evaluation Sets] (#genSets)
 
 5.1\. [Generate Training Set] (#genTrainingSet)
 
-5.2\. [Generate Test Set] (#genTestSet)
+5.2\. [Generate Evaluation Set-1] (#genEvalSet-1)
 
 <a name="intro">
 #### Introduction
@@ -60,8 +60,8 @@ be found by following the link below:
 
 https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
 
-<a name="usage" />
-### Software Usage 
+<a name="genSets" />
+### Generate Training and Evaluation Sets 
 
 The details of the usage description of this software are as follows.
 
@@ -133,8 +133,8 @@ trainingSet.9606.tfa_LK_cco.1.map
 Repeated run of the program will create the subsequent versions of each 
 output file.
 
-<a name="genTestSet" />
-#### Generate Test Set 
+<a name="genEvalSet-1" />
+#### Generate Evaluation Set-1 (ES-1)
 
 This program will extract the sequences of the proteins whose annotations
 did not have experimental evidence codes in UniProt/SwissProt database at time
