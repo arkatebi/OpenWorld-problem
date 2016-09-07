@@ -19,17 +19,17 @@
 
 3\. [Requirements to use the tools] (#requirements)
 
-4\. [Software Usage] (#usage)
+5\. [Software Usage] (#usage)
 
-4.1\. [Generate Gene Counts Annotated by Exp Evidence Codes] (#genGeneCounts)
+5.1\. [Generate Gene Counts Annotated by Exp Evidence Codes] (#genGeneCounts)
 
-4.2\. [Generate Graphs for Gene Counts] (#genGraphs)
+5.2\. [Generate Graphs for Gene Counts] (#genGraphs)
 
-4.3\. [Generate Training Set] (#genTrainingSet)
+5.3\. [Generate Training Set] (#genTrainingSet)
 
-4.4\. [Generate Test Set] (#genTestSet)
+5.4\. [Generate Test Set] (#genTestSet)
 
-5\. [Graphical Views of Gene Counts] (#graphicalView)
+6\. [Graphical Views of Gene Counts] (#graphicalView)
 
 5.1\. [Gene Counts: Jan 2010 to May 2016] (#year_2010to2016)
 
