@@ -19,6 +19,8 @@
 
 3\. [Requirements to use the tools] (#requirements)
 
+4\. [Gene Count Statistics] (#geneCounts)
+
 5\. [Software Usage] (#usage)
 
 5.1\. [Generate Gene Counts Annotated by Exp Evidence Codes] (#genGeneCounts)
@@ -90,6 +92,13 @@ cross-reference.
 ### Requirements
 * Python 3.5 or greater
 * Biopython 1.66 or greater
+
+<a name="geneCounts" />
+### Gene Count Statistics 
+The statistics for gene counts in the UniProtKB/SwissProt can 
+be found by following the link below: 
+
+https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
 
 <a name="usage" />
 ### Software Usage 
