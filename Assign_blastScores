@@ -86,12 +86,18 @@ class Assign_blastScores:
         # Obtain gene ontology file name:
         self.obo_fname = self.work_dir + '/' + basename(OBO_FNAME)
 
-        # Obtain the user supplied data file names:
-        target_fname = self.parsed_dict['target_fname'] # Extract input file name
+        # Obtain the user supplied query file names:
+        target_fname = self.parsed_dict['target_fname'] 
         self.target_fname = ld.locate_anyfile(target_fname, self.work_dir)
-        GOterm_fname = self.parsed_dict['GOterm_fname'] # Extract input file name
+
+        # Obtain the user supplied file name for mapping training  
+        # protein id and GO term:
+        GOterm_fname = self.parsed_dict['GOterm_fname'] 
         self.GOterm_fname = ld.locate_anyfile(GOterm_fname, self.work_dir)
-        blast_result_fname = self.parsed_dict['blast_result'] # Extract input file name
+
+        # Obtain the user supplied file name containing blast results 
+        # between target sequences and training sequences:
+        blast_result_fname = self.parsed_dict['blast_result'] 
         self.blast_result_fname = ld.locate_anyfile(blast_result_fname, self.work_dir)
 
         # Obtain the user supplied output file name or assign it to the 
