@@ -21,7 +21,7 @@
 
 5.1\. [Collecting Training Set] (#genTrainingSet)
 
-5.2\. [Collecting Evaluation Set-1] (#genEvalSet-1)
+5.2\. [Collecting Evaluation Set 1] (#genEvalSet-1)
 
 <a name="intro">
 #### Introduction
