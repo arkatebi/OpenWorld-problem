@@ -17,11 +17,11 @@
 
 4\. [Gene Count Statistics] (#geneCounts)
 
-5\. [Collecting Training and Evaluation Sets] (#genSets)
+5\. [Training and Evaluation Sets] (#genSets)
 
-5.1\. [Collecting Training Set] (#genTrainingSet)
+5.1\. [Training Set] (#genTrainingSet)
 
-5.2\. [Collecting Evaluation Set 1] (#genEvalSet-1)
+5.2\. [Evaluation Set 1] (#genEvalSet-1)
 
 <a name="intro">
 #### Introduction
@@ -64,12 +64,12 @@ be found by following the link below:
 https://github.com/arkatebi/OpenWorld-problem/blob/master/geneCount.md
 
 <a name="genSets" />
-### Collect Training and Evaluation Sets 
+### Training and Evaluation Sets 
 
 The details of the usage description of this software are as follows.
 
 <a name="genTrainingSet" />
-#### Collect Training Set (TS)
+#### Training Set (TS)
 
 This program will extract the sequences of the proteins that have 
 experimental evidence codes in a UniProt/SwissProt file at some 
@@ -138,7 +138,7 @@ Repeated run of the program will create the subsequent versions of each
 output file.
 
 <a name="genEvalSet-1" />
-#### Collect Evaluation Set 1 (ES-1)
+#### Evaluation Set 1 (ES-1)
 
 This program will extract the sequences of the proteins whose annotations
 did not have experimental evidence codes in UniProt/SwissProt database at time
