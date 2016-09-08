@@ -114,7 +114,7 @@ def filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
                 mapStr = "TR" + str(target_id) + '\t' + \
                                str(rec.accessions[0]) + '\t' + \
                                goTerms + '\n'
-                # Write out the mapping (target id -> protein name):
+                # Write out the mapping (target id, protein name, GO term):
                 fh_map.write("%s" % mapStr)
                 target_id += 1
                 seqCount_exp += 1
