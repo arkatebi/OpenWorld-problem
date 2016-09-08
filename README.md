@@ -29,7 +29,7 @@ Models for functional predictions of proteins are developed based on the
 current state of the functional annotation databases. However, the
 annotations of most proteins are incomplete. Therefore, the question arises
 whether the assigned strengths and weaknesses of the predictive models based
-on the current knowledge still hold when new annotations becomes 
+on the current knowledge still hold when new annotations become 
 available through additional experiments. The situation can be depicted in the
 following figure.
 
@@ -39,7 +39,7 @@ Suppose, T is the set of experimentally annotated functions for some protein,
 according to the current state of knowledge. Some model A predicts this 
 set to be P. Therefore, tp (true positive) = |P∩T|, fp (false positive) = 
 |P-T|, and fn (false negative) = |T-P|. The performance will be measured 
-according to these values. Now, if, because of new experiments, T expands to 
+according to these values. Because of new experiments, if T expands to 
 become T′ as shown in the figure above, then tp, fp, and fn will change. We 
 want to address the following question: how can this change of knowledge 
 impact the performance evaluation of the predictive model A?
