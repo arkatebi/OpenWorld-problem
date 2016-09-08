@@ -69,10 +69,11 @@ https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
 The details of the usage description of this software are as follows.
 
 <a name="genTrainingSet" />
-#### Generate Training Set 
+#### Generate Training Set, TS 
 
 This program will extract the sequences of the proteins that have 
-experimental evidence codes in a UniProt/SwissProt file: 
+experimental evidence codes in a UniProt/SwissProt file at some 
+time point. For TS, January 2010 is the time point.  
 
 ```
 python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01
@@ -141,7 +142,8 @@ output file.
 
 This program will extract the sequences of the proteins whose annotations
 did not have experimental evidence codes in UniProt/SwissProt database at time
-t1 but gained experimental evidence codes at time t2:
+t1 but gained experimental evidence codes at time t2. For ES-1, t1 is set as 
+January 2010 and t2 is set as January 2011.
 
 ```
 python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01
