@@ -17,11 +17,11 @@
 
 4\. [Gene Count Statistics] (#geneCounts)
 
-5\. [Generate Training and Evaluation Sets] (#genSets)
+5\. [Collecting Training and Evaluation Sets] (#genSets)
 
-5.1\. [Generate Training Set] (#genTrainingSet)
+5.1\. [Collecting Training Set] (#genTrainingSet)
 
-5.2\. [Generate Evaluation Set-1] (#genEvalSet-1)
+5.2\. [Collecting Evaluation Set-1] (#genEvalSet-1)
 
 <a name="intro">
 #### Introduction
