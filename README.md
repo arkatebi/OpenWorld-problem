@@ -69,7 +69,7 @@ https://github.com/arkatebi/OpenWorld-problem/blob/master/geneCount.md
 The details of the usage description of this software are as follows.
 
 <a name="genTrainingSet" />
-#### Generate Training Set, TS 
+#### Generate Training Set (TS)
 
 This program will extract the sequences of the proteins that have 
 experimental evidence codes in a UniProt/SwissProt file at some 
