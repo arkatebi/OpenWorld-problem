@@ -61,7 +61,7 @@ evaluation sets.
 The statistics for gene counts in the UniProtKB/SwissProt can 
 be found by following the link below: 
 
-https://github.com/arkatebi/SwissProt-stats/blob/master/geneCount.md
+https://github.com/arkatebi/OpenWorld-problem/blob/master/geneCount.md
 
 <a name="genSets" />
 ### Generate Training and Evaluation Sets 
