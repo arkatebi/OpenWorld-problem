@@ -138,7 +138,7 @@ Repeated run of the program will create the subsequent versions of each
 output file.
 
 <a name="genEvalSet-1" />
-#### Generate Evaluation Set-1 (ES-1)
+#### Generate Evaluation Set 1 (ES-1)
 
 This program will extract the sequences of the proteins whose annotations
 did not have experimental evidence codes in UniProt/SwissProt database at time
