@@ -3,7 +3,7 @@
 * The open-world problem arises from the open-world assumption: 'the 
   absence of evidence does not amount to the evidence of absence'.
 * In this project, I investigate this problem by taking the advantage 
-  of the curated growth of the protein annotation database, 
+  of the growth of the curated protein annotation database, 
   UniProtKB/SwissProt.
 * I update this repository with the new tools that I develop to 
   facilitate the research. 
