@@ -128,7 +128,7 @@ def create_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_cco_handle,
                        trainingFile_LK_cco_map_handle,
                        EXP_default=set([])):
-    print('Creating training set for MFO ontology ..')
+    print('Creating training set for MFO ontology ...')
     filter_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_mfo_handle,
                        trainingFile_LK_mfo_map_handle,
@@ -136,7 +136,7 @@ def create_trainingSet_allSpecies(fh_sprot,
     trainingFile_LK_mfo_handle.flush()
     trainingFile_LK_mfo_map_handle.flush()
 
-    print('Creating training set for BPO ontology ..')
+    print('Creating training set for BPO ontology ...')
     fh_sprot.seek(0)
     filter_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_bpo_handle,
@@ -145,7 +145,7 @@ def create_trainingSet_allSpecies(fh_sprot,
     trainingFile_LK_bpo_handle.flush()
     trainingFile_LK_bpo_map_handle.flush()
 
-    print('Creating training set for CCO ontology ..')
+    print('Creating training set for CCO ontology ...')
     fh_sprot.seek(0)
     filter_trainingSet_allSpecies(fh_sprot,
                        trainingFile_LK_cco_handle,
@@ -228,21 +228,21 @@ def create_trainingSet_singleSpecies(fh_sprot, taxon_id,
                        trainingFile_LK_cco_handle,
                        trainingFile_LK_cco_map_handle,
                        EXP_default=set([])):
-    print('Creating training set for MFO ontology ..')
+    print('Creating training set for MFO ontology ...')
     filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
                        trainingFile_LK_mfo_handle,
                        trainingFile_LK_mfo_map_handle,
                        'F', EXP_default)
     #sys.exit(0) 
 
-    print('Creating training set for BPO ontology ..')
+    print('Creating training set for BPO ontology ...')
     # Repositioning the reference point at the beginning of the file:
     fh_sprot.seek(0)
     filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
                        trainingFile_LK_bpo_handle,
                        trainingFile_LK_bpo_map_handle,
                        'P', EXP_default)
-    print('Creating training set for CCO ontology ..')
+    print('Creating training set for CCO ontology ...')
     # Repositioning the reference point at the beginning of the file:
     fh_sprot.seek(0)
     filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
