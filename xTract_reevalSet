@@ -1,0 +1,335 @@
+#!/usr/bin/env python
+'''
+    This tool generates the tes set of protein sequences for the
+    re-evaluation of a predictive model. The tool accepts the following
+    four inputs:
+           (1) a map file from time t1
+           (2) a UniProtKB/swissProt file at time t2
+           (3) an ontology name
+           (3) an optional taxon id and
+           (4) an optional output file name
+    This tool extracts the protein sequences from the UniProtKB/SwissProt 
+    database at t2 for the proteins that gained new experimental annotations
+    after time t1. The extracted sequenes are written to the output files in MFO, BPO, 
+    and CCO ontological categories.
+   
+    When the taxon id is NOT supplied, it will extract the test sequences 
+    for all species. In case the taxon id is supplied by the user, the program 
+    will extract the sequences for that specific organism only.
+
+    When the output file name is NOT given, it will construct an output file
+    name by combining a portion of the UniProtKB/SwissProt file names at time 
+    points t1 and t2 (and the taxon id if it is supplied by the user). 
+    
+    The UniProtKB/SwissProt file names must follow specific conventions:
+    .dat. separating the prefix and post fix where the postfix is the date 
+    strings representing the year and month of the release: 
+    uniprot_sprot.dat.2010_01
+
+    How to run this program?
+    Mode 1: 
+        For two input files uniprot_sprot.dat.2010_01 at time t1 and 
+        uniprot_sprot.dat.2011_01 at time t2
+
+       > python xTract_reevalSet -I1=evalSet-1.mfo.map -I2=uniprot_sprot.dat.2011_01 -N=F
+  
+    Six output files will be created:
+        Three files with test sequences in MFO, BPO, and CCO 
+        ontological groups: 
+            uniprot_sprot.dat.2010_01-2011_01.tfa_LK_mfo.1
+            uniprot_sprot.dat.2010_01-2011_01.tfa_LK_bpo.1
+            uniprot_sprot.dat.2010_01-2011_01.tfa_LK_cco.1
+        Three corresponding test sequence id and protein name mapping files:
+            uniprot_sprot.dat.2010_01-2011_01.tfa_LK_mfo.1.map
+            uniprot_sprot.dat.2010_01-2011_01.tfa_LK_bpo.1.map
+            uniprot_sprot.dat.2010_01-2011_01.tfa_LK_cco.1.map
+    Mode 2:
+        For two input files uniprot_sprot.dat.2010_01 at time t1 and 
+        uniprot_sprot.dat.2011_01 at time t2 and taxon id 9606
+
+       > python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606
+  
+    Three fasta files and the three map files will be created:
+            uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_mfo.1
+            uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_bpo.1
+            uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_cco.1
+            uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_mfo.1.map
+            uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_bpo.1.map
+            uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_cco.1.map
+'''
+import os
+import sys
+from os.path import basename 
+
+import configparser as cp
+import shutil
+import subprocess
+
+import ArgParser_xTract_reevalSet as ap
+import Config
+import xTract_sp_reevalSet as xt
+import FormatChecker as fc
+import LocateDataset as ld
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+# Default configuration file name:
+config_filename = '.cafarc' 
+
+splitterStr = '.dat.'
+year_Llimit = 2010
+month_str = ['01','02','03','04','05','06','07','08','09','10','11','12']
+
+class xTract_reevalSeq: 
+    def __init__(self):
+        # Collect user arguments into a dictionary:
+        self.parsed_dict = ap.parse_args()
+
+        # Collect config file entries:
+        self.ConfigParam = Config.read_config(config_filename) 
+        self.work_dir = self.ConfigParam['workdir']
+
+        # Look for workspace, and if none exists create one:
+        if not os.path.exists(self.work_dir):
+            os.makedirs(self.work_dir) # Create work space
+
+        t1 = self.parsed_dict['t1'] # Extract input file name
+        # Locate the input file:
+        self.t1_input_file = ld.locate_SwissProtfile(t1, self.work_dir)
+        t2 = self.parsed_dict['t2'] # Extract input file name
+        # Locate the input file:
+        self.t2_input_file = ld.locate_SwissProtfile(t2, self.work_dir)
+
+        self.ontology_name = self.parsed_dict['Aspect'] # Extract ontology name 
+
+        #if not self.check_map_filename_format(t1): 
+        #    sys.exit(0) 
+
+        # Check the SwissProt filename formats:
+        if not self.check_SwissProt_filename_format(t2):
+            sys.exit(0)
+
+        self.reevalSet_fname = self.work_dir + '/' + 'evalSet-2.mfo'
+        self.reevalSet_map_fname = self.work_dir + '/' + 'evalSet-2.mfo.map'
+
+        # Create output file names to store test sequences:
+        #self.testSet_LK_mfo = self.create_outfilename('LK_mfo')
+        #self.testSet_LK_bpo = self.create_outfilename('LK_bpo')
+        #self.testSet_LK_cco = self.create_outfilename('LK_cco')
+
+        # Create output file name for mapping between SwissProt 
+        #self.testSet_LK_mfo_map = self.testSet_LK_mfo + '.map'
+        #self.testSet_LK_bpo_map = self.testSet_LK_bpo + '.map' 
+        #self.testSet_LK_cco_map = self.testSet_LK_cco + '.map'
+        return None
+        
+    def create_outfilename(self, ontType):
+        """ 
+        Creates an output filename based on the output file prefix
+        provided by the user and at the end returns the newly
+        created output filename. If the output file prefix is not 
+        supplied, it creates output file name from the two input file 
+        names. 
+        """
+        if not self.parsed_dict['outfile'] == '': # output filename is supplied
+            if not basename(self.parsed_dict['g']): # if the taxon id is NOT supplied
+                ob = basename(self.parsed_dict['outfile']) + '.%s' \
+                     %(basename(self.parsed_dict['t1'])).split('.dat.')[1] + '-%s' \
+                     %(basename(self.parsed_dict['t2'])).split('.dat.')[1] + \
+                     '.tfa_' + ontType
+            else: # if taxon id is supplied
+                ob = basename(self.parsed_dict['outfile']) + '.' + \
+                     (basename(self.parsed_dict['t1'])).split('.dat.')[1] + '-' + \
+                     (basename(self.parsed_dict['t2'])).split('.dat.')[1] + \
+                     '.%s.tfa_' % basename(self.parsed_dict['g']) + ontType
+        else: # if output file name is NOT supplied, construct one:
+            if not basename(self.parsed_dict['g']):
+                ob = basename(self.parsed_dict['t1']) + '-%s' \
+                     %(basename(self.parsed_dict['t2'])).split('.dat.')[1]  + \
+                     '.tfa_' + ontType
+            else: # if taxon id is supplied
+                ob = basename(self.parsed_dict['t1']) + '-%s' \
+                     %(basename(self.parsed_dict['t2'])).split('.dat.')[1] + \
+                     '.%s.tfa_' % basename(self.parsed_dict['g']) + ontType
+                # output file name is constructed by appending '.taxon id.tfa'
+                # as an extension
+        index = 1
+        while os.path.exists(self.work_dir + '/' + ob + '.' + str(index)):
+            index = index + 1
+        output_filename = self.work_dir + '/' + ob + '.' + str(index)
+        return output_filename
+
+    def create_iterator(self, infile):
+        """ 
+        Creates and returns an iterator object for an input a UniProt-GOA
+        file along with a list of all field names contained in the
+        UniProt-GOA file.
+        """
+        infile_handle = open(infile, 'r')
+        iter_handle = GOA.gafiterator(infile_handle)
+        for ingen in iter_handle:
+            if len(ingen) == 17:
+                GAFFIELDS = GOA.GAF20FIELDS
+                break
+            else:
+                GAFFIELDS = GOA.GAF10FIELDS
+                break
+        infile_handle = open(infile, 'r')
+        iter_handle = GOA.gafiterator(infile_handle)
+        return iter_handle, GAFFIELDS
+
+    def print_prolog(self):
+        print ("*************************************************")
+        print ("Running Test Set Generatin Tool !!!!!")
+        print ('Following is a list of user supplied inputs:')
+        for arg in self.parsed_dict:
+            print (arg + ': ' + str(self.parsed_dict[arg]))
+        print ('*********************************************\n')
+        return None
+
+    def print_epilog(self):
+        print(bcolors.OKGREEN + 'The following output files are created: ' +
+              bcolors.ENDC)
+        if os.path.exists(self.testSet_LK_mfo) and os.path.exists(self.testSet_LK_mfo_map):
+            print('    MFO-Test sequence file and the corresponding map file: ')
+            print('         ' + basename(self.testSet_LK_mfo))
+            print('         ' + basename(self.testSet_LK_mfo_map))
+        if os.path.exists(self.testSet_LK_bpo) and os.path.exists(self.testSet_LK_bpo_map):
+            print('    BPO-Test sequence file and the corresponding map file: ')
+            print('         ' + basename(self.testSet_LK_bpo))
+            print('         ' + basename(self.testSet_LK_bpo_map))
+        if os.path.exists(self.testSet_LK_cco) and os.path.exists(self.testSet_LK_cco_map):
+            print('    CCO-Test sequence file and the corresponding map file: ')
+            print('         ' + basename(self.testSet_LK_cco))
+            print('         ' + basename(self.testSet_LK_cco_map))
+        print(bcolors.OKGREEN + 'Thank you for using Test Sequence Generation Tool' + \
+               bcolors.ENDC)
+        return None
+
+    def check_SwissProt_filename_format(self, sp_fname):
+        '''
+        This method checks whether UniProtKB/SwissProt filenames are 
+        are named in the correct format.
+        The names of the files should be in this format: 
+            uniprot_sprot.dat.yyyy_mm
+            yyyy is a year that cannot be less than year_Llimit 
+            mm is a month that must be in month_str
+            where year_Llimit and month_str are global variables.   
+        If the file name is NOT in that format, 
+            the the method returns False.
+        If all above checks are passed, the method returns True
+        '''
+        if not splitterStr in basename(sp_fname):
+             print('Given UniProtKB/SwissProt filename: ' + basename(sp_fname.strip()))
+             print('File name format must be: ' + 'prfix' + splitterStr + 'date')
+             return False
+        fname_parts = basename(sp_fname).strip().split(splitterStr)
+        if (len(fname_parts)) != 2: 
+             print('Given UniProtKB/SwissProt filename: ' + basename(sp_fname.strip()))
+             print('File name format must be: ' + 'prfix' + splitterStr + 'date')
+             return False
+        if len(fname_parts[1].split('_')) !=2:
+            print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
+            return False
+        yy = fname_parts[1].split('_')[0]
+        mm = fname_parts[1].split('_')[1]
+        if int(yy) < year_Llimit:
+            print('Given UniProtKB/SwissProt filename: ' + basename(sp_fname.strip()))
+            print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
+            print('And a valid year must be greater than 2009')
+            return False
+        if(mm not in month_str):
+            print('Given UniProtKB/SwissProt filename: ' + basename(sp_fname.strip()))
+            print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
+            print('And a valid month must be between 01 and 12.')
+            return False
+        return True
+
+    def check_sprot_format(self, sprot_fname):
+        """
+        This method exits the xTract_testSeq program on any of the
+        following conditions:
+            Case 1: if the file is empty
+            Case 2: if the file is NOT in UniProtKB/SwissProt format.
+                    To check this it invokes check_sprot_format method
+                    of FormatChecker module.
+        """
+        if os.stat(sprot_fname).st_size == 0:
+            print(bcolors.WARNING + 'You submitted an empty file: ' + sprot_fname + \
+                  bcolors.ENDC)
+            sys.exit(1)
+        elif not fc.check_sprot_format(open(sprot_fname, 'r')):
+            print(bcolors.WARNING + 'File format error: ' + \
+                  basename(sprot_fname) + bcolors.ENDC)
+            print(bcolors.WARNING + 'File must be in UniProtKB/SwissProt ' + \
+                'format' + bcolors.ENDC)
+            sys.exit(1)
+
+    def process_data(self):
+        """
+        This method invokes other methods to perform all tasks related
+        to test sequence generation.
+        """
+        # Print the wellcome message:
+        self.print_prolog()
+
+        # Check UniProtKB/SwissProt file format: 
+        #self.check_sprot_format(self.t1_input_file)
+
+        # Check UniProtKB/SwissProt file format: 
+        self.check_sprot_format(self.t2_input_file)
+
+        # Filter out the target sequences from the UniProtKB/SwissProt file:
+        print('Filtering test sequences based on ' + \
+               basename(self.t1_input_file) + ' (map file at t1) and \n' + \
+               basename(self.t2_input_file) + ' (SwissProt file at t2) ...')
+
+        if not basename(self.parsed_dict['g']): # Extract for all organisms
+            xt.create_reevalSet_allSpecies(open(self.t1_input_file, 'r'),
+                                         open(self.t2_input_file, 'r'),
+                                         open(self.reevalSet_fname, 'w'),
+                                         open(self.reevalSet_map_fname, 'w'),
+                                         self.ontology_name, 
+                                         self.ConfigParam['exp_eec'])
+        sys.exit(0)
+        if not basename(self.parsed_dict['g']): # Extract for all organisms
+            xt.create_testSet_allSpecies(open(self.t1_input_file, 'r'),
+                                         open(self.t2_input_file, 'r'),
+                                         open(self.testSet_LK_mfo, 'w'),
+                                         open(self.testSet_LK_mfo_map, 'w'),
+                                         open(self.testSet_LK_bpo, 'w'),
+                                         open(self.testSet_LK_bpo_map, 'w'),
+                                         open(self.testSet_LK_cco, 'w'),
+                                         open(self.testSet_LK_cco_map, 'w'),
+                                         self.ConfigParam['exp_eec'])
+        else: # Extract for specific organism 
+            xt.create_testSet_singleSpecies(open(self.t1_input_file, 'r'),
+                                            open(self.t1_input_file, 'r'),
+                                            self.parsed_dict['g'],
+                                            open(self.testSet_LK_mfo, 'w'),
+                                            open(self.testSet_LK_mfo_map, 'w'),
+                                            open(self.testSet_LK_bpo, 'w'),
+                                            open(self.testSet_LK_bpo_map, 'w'),
+                                            open(self.testSet_LK_cco, 'w'),
+                                            open(self.testSet_LK_cco_map, 'w'),
+                                            self.ConfigParam['exp_eec'])
+        # Print the summary of running this program:
+        self.print_epilog()
+        return None
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print(sys.argv[0] + ':')
+        print(__doc__)
+    else:
+        fd = xTract_reevalSeq() # Create an instance of xTract_testSeq class
+        fd.process_data() # Process data and filter out target sequences
+    sys.exit(0)
