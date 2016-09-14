@@ -36,7 +36,6 @@
        of the SwissProt record mathes any of the keys in the prevES_dict. 
        If it does, it returns the key; otherwise, it returns None. 
 '''
-
 import sys
 from collections import defaultdict
 from Bio import SeqIO
@@ -98,9 +97,9 @@ def create_reevalSet_allSpecies(fh_mapFile_t1, fh_sprot_t2,
                         #break
             # If the current protein's annotation gains EXP evidence
             # code at t2, write the sequence to the output file:
-            # GO terms from t1: 
+            # GO terms from map file at time point t1: 
             curGOterms=prevES_dict[retVal]
-            # Gained GO terms between t1 and t2: 
+            # Gained GO terms between time points t1 and t2: 
             newGOterms = goTerms-curGOterms
             if exp_code and newGOterms:
                 countFunctionGain += 1
