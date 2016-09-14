@@ -33,11 +33,12 @@ def collect_args():
     parser = argparse.ArgumentParser(description='Generate a test set of ' + \
         'sequences by comparing two UniProt-SwissProt files at two time points.')
     parser.add_argument('-I1', '--input1', help=' Specifies path to a ' + \
-        'UniProt-SwissProt file at time t1. This opton is mandatory.')
+        'map file at time t1. This opton is mandatory.')
     parser.add_argument('-I2', '--input2', help=' Specifies path to a ' + \
         'UniProt-SwissProt file at time t2 (>t1). This opton is mandatory.')
-    parser.add_argument('-N', '--ontology', help=' Specifies an ontology ' + \
-        'name. This opton is mandatory.')
+    parser.add_argument('-N', '--ontology', type=str, choices=['F', 'P', 'C'], \
+         required=True, help=' Specifies an ontology name. ' + \
+         'This opton is mandatory.')
     parser.add_argument('-G','--organism', default='', help=' Specifies an ' + \
        'organism id, for example, 559292 for Saccharomyces cerevisiae.')
     parser.add_argument('-O', '--output', default='', help='Provides user ' + \
