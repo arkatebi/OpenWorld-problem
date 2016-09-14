@@ -23,6 +23,8 @@
 
 5.2\. [Evaluation Set 1] (#genEvalSet-1)
 
+5.3\. [Evaluation Set 2] (#genEvalSet-2)
+
 <a name="intro">
 #### Introduction
 Models for functional predictions of proteins are developed based on the
@@ -210,6 +212,34 @@ testSet.9606.tfa_LK_cco.1.map
 
 Repeated run of the program will create the subsequent versions of each 
 output file.
+
+<a name="genEvalSet-2" />
+#### Evaluation Set 2 (ES-2)
+
+This program will extract the sequences of the proteins whose annotations
+gained annotations that have experimental evidence codes in UniProt/SwissProt 
+database at time t2. For ES-2, t1 is set as January 2011 and t2 is set as 
+January 2012.
+
+```
+python xTract_reevalSet -I1=evalSet-1.mfo.map -I2=uniprot_sprot.dat.2012_01 -N=F -O=evalSet-2
+python xTract_reevalSet -I1=evalSet-1.bpo.map -I2=uniprot_sprot.dat.2012_01 -N=P -O=evalSet-2
+python xTract_reevalSet -I1=evalSet-1.cco.map -I2=uniprot_sprot.dat.2012_01 -N=C -O=evalSet-2
+```
+The first input argument is the map file at time t1 from ES-1. The second input
+argument is the SwissProt file at t2. The third argument is the ontology 
+name and the fourth argument is the output file name prefix. It generates
+the following output files - one sequence file and one map file for each 
+ontology:
+
+```
+evalSet-2.mfo.1
+evalSet-2.mfo.1.map 
+evalSet-2.bpo.1
+evalSet-2.bpo.1.map 
+evalSet-2.cco.1
+evalSet-2.cco.1.map 
+```
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
