@@ -17,7 +17,7 @@
     will extract the sequences for that specific organism only.
 
     When the output file name is NOT given, it will construct an output file
-    name by adding suffixes at the end of prefix.
+    name by adding suffixes at the end of default prefix.
     
     How to run this program?
     Mode 1: 
@@ -29,7 +29,6 @@
         Two output files will be created:  
             evalSet-2.mfo.1
             evalSet-2.mfo.1.map
-
     Mode 2:
         For two input files uniprot_sprot.dat.2010_01 at time t1 and 
         uniprot_sprot.dat.2011_01 at time t2 and taxon id 9606
