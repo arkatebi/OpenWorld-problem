@@ -123,8 +123,6 @@ def create_reevalSet_allSpecies(fh_mapFile_t1, fh_sprot_t2,
                              str(protName) + '\t' + \
                              str(gt) + '\n'
                     reevalSet_map_handle.write("%s" % mapStr)
-                return None
-                #sys.exit(0)
     print('countMatch at t2: ' + str(countMatch))
     print('countFunctionGain at t2: ' + str(countFunctionGain))
     return None
