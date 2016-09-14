@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 '''
     The entry point of this module is parse_args() method which calls
     other methods to collect user supplied arguments, parses and
@@ -18,7 +17,6 @@
     parse_args: This method calls the above methods and returns the final 
         dictionary of the user supplied arguments to the calling point.
 '''
-
 import os
 import sys
 import argparse
@@ -94,7 +92,7 @@ def check_args(args_dict,parser):
     return user_dict
 
 def parse_args():
-    """ 
+    ''' 
     This is the entry point for the other methods in this module. It
       1. invokes collect_args to collect the user arguments.
       2. invokes extract_args to put those arguments into an 
@@ -103,7 +101,7 @@ def parse_args():
          check_args which returns an ordered dictionary of correct 
          arguments.
       4. returns the dictionary at the end.
-    """
+    '''
     # Collect user arguments:
     parser = collect_args() 
     args_dict = {}
