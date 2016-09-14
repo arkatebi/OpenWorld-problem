@@ -70,7 +70,7 @@ def create_reevalSet_allSpecies(fh_mapFile_t1, fh_sprot_t2,
                                 ontType,
                                 EXP_default=set([])):
     prevES_dict = __collect_prevES(fh_mapFile_t1)
-
+    fh_mapFile_t1.close()
     # Counter for the number of proteins that had also annotations at t1: 
     countMatch = 0 
     # Counter for the number of proteins that gained annotations at t2: 
@@ -122,6 +122,10 @@ def create_reevalSet_allSpecies(fh_mapFile_t1, fh_sprot_t2,
                              str(protName) + '\t' + \
                              str(gt) + '\n'
                     reevalSet_map_handle.write("%s" % mapStr)
+    # Close the open files: 
+    fh_sprot_t2.close()
+    reevalSet_handle.close() 
+    reevalSet_map_handle.close()
     print('countMatch at t2: ' + str(countMatch))
     print('countFunctionGain at t2: ' + str(countFunctionGain))
     return None
