@@ -102,7 +102,6 @@ def create_reevalSet_allSpecies(fh_mapFile_t1, fh_sprot_t2,
             # Gained GO terms between time points t1 and t2: 
             newGOterms = goTerms-curGOterms
             if exp_code and newGOterms:
-                countFunctionGain += 1
                 target_id=retVal.split(':')[0]
                 protName=retVal.split(':')[1]
                 outseq = SeqRecord(Seq(rec.sequence),
@@ -115,13 +114,16 @@ def create_reevalSet_allSpecies(fh_mapFile_t1, fh_sprot_t2,
 
                 # Write out the mapping to the map file:
                 # (protein sequence id, protein name, new GO term(s))
-                for gt in newGOterms:
+                for gt in sorted(newGOterms):
                     #mapStr = "T" + str(target_id) + '\t' + \
                     #           str(gt) + '\n'
                     mapStr = str(target_id) + '\t' + \
                              str(protName) + '\t' + \
                              str(gt) + '\n'
                     reevalSet_map_handle.write("%s" % mapStr)
+                countFunctionGain += 1
+                #if countFunctionGain > 3: 
+                #    return None
     # Close the open files: 
     fh_sprot_t2.close()
     reevalSet_handle.close() 
