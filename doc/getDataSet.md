@@ -11,6 +11,8 @@
 
 1.3\. [Evaluation Set 2] (#genEvalSet-2)
 
+1.4\. [Evaluation Set 3] (#genEvalSet-3)
+
 <a name="genSets" />
 ### Training and Evaluation Sets 
 
@@ -186,6 +188,30 @@ evalSet-2.bpo.1.map
 evalSet-2.cco.1
 evalSet-2.cco.1.map 
 ```
+
+<a name="genEvalSet-3" />
+#### Evaluation Set 3 (ES-3)
+
+The following set of commands will generate ES-3:
+
+```
+python xTract_reevalSet -I1=evalSet-2.mfo.1.map -I2=uniprot_sprot.dat.2013_01 -N=F -O=evalSet-3
+python xTract_reevalSet -I1=evalSet-2.bpo.1.map -I2=uniprot_sprot.dat.2013_01 -N=P -O=evalSet-3
+python xTract_reevalSet -I1=evalSet-2.cco.1.map -I2=uniprot_sprot.dat.2013_01 -N=C -O=evalSet-3
+```
+ES-3 data will be stored in the following files: one sequence file in fasta 
+format and one map file for each ontology:
+
+```
+evalSet-3.mfo.1
+evalSet-3.mfo.1.map 
+evalSet-3.bpo.1
+evalSet-3.bpo.1.map 
+evalSet-3.cco.1
+evalSet-3.cco.1.map 
+```
+
+Similarly, ES-4, ES-5, and ES-6 can be generated. 
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
