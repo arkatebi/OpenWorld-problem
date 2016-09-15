@@ -1,5 +1,5 @@
 <a name="title" />
-## Obtaining training and evaluation datasets for assessing the predictive models
+## Obtaining training and evaluation datasets for assessing predictive models
 
 ### Contents
 
