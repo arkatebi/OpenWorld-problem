@@ -16,6 +16,9 @@
 <a name="genSets" />
 ### Training and Evaluation Sets 
 
+![alt Experiment Design] (/figures/experiment-design-1.3.png?raw=true “Experiment Design”)
+
+
 The details of how to collect the training and evaluation data sets
 are as follows.
 
