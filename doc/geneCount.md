@@ -197,7 +197,7 @@ python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2010to2016.txt -I3=geneCount_20
 
 The figures can be viewed by following the link below:
 
-https://github.com/arkatebi/OpenWorld-problem/blob/master/geneCount_2010to2016.md
+https://github.com/arkatebi/OpenWorld-problem/blob/master/doc/geneCount_2010to2016.md
 
 <a name ="year_2012to2016" />
 ##### Gene Counts: Jan 2012 to May 2016
@@ -215,7 +215,7 @@ python Plot_geneCounts -I1=sp_list.txt -I2=sprot_2012to2016.txt -I3=geneCount_20
 
 The figures can be viewed by following the link below:
 
-https://github.com/arkatebi/OpenWorld-problem/blob/master/geneCount_2012to2016.md
+https://github.com/arkatebi/OpenWorld-problem/blob/master/doc/geneCount_2012to2016.md
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
