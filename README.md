@@ -76,10 +76,10 @@ https://github.com/arkatebi/OpenWorld-problem/blob/master/doc/getDataSet.md
 
 #### BLAST 
  
-See reference [1]
+See reference [1].
 
 #### HMMER 
-See reference [2]
+See reference [2].
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
