@@ -1,5 +1,5 @@
 <a name="title" />
-## Training and evaluation dataset generation for evaluating of predictive model
+## Obtaining training and evaluation datasets for assessing the predictive models
 
 ### Contents
 
