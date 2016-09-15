@@ -106,12 +106,12 @@ followed by the time stamp (in yyyy_mm format). The program generates the
 following six output files - two files in each ontological category:
 
 ```
-uniprot_sprot.dat.2010_01-2011_01.tfa_LK_mfo.1
-uniprot_sprot.dat.2010_01-2011_01.tfa_LK_mfo.1.map
-uniprot_sprot.dat.2010_01-2011_01.tfa_LK_bpo.1
-uniprot_sprot.dat.2010_01-2011_01.tfa_LK_bpo.1.map
-uniprot_sprot.dat.2010_01-2011_01.tfa_LK_cco.1
-uniprot_sprot.dat.2010_01-2011_01.tfa_LK_cco.1.map
+uniprot_sprot.dat.2010_01-2011_01.mfo.1
+uniprot_sprot.dat.2010_01-2011_01.mfo.1.map
+uniprot_sprot.dat.2010_01-2011_01.bpo.1
+uniprot_sprot.dat.2010_01-2011_01.bpo.1.map
+uniprot_sprot.dat.2010_01-2011_01.cco.1
+uniprot_sprot.dat.2010_01-2011_01.cco.1.map
 ```
 
 The first ouput file has the extracted test sequences in the FASTA 
@@ -125,35 +125,35 @@ respectively.
 The program can also be used to extract sequences for a specific organism:
 
 ```
-python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606
+python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -O=evalSet-1
 ```
 
 This will generate the following output files:
 
 ```
-uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_mfo.1
-uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_mfo.1.map
-uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_bpo.1
-uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_bpo.1.map
-uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_cco.1
-uniprot_sprot.dat.2010_01-2011_01.9606.tfa_LK_cco.1.map
+evalSet-1.mfo.1
+evalSet-1.mfo.1.map
+evalSet-1.bpo.1
+evalSet-1.bpo.1.map
+evalSet-1.cco.1
+evalSet-1.cco.1.map
 ```
 
 This program can also take an optional output file name: 
 
 ```
-python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=testSet
+python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=evalSet-1
 ```
 
 This will create the following output files:
 
 ```
-testSet.9606.tfa_LK_mfo.1
-testSet.9606.tfa_LK_mfo.1.map
-testSet.9606.tfa_LK_bpo.1
-testSet.9606.tfa_LK_bpo.1.map
-testSet.9606.tfa_LK_cco.1
-testSet.9606.tfa_LK_cco.1.map
+evalSet-1.9606.mfo.1
+evalSet-1.9606.mfo.1.map
+evalSet-1.9606.bpo.1
+evalSet-1.9606.bpo.1.map
+evalSet-1.9606.cco.1
+evalSet-1.9606.cco.1.map
 ```
 
 Repeated run of the program will create the subsequent versions of each 
@@ -168,9 +168,9 @@ database at time t2. For ES-2, t1 is set as January 2011 and t2 is set as
 January 2012.
 
 ```
-python xTract_reevalSet -I1=evalSet-1.mfo.map -I2=uniprot_sprot.dat.2012_01 -N=F -O=evalSet-2
-python xTract_reevalSet -I1=evalSet-1.bpo.map -I2=uniprot_sprot.dat.2012_01 -N=P -O=evalSet-2
-python xTract_reevalSet -I1=evalSet-1.cco.map -I2=uniprot_sprot.dat.2012_01 -N=C -O=evalSet-2
+python xTract_reevalSet -I1=evalSet-1.mfo.1.map -I2=uniprot_sprot.dat.2012_01 -N=F -O=evalSet-2
+python xTract_reevalSet -I1=evalSet-1.bpo.1.map -I2=uniprot_sprot.dat.2012_01 -N=P -O=evalSet-2
+python xTract_reevalSet -I1=evalSet-1.cco.1.map -I2=uniprot_sprot.dat.2012_01 -N=C -O=evalSet-2
 ```
 The first input argument is the map file at time t1 from ES-1. The second input
 argument is the SwissProt file at t2. The third argument is the ontology 
