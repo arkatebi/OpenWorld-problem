@@ -19,6 +19,9 @@
 
 5\. [Training and Evaluation Sets] (#genSets)
 
+6\. [Predictive Models] (#modelSet)
+
+
 <a name="intro">
 #### Introduction
 Models for functional predictions of proteins are developed based on the
@@ -68,13 +71,26 @@ can be found by following the link below:
 https://github.com/arkatebi/OpenWorld-problem/blob/master/doc/getDataSet.md
 
 
+<a name="modelSet" />
+### Predictive Models 
 
+#### BLAST 
+ 
+See reference [1]
 
+#### HMMER 
+See reference [2]
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
 GitHub through the following URL: https://github.com/arkatebi/OpenWorld-problem.
 For questions, please email either of us: Iddo Friedberg (idoerg@gmail.com),
 Ataur Katebi (arkatebi@gmail.com).
+
+<a name="refSet" />
+### References 
+
+[1] Altschul SF, Gish W, Miller W, Myers EW & Lipman DJ (1990). Basic local alignment search tool. J. Mol. Biol. 215:403-410
+[2] HMMER 3.1b2 (February 2015); http://hmmer.org/
 
 [Go to the top] (#title)
