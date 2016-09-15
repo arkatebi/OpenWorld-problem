@@ -228,7 +228,7 @@ python xTract_reevalSet -I1=evalSet-1.cco.map -I2=uniprot_sprot.dat.2012_01 -N=C
 ```
 The first input argument is the map file at time t1 from ES-1. The second input
 argument is the SwissProt file at t2. The third argument is the ontology 
-name and the fourth argument is the output file name prefix. It generates
+name and the fourth argument is the prefix for the output file name. It generates
 the following output files - one sequence file and one map file for each 
 ontology:
 
