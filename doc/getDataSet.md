@@ -1,5 +1,5 @@
 <a name="title" />
-## Obtaining datasets for assessment of the predictive models
+## Obtaining datasets for assessment of predictive models
 
 ### Contents
 
