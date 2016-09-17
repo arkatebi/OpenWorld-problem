@@ -117,6 +117,7 @@ evalSet-1.bpo.1.map
 evalSet-1.cco.1
 evalSet-1.cco.1.map
 ```
+
 The first ouput file has the extracted sequences in the FASTA
 file format for MFO ontology. The id for each sequence for the FASTA 
 file format is constructed from a program generated string and the 
@@ -129,9 +130,10 @@ of files are for BPO and CCO ontological categories, respectively.
 This program can also take an optional output file name. Furthermore, 
 the program can be used to extract sequences for a specific organism by 
 supplying an optional organism id:
+
 ```
 python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=evalSet-1
-`
+```
 
 This will create the following output files:
 
@@ -143,6 +145,7 @@ evalSet-1.9606.bpo.1.map
 evalSet-1.9606.cco.1
 evalSet-1.9606.cco.1.map
 ```
+
 Repeated run of the program will create the subsequent versions of each 
 output file.
 
@@ -159,10 +162,11 @@ python xTract_reevalSet -I1=evalSet-1.mfo.1.map -I2=uniprot_sprot.dat.2012_01 -N
 python xTract_reevalSet -I1=evalSet-1.bpo.1.map -I2=uniprot_sprot.dat.2012_01 -N=P -O=evalSet-2
 python xTract_reevalSet -I1=evalSet-1.cco.1.map -I2=uniprot_sprot.dat.2012_01 -N=C -O=evalSet-2
 ```
+
 The first input argument is the map file at time t1 from ES-1. The second input
 argument is the SwissProt file at t2. The third argument is the ontology 
 name and the fourth argument is the prefix for the output file name. It 
-generates the following output files - one sequence file in fasta format 
+generates the following output files - one sequence file in FASTA format 
 and one map file for each ontology:
 
 ```
@@ -184,7 +188,7 @@ python xTract_reevalSet -I1=evalSet-2.mfo.1.map -I2=uniprot_sprot.dat.2013_01 -N
 python xTract_reevalSet -I1=evalSet-2.bpo.1.map -I2=uniprot_sprot.dat.2013_01 -N=P -O=evalSet-3
 python xTract_reevalSet -I1=evalSet-2.cco.1.map -I2=uniprot_sprot.dat.2013_01 -N=C -O=evalSet-3
 ```
-ES-3 data will be stored in the following files: one sequence file in fasta 
+ES-3 data will be stored in the following files: one sequence file in FASTA 
 format and one map file for each ontology:
 
 ```
