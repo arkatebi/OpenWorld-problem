@@ -94,46 +94,20 @@ output file.
 <a name="genEvalSet-1" />
 #### Evaluation Set 1 (ES-1)
 
-This program will extract the sequences of the proteins whose annotations
-did not have experimental evidence codes in UniProt/SwissProt database at time
-t1 but gained experimental evidence codes at time t2. For ES-1, t1 is set as 
-January 2010 and t2 is set as January 2011.
+This program will extractg the sequences of the proteins
+whose annotations did not have experimental evidence codes in 
+UniProt/SwissProt database at time t1 but gained experimental evidence 
+codes at time t2. To obtain ES-1, t1 is set as January 2010 and t2 is 
+set as January 2011.
 
 ```
 python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01
 
 ```
-The first input file uniprot_sprot.dat.2010_01 is the UniProt/SwissProt 
-annotation file at t1 and the second input file uniprot_sprot.dat.2011_01 is the 
-UniProt/SwissProt annotation file at t2. The name of a SwissProt file should have 
-the following format: a file name prefix followed by the exact string .dat. 
-followed by the time stamp (in yyyy_mm format). The program generates the 
+The first input file uniprot_sprot.dat.2010_01 is the UniProt/SwissProt
+annotation file at t1 and the second input file uniprot_sprot.dat.2011_01 is
+the UniProt/SwissProt annotation file at t2. The program generates the 
 following six output files - two files in each ontological category:
-
-```
-uniprot_sprot.dat.2010_01-2011_01.mfo.1
-uniprot_sprot.dat.2010_01-2011_01.mfo.1.map
-uniprot_sprot.dat.2010_01-2011_01.bpo.1
-uniprot_sprot.dat.2010_01-2011_01.bpo.1.map
-uniprot_sprot.dat.2010_01-2011_01.cco.1
-uniprot_sprot.dat.2010_01-2011_01.cco.1.map
-```
-
-The first ouput file has the extracted test sequences in the FASTA 
-file format for MFO ontology. The id for each sequence is constructed from 
-a program generated string and the SwissProt name of the protein. The 
-second output file records the mapping between the program generated string 
-and the SwissProt protein name, corresponding to the entries in the first file.
-The subsequent two pairs of files are for BPO and CCO ontological categories, 
-respectively.
-
-The program can also be used to extract sequences for a specific organism:
-
-```
-python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -O=evalSet-1
-```
-
-This will generate the following output files:
 
 ```
 evalSet-1.mfo.1
@@ -143,12 +117,21 @@ evalSet-1.bpo.1.map
 evalSet-1.cco.1
 evalSet-1.cco.1.map
 ```
+The first ouput file has the extracted sequences in the FASTA
+file format for MFO ontology. The id for each sequence for the FASTA 
+file format is constructed from a program generated string and the 
+SwissProt name of the protein. The second output file is the map file 
+where each record (line) has three tab separated fields (the program 
+generated string, the SwissProt protein name, and the corresponding 
+GO term that represents the proteins function). The subsequent two pairs 
+of files are for BPO and CCO ontological categories, respectively.
 
-This program can also take an optional output file name: 
-
+This program can also take an optional output file name. Furthermore, 
+the program can be used to extract sequences for a specific organism by 
+supplying an optional organism id:
 ```
 python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=evalSet-1
-```
+`
 
 This will create the following output files:
 
@@ -160,7 +143,6 @@ evalSet-1.9606.bpo.1.map
 evalSet-1.9606.cco.1
 evalSet-1.9606.cco.1.map
 ```
-
 Repeated run of the program will create the subsequent versions of each 
 output file.
 
