@@ -101,7 +101,7 @@ at time t2. To obtain ES-1, t1 is set as January 2010 and t2 is
 set as January 2011.
 
 ```
-python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01
+python xTract_evalSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01
 
 ```
 The first input file uniprot_sprot.dat.2010_01 is the UniProt/SwissProt
@@ -132,7 +132,7 @@ the program can be used to extract sequences for a specific organism by
 supplying an optional organism id:
 
 ```
-python xTract_testSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=evalSet-1
+python xTract_evalSet -I1=uniprot_sprot.dat.2010_01 -I2=uniprot_sprot.dat.2011_01 -G=9606 -O=evalSet-1
 ```
 
 This will create the following output files:
