@@ -94,10 +94,10 @@ output file.
 <a name="genEvalSet-1" />
 #### Evaluation Set 1 (ES-1)
 
-This program will extractg the sequences of the proteins
-whose annotations did not have experimental evidence codes in 
-UniProt/SwissProt database at time t1 but gained experimental evidence 
-codes at time t2. To obtain ES-1, t1 is set as January 2010 and t2 is 
+This program will extract the sequences of the proteins
+whose annotations did not have experimental evidence codes in
+UniProt/SwissProt database at time t1 but gained such evidences 
+at time t2. To obtain ES-1, t1 is set as January 2010 and t2 is 
 set as January 2011.
 
 ```
@@ -145,7 +145,6 @@ evalSet-1.9606.bpo.1.map
 evalSet-1.9606.cco.1
 evalSet-1.9606.cco.1.map
 ```
-
 Repeated run of the program will create the subsequent versions of each 
 output file.
 
