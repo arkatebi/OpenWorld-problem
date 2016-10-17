@@ -13,16 +13,16 @@
                prediction scores
     How to run this tool?
     Mode 1: output filename prefix is supplied in addition to the input files -
-       > python Assign_blastScores -I1=testSet.9606_mfo.map \
+       > python Assign_blastScores -I1=evalSet-1.9606_mfo.1.map \
                                    -I2=trainingSet.9606_mfo.map \
-                                   -I3=testSet.9606_mfo-blast-results.txt \
-                                   -O=testSet.9606_mfo.scores.txt
+                                   -I3=evalSet-1.9606.mfo-blast-results.txt \
+                                   -O=evalSet-1.9606.mfo.scores.txt
     It will save the blast scores in the output file testSet.9606_mfo.scores.txt.1
     Mode 2: output file name prefix is NOT supplied -
-       > python Assign_blastScores -I1=testSet.9606_mfo.map \
+       > python Assign_blastScores -I1=evalSet-1.9606_mfo.map \
                                    -I2=trainingSet.9606_mfo.map \
-                                   -I3=testSet.9606_mfo-blast-results.txt
-    It will save the blast scores in the output file blast_prediction_scores.1
+                                   -I3=evalSet-1.9606.mfo-blast-results.txt
+    It will save the assigned scores in the output file blast_prediction_scores.1
     Repeated run of the program will create subsequent versions of the output file.
 '''
 import os
@@ -326,11 +326,12 @@ class Assign_blastScores:
         fh_scores = open(self.score_fname, 'w')
         fh_targets=open(self.target_fname, 'r')
         for line in fh_targets:
+            # extract the query protein:
             q=line.strip().split('\t')[0]
             #q='T96060000001'
             #q='T96060000002'
             #q='T96060000003'
-            for v in self.GOterm_dict.keys():
+            for v in sorted(self.GOterm_dict.keys()):
                 #v = 'GO:0042802'
                 #v = 'GO:0004725'
                 Sv=self.GOterm_dict[v]
@@ -381,10 +382,10 @@ class Assign_blastScores:
         #self.__print_blast_results()
 
         # Score the target sequences: 
-        #self.__score_targets()
+        self.__score_targets()
 
         # Score the target sequences: 
-        self.__import_obsolete_GOterms()
+        #self.__import_obsolete_GOterms()
 
         # Print the summary of running this program:
         #self.__print_epilog()
