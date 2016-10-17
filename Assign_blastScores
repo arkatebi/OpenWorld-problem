@@ -13,14 +13,14 @@
                prediction scores
     How to run this tool?
     Mode 1: output filename prefix is supplied in addition to the input files -
-       > python Assign_blastScores -I1=evalSet-1.9606_mfo.1.map \
-                                   -I2=trainingSet.9606_mfo.map \
+       > python Assign_blastScores -I1=evalSet-1.9606.mfo.1.map \
+                                   -I2=trainingSet.9606.mfo.map \
                                    -I3=evalSet-1.9606.mfo-blast-results.txt \
                                    -O=evalSet-1.9606.mfo.scores.txt
     It will save the blast scores in the output file testSet.9606_mfo.scores.txt.1
     Mode 2: output file name prefix is NOT supplied -
-       > python Assign_blastScores -I1=evalSet-1.9606_mfo.map \
-                                   -I2=trainingSet.9606_mfo.map \
+       > python Assign_blastScores -I1=evalSet-1.9606.mfo.map \
+                                   -I2=trainingSet.9606.mfo.map \
                                    -I3=evalSet-1.9606.mfo-blast-results.txt
     It will save the assigned scores in the output file blast_prediction_scores.1
     Repeated run of the program will create subsequent versions of the output file.
