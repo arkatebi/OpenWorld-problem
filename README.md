@@ -23,7 +23,7 @@
 
 
 <a name="intro">
-#### Introduction
+### Introduction
 Models for functional predictions of proteins are developed based on the
 current state of the functional annotation databases. However, the
 annotations of most proteins are incomplete. Therefore, the question arises
