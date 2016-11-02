@@ -2,7 +2,7 @@
 ## Impact of 'Open World Assumption' on assessment of predictive models
 * The open-world problem arises from the open-world assumption: 'the 
   absence of evidence does not amount to the evidence of absence'.
-* In this project, I investigate this problem by taking the advantage 
+* In this project, I investigate this problem by taking advantage 
   of the growth of the curated protein annotation database, 
   UniProtKB/SwissProt.
 * I update this repository with the new tools that I develop to 
