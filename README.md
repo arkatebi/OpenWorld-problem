@@ -75,8 +75,26 @@ https://github.com/arkatebi/OpenWorld-problem/blob/master/doc/getDataSet.md
 ### Predictive Models 
 
 #### BLAST 
- 
-See reference [1].
+
+The Assign_blastScores program assign scores to the association between 
+GO terms and proteins according to the scoring criteria described in [1].
+
+```
+python Assign_blastScores -I1=evalSet-1.9606.mfo.1.map \
+                          -I2=trainingSet.9606.mfo.map \
+                          -I3=evalSet-1.9606.mfo-blast-results.txt \
+                          -O=evalSet-1.9606.mfo.scores.txt
+```
+
+The first and second input files are map files related to evaluation set
+and training set, respectively. A map file has three columns: the first
+column records program generated protein id (for details, see #genSet),
+the second column records protein name, and the third column records the
+GO term that defines the function of this protein. The third input file
+contains the blast results of evaluation set against the training set.
+The fourth input is the output filename where the program records scores:
+the first column has the target id, the second column has the protein name,
+and the third column has the assigned score.
 
 #### HMMER 
 See reference [2].
