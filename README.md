@@ -88,7 +88,7 @@ python Assign_blastScores -I1=evalSet-1.9606.mfo.1.map \
 
 The first and second input files are map files related to evaluation set
 and training set, respectively. A map file has three columns: the first
-column records program generated protein id (for details, see #genSet),
+column records program generated protein id (for details, see (#genSet)),
 the second column records protein name, and the third column records the
 GO term that defines the function of this protein. The third input file
 contains the blast results of evaluation set against the training set.
