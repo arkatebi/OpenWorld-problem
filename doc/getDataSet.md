@@ -38,12 +38,12 @@ where the sequences are extracted from. The program generates the
 following six output files - two files for each ontological category:
 
 ```
-uniprot_sprot.dat.2010_01.tfa_LK_mfo.1
-uniprot_sprot.dat.2010_01.tfa_LK_mfo.1.map
-uniprot_sprot.dat.2010_01.tfa_LK_bpo.1
-uniprot_sprot.dat.2010_01.tfa_LK_bpo.1.map
-uniprot_sprot.dat.2010_01.tfa_LK_cco.1
-uniprot_sprot.dat.2010_01.tfa_LK_cco.1.map
+trainingSet.mfo.1
+trainingSet.mfo.1.map
+trainingSet.bpo.1
+trainingSet.bpo.1.map
+trainingSet.cco.1
+trainingSet.cco.1.map
 ```
 
 The first ouput file has the extracted training sequences in the FASTA 
@@ -63,12 +63,12 @@ python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
 This will generate the following output files:
 
 ```
-uniprot_sprot.dat.2010_01.9606.tfa_LK_mfo.1
-uniprot_sprot.dat.2010_01.9606.tfa_LK_mfo.1.map
-uniprot_sprot.dat.2010_01.9606.tfa_LK_bpo.1
-uniprot_sprot.dat.2010_01.9606.tfa_LK_bpo.1.map
-uniprot_sprot.dat.2010_01.9606.tfa_LK_cco.1
-uniprot_sprot.dat.2010_01.9606.tfa_LK_cco.1.map
+trainingSet.9606.mfo.1
+trainingSet.9606.mfo.1.map
+trainingSet.9606.bpo.1
+trainingSet.9606.bpo.1.map
+trainingSet.9606.cco.1
+trainingSet.9606.cco.1.map
 ```
 
 This program can also take an optional output file name: 
@@ -76,18 +76,6 @@ This program can also take an optional output file name:
 ```
 python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606 -O=trainingSet
 ```
-
-This will create the following output files:
-
-```
-trainingSet.9606.tfa_LK_mfo.1
-trainingSet.9606.tfa_LK_mfo.1.map
-trainingSet.9606.tfa_LK_bpo.1
-trainingSet.9606.tfa_LK_bpo.1.map
-trainingSet.9606.tfa_LK_cco.1
-trainingSet.9606.tfa_LK_cco.1.map
-```
-
 Repeated run of the program will create the subsequent versions of each 
 output file.
 
