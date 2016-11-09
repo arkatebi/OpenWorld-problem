@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 '''
     xTract_trainingSeq program accepts the following three inputs:
-           (1) a UniProtKB/swissProt file 
-           (2) an optional taxon id and 
-           (3) an optional output file name 
-    This program extracts the protein sequences from the UniProtKB/SwissProt 
-    file that are experimentally annotated and writes them to the output 
+           (1) a UniProtKB/swissProt file
+           (2) an optional taxon id and
+           (3) an optional output file name
+    This program extracts the protein sequences from the UniProtKB/SwissProt
+    file that are experimentally annotated and writes them to the output
     files in MFO, BPO, and CCO ontological categories.
     When the taxon id is NOT given, it will extract the training sequences 
     for all species. In case the taxon id is given by the user, the program 
@@ -13,7 +13,7 @@
     only.
     When the output file name is NOT given, it will construct an output file
     name by combining a portion of the UniProtKB/SwissProt file name (and the 
-    taxon id if it is supplied by the user). 
+    taxon id if it is supplied by the user).
     How to run this program?
     Mode 1: extract sequences for all species from some input file 
             uniprot_sprot.dat.2010_01
@@ -68,8 +68,9 @@ class bcolors:
 
 # Default configuration file name:
 config_filename = '.cafarc' 
+DEFAULT_PREFIX = 'trainingSet'
 
-class xTract_trainingSeq: 
+class xTract_trainingSeq:
     def __init__(self):
         # Collect user arguments into a dictionary:
         self.parsed_dict = ap.parse_args()
@@ -87,34 +88,38 @@ class xTract_trainingSeq:
         self.t1_input_file = ld.locate_SwissProtfile(t1, self.work_dir)
 
         # Create output file names to store training sequences:
-        self.trSet_LK_mfo = self.create_outfilename('LK_mfo')
-        self.trSet_LK_bpo = self.create_outfilename('LK_bpo')
-        self.trSet_LK_cco = self.create_outfilename('LK_cco')
+        self.trSet_mfo = self.__create_outfilename('mfo')
+        self.trSet_bpo = self.__create_outfilename('bpo')
+        self.trSet_cco = self.__create_outfilename('cco')
 
         # Create output file name for mapping between SwissProt 
-        self.trSet_LK_mfo_map = self.trSet_LK_mfo + '.map'
-        self.trSet_LK_bpo_map = self.trSet_LK_bpo + '.map' 
-        self.trSet_LK_cco_map = self.trSet_LK_cco + '.map'
+        self.trSet_mfo_map = self.trSet_mfo + '.map'
+        self.trSet_bpo_map = self.trSet_bpo + '.map' 
+        self.trSet_cco_map = self.trSet_cco + '.map'
         return None
 
-    def create_outfilename(self, ontType):
+    def __create_outfilename(self, ontType):
         """ 
         Creates an output filename based on the output file prefix
         provided by the user and at the end returns the newly
         created output filename.
         """
         if not self.parsed_dict['outfile'] == '':
-            if not basename(self.parsed_dict['g']):
-                ob = basename(self.parsed_dict['outfile']) + '.tfa_' + ontType
-            else:
-                ob = basename(self.parsed_dict['outfile']) + '.%s.tfa_' \
-                          % basename(self.parsed_dict['g']) + ontType
+            if not basename(self.parsed_dict['g']): # if the taxon id is NOT supplied
+                #ob = basename(self.parsed_dict['outfile']) + '.tfa_' + ontType
+                ob = basename(self.parsed_dict['outfile']) + '.%s' %ontType
+            else: # if taxon id is supplied
+                ob = basename(self.parsed_dict['outfile']) + '.%s' \
+                          % basename(self.parsed_dict['g']) + '.%s' %ontType
         else: # if output file name is NOT supplied, construct one:
             if not basename(self.parsed_dict['g']):
-                ob = basename(self.parsed_dict['t1']) + '.tfa_' + ontType
+                ob = DEFAULT_PREFIX + '.%s' %ontType
+                #ob = basename(self.parsed_dict['t1']) + '.%s' %ontType
             else: # if taxon id is supplied
-                ob = basename(self.parsed_dict['t1']) + '.%s.tfa_' \
-                          % basename(self.parsed_dict['g']) + ontType
+                ob = DEFAULT_PREFIX + '.%s' % basename(self.parsed_dict['g']) \
+                     + '.%s' %ontType
+                #ob = basename(self.parsed_dict['t1']) + '.%s' \
+                #          % basename(self.parsed_dict['g']) + '.%s' %ontType
                 # output file name is constructed by appending '.taxon id.tfa'
                 # as an extension
         index = 1
@@ -123,26 +128,7 @@ class xTract_trainingSeq:
         output_filename = self.work_dir + '/' + ob + '.' + str(index)
         return output_filename
 
-    def create_iterator(self, infile):
-        """ 
-        Creates and returns an iterator object for an input a UniProt-GOA
-        file along with a list of all field names contained in the
-        UniProt-GOA file.
-        """
-        infile_handle = open(infile, 'r')
-        iter_handle = GOA.gafiterator(infile_handle)
-        for ingen in iter_handle:
-            if len(ingen) == 17:
-                GAFFIELDS = GOA.GAF20FIELDS
-                break
-            else:
-                GAFFIELDS = GOA.GAF10FIELDS
-                break
-        infile_handle = open(infile, 'r')
-        iter_handle = GOA.gafiterator(infile_handle)
-        return iter_handle, GAFFIELDS
-
-    def print_prolog(self):
+    def __print_prolog(self):
         print ("*************************************************")
         print ("Running Training Set Generatin Tool !!!!!")
         print ('Following is a list of user supplied inputs:')
@@ -151,32 +137,32 @@ class xTract_trainingSeq:
         print ('*********************************************\n')
         return None
 
-    def print_epilog(self):
+    def __print_epilog(self):
         print(bcolors.OKGREEN + 'The following output files are created: ' +
               bcolors.ENDC)
-        if os.path.exists(self.trSet_LK_mfo) and os.path.exists(self.trSet_LK_mfo_map):
+        if os.path.exists(self.trSet_mfo) and os.path.exists(self.trSet_mfo_map):
             print('    MFO-Training sequence file and the corresponding map file: ')
-            print('         ' + basename(self.trSet_LK_mfo))
-            print('         ' + basename(self.trSet_LK_mfo_map))
-        if os.path.exists(self.trSet_LK_bpo) and os.path.exists(self.trSet_LK_bpo_map):
+            print('         ' + basename(self.trSet_mfo))
+            print('         ' + basename(self.trSet_mfo_map))
+        if os.path.exists(self.trSet_bpo) and os.path.exists(self.trSet_bpo_map):
             print('    BPO-Training sequence file and the corresponding map file: ')
-            print('         ' + basename(self.trSet_LK_bpo))
-            print('         ' + basename(self.trSet_LK_bpo_map))
-        if os.path.exists(self.trSet_LK_cco) and os.path.exists(self.trSet_LK_cco_map):
+            print('         ' + basename(self.trSet_bpo))
+            print('         ' + basename(self.trSet_bpo_map))
+        if os.path.exists(self.trSet_cco) and os.path.exists(self.trSet_cco_map):
             print('    CCO-Training sequence file and the corresponding map file: ')
-            print('         ' + basename(self.trSet_LK_cco))
-            print('         ' + basename(self.trSet_LK_cco_map))
+            print('         ' + basename(self.trSet_cco))
+            print('         ' + basename(self.trSet_cco_map))
         print(bcolors.OKGREEN + 'Thank you for using Training Sequence Generation Tool' + \
                bcolors.ENDC)
         return None
 
-    def check_sprot_format(self, sprot_fname):
+    def __check_sprot_format(self, sprot_fname):
         """
         This method exits the xTract_trainingSeq program on any of the
         following conditions:
             Case 1: if the file is empty
             Case 2: if the file is NOT in UniProtKB/SwissProt format.
-                    To check this it invokes check_sprot_format method
+                    To check this it invokes __check_sprot_format method
                     of FormatChecker module.
         """
         if os.stat(sprot_fname).st_size == 0:
@@ -196,10 +182,10 @@ class xTract_trainingSeq:
         to training sequence generation.
         """
         # Print the wellcome message:
-        self.print_prolog()
+        self.__print_prolog()
 
         # Check UniProtKB/SwissProt file format: 
-        self.check_sprot_format(self.t1_input_file)
+        self.__check_sprot_format(self.t1_input_file)
 
         # Filter out the target sequences from the UniProtKB/SwissProt file:
         print('Filtering training sequences from ' + \
@@ -207,25 +193,25 @@ class xTract_trainingSeq:
 
         if not basename(self.parsed_dict['g']): # Extract for all organisms
             xt.create_trainingSet_allSpecies(open(self.t1_input_file, 'r'),
-                                             open(self.trSet_LK_mfo, 'w'),
-                                             open(self.trSet_LK_mfo_map, 'w'),
-                                             open(self.trSet_LK_bpo, 'w'),
-                                             open(self.trSet_LK_bpo_map, 'w'),
-                                             open(self.trSet_LK_cco, 'w'),
-                                             open(self.trSet_LK_cco_map, 'w'),
+                                             open(self.trSet_mfo, 'w'),
+                                             open(self.trSet_mfo_map, 'w'),
+                                             open(self.trSet_bpo, 'w'),
+                                             open(self.trSet_bpo_map, 'w'),
+                                             open(self.trSet_cco, 'w'),
+                                             open(self.trSet_cco_map, 'w'),
                                              self.ConfigParam['exp_eec'])
         else: # Extract for specific organism
             xt.create_trainingSet_singleSpecies(open(self.t1_input_file, 'r'),
                                              self.parsed_dict['g'],
-                                             open(self.trSet_LK_mfo, 'w'),
-                                             open(self.trSet_LK_mfo_map, 'w'),
-                                             open(self.trSet_LK_bpo, 'w'),
-                                             open(self.trSet_LK_bpo_map, 'w'),
-                                             open(self.trSet_LK_cco, 'w'),
-                                             open(self.trSet_LK_cco_map, 'w'),
+                                             open(self.trSet_mfo, 'w'),
+                                             open(self.trSet_mfo_map, 'w'),
+                                             open(self.trSet_bpo, 'w'),
+                                             open(self.trSet_bpo_map, 'w'),
+                                             open(self.trSet_cco, 'w'),
+                                             open(self.trSet_cco_map, 'w'),
                                              self.ConfigParam['exp_eec'])
         # Print the summary of running this program:
-        self.print_epilog()
+        self.__print_epilog()
         return None
 
 if __name__ == '__main__':
