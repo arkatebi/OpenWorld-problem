@@ -8,31 +8,31 @@
     specific species. 
 
     create_trainingSet_allSpecies(fh_sprot,
-                       trainingFile_LK_mfo_handle, 
-                       trainingFile_LK_mfo_map_handle,
-                       trainingFile_LK_bpo_handle,
-                       trainingFile_LK_bpo_map_handle,
-                       trainingFile_LK_cco_handle,
-                       trainingFile_LK_cco_map_handle,
+                       trainingFile_mfo_handle, 
+                       trainingFile_mfo_map_handle,
+                       trainingFile_bpo_handle,
+                       trainingFile_bpo_map_handle,
+                       trainingFile_cco_handle,
+                       trainingFile_cco_map_handle,
                        EXP_default=set([])):
-        This method invokes filter_trainingSet_allSpecies() 
+        This method invokes __filter_trainingSet_allSpecies() 
         to generate training sequences on each of three ontologies:
         MFO, BPO, and CCO. 
    
     create_trainingSet_singleSpecies(fh_sprot, taxon_id,
-                       trainingFile_LK_mfo_handle,
-                       trainingFile_LK_mfo_map_handle,
-                       trainingFile_LK_bpo_handle,
-                       trainingFile_LK_bpo_map_handle,
-                       trainingFile_LK_cco_handle,
-                       trainingFile_LK_cco_map_handle,
+                       trainingFile_mfo_handle,
+                       trainingFile_mfo_map_handle,
+                       trainingFile_bpo_handle,
+                       trainingFile_bpo_map_handle,
+                       trainingFile_cco_handle,
+                       trainingFile_cco_map_handle,
                        EXP_default=set([])):
         This method is similar to create_trainingSet_allSpecies() but 
-        invokes filter_trainingSet_singleSpecies() method and generates 
+        invokes __filter_trainingSet_singleSpecies() method and generates 
         the training sequences for specific species defined by the 
         parameter taxon_id. 
 
-    filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
+    __filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
                                   ontType, EXP_default=set([])):
         This method takes five input arguments:
             (1) a uniprot-swissProt file handle,
@@ -46,10 +46,10 @@
         protein to the output file. It also writes the mapping of training  
         sequence id and the protein name to the map file.
 
-    filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
+    __filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
                                   ontType, EXP_default=set([])):
 
-       This method is similar to filter_trainingSet_allSpecies but works 
+       This method is similar to __filter_trainingSet_allSpecies but works 
        on only a specific species defined by the parameter taxon_id. 
 
 '''
@@ -59,7 +59,7 @@ from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from Bio import SwissProt as sp
 
-def filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
+def __filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
                                   ontType, EXP_default=set([])):
     # Initializes the target_id:
     target_id = int("1"+"0000001")
@@ -101,7 +101,8 @@ def filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
             # If the protein's annotation has any EXP evidence,
             # write the sequence and the mapping to the output files:
             if exp_code:
-                goTerms = ','.join(list(goTerms))
+                #goTerms = ','.join(list(goTerms))
+                goTerms = ','.join(sorted(goTerms))
                 outseq = SeqRecord(Seq(rec.sequence),
                                    id="TR"+str(target_id),
                                    description = "%s" %
@@ -121,41 +122,41 @@ def filter_trainingSet_allSpecies(fh_sprot, fh_targets, fh_map,
     return seqCount_exp
 
 def create_trainingSet_allSpecies(fh_sprot,
-                       trainingFile_LK_mfo_handle, 
-                       trainingFile_LK_mfo_map_handle,
-                       trainingFile_LK_bpo_handle,
-                       trainingFile_LK_bpo_map_handle,
-                       trainingFile_LK_cco_handle,
-                       trainingFile_LK_cco_map_handle,
+                       trainingFile_mfo_handle, 
+                       trainingFile_mfo_map_handle,
+                       trainingFile_bpo_handle,
+                       trainingFile_bpo_map_handle,
+                       trainingFile_cco_handle,
+                       trainingFile_cco_map_handle,
                        EXP_default=set([])):
     print('Creating training set for MFO ontology ...')
-    filter_trainingSet_allSpecies(fh_sprot,
-                       trainingFile_LK_mfo_handle,
-                       trainingFile_LK_mfo_map_handle,
+    __filter_trainingSet_allSpecies(fh_sprot,
+                       trainingFile_mfo_handle,
+                       trainingFile_mfo_map_handle,
                        'F', EXP_default)
-    trainingFile_LK_mfo_handle.flush()
-    trainingFile_LK_mfo_map_handle.flush()
+    trainingFile_mfo_handle.flush()
+    trainingFile_mfo_map_handle.flush()
 
     print('Creating training set for BPO ontology ...')
     fh_sprot.seek(0)
-    filter_trainingSet_allSpecies(fh_sprot,
-                       trainingFile_LK_bpo_handle,
-                       trainingFile_LK_bpo_map_handle,
+    __filter_trainingSet_allSpecies(fh_sprot,
+                       trainingFile_bpo_handle,
+                       trainingFile_bpo_map_handle,
                        'P', EXP_default)
-    trainingFile_LK_bpo_handle.flush()
-    trainingFile_LK_bpo_map_handle.flush()
+    trainingFile_bpo_handle.flush()
+    trainingFile_bpo_map_handle.flush()
 
     print('Creating training set for CCO ontology ...')
     fh_sprot.seek(0)
-    filter_trainingSet_allSpecies(fh_sprot,
-                       trainingFile_LK_cco_handle,
-                       trainingFile_LK_cco_map_handle,
+    __filter_trainingSet_allSpecies(fh_sprot,
+                       trainingFile_cco_handle,
+                       trainingFile_cco_map_handle,
                        'C', EXP_default)
-    trainingFile_LK_cco_handle.flush()
-    trainingFile_LK_cco_map_handle.flush()
+    trainingFile_cco_handle.flush()
+    trainingFile_cco_map_handle.flush()
     return None
 
-def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
+def __filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
                                   ontType, EXP_default=set([])):
     '''
     This method filters out all the sequences from a UniProtKB/SwissProt
@@ -202,7 +203,8 @@ def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
             # If the protein's annotation has any EXP evidences,
             # write the sequence and the mapping to the output files:
             if exp_code:
-                goTerms = ','.join(list(goTerms))
+                #goTerms = ','.join(list(goTerms))
+                goTerms = ','.join(sorted(goTerms))
                 #print(goTerms)
                 outseq = SeqRecord(Seq(rec.sequence),
                                    id="TR"+str(target_id),
@@ -221,34 +223,39 @@ def filter_trainingSet_singleSpecies(fh_sprot, taxon_id, fh_targets, fh_map,
     return seqCount_exp
 
 def create_trainingSet_singleSpecies(fh_sprot, taxon_id,
-                       trainingFile_LK_mfo_handle,
-                       trainingFile_LK_mfo_map_handle,
-                       trainingFile_LK_bpo_handle,
-                       trainingFile_LK_bpo_map_handle,
-                       trainingFile_LK_cco_handle,
-                       trainingFile_LK_cco_map_handle,
+                       trainingFile_mfo_handle,
+                       trainingFile_mfo_map_handle,
+                       trainingFile_bpo_handle,
+                       trainingFile_bpo_map_handle,
+                       trainingFile_cco_handle,
+                       trainingFile_cco_map_handle,
                        EXP_default=set([])):
     print('Creating training set for MFO ontology ...')
-    filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
-                       trainingFile_LK_mfo_handle,
-                       trainingFile_LK_mfo_map_handle,
+    __filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
+                       trainingFile_mfo_handle,
+                       trainingFile_mfo_map_handle,
                        'F', EXP_default)
     #sys.exit(0) 
-
+    trainingFile_mfo_handle.flush()
+    trainingFile_mfo_map_handle.flush()
     print('Creating training set for BPO ontology ...')
     # Repositioning the reference point at the beginning of the file:
     fh_sprot.seek(0)
-    filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
-                       trainingFile_LK_bpo_handle,
-                       trainingFile_LK_bpo_map_handle,
+    __filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
+                       trainingFile_bpo_handle,
+                       trainingFile_bpo_map_handle,
                        'P', EXP_default)
+    trainingFile_bpo_handle.flush()
+    trainingFile_bpo_map_handle.flush()
     print('Creating training set for CCO ontology ...')
     # Repositioning the reference point at the beginning of the file:
     fh_sprot.seek(0)
-    filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
-                       trainingFile_LK_cco_handle,
-                       trainingFile_LK_cco_map_handle,
+    __filter_trainingSet_singleSpecies(fh_sprot, taxon_id,
+                       trainingFile_cco_handle,
+                       trainingFile_cco_map_handle,
                        'C', EXP_default)
+    trainingFile_cco_handle.flush()
+    trainingFile_cco_map_handle.flush()
     return None
 
 if __name__ == '__main__':
