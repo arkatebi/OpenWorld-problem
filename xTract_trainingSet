@@ -18,29 +18,27 @@
     Mode 1: extract sequences for all species from some input file 
             uniprot_sprot.dat.2010_01
        > python xTract_trainingSet -I1=uniprot_sprot.dat.2014_09
-    Six output files will be created:
-        Three files with training sequences in MFO, BPO, and CCO 
-        ontological groups:
-            uniprot_sprot.dat.2010_01.tfa_LK_mfo.1
-            uniprot_sprot.dat.2010_01.tfa_LK_bpo.1
-            uniprot_sprot.dat.2010_01.tfa_LK_cco.1
-        Three corresponding map files:
-            uniprot_sprot.dat.2010_01.tfa_LK_mfo.1.map
-            uniprot_sprot.dat.2010_01.tfa_LK_bpo.1.map
-            uniprot_sprot.dat.2010_01.tfa_LK_cco.1.map
-        Each map file will have three types of information: 
-           Sequence id, protein name, and list of GO terms that have EXP evidence.
+    Six output files will be created: three files with training sequences in 
+    MFO, BPO, and CCO ontological groups, and three corresponding map files.
+            trainingSet.mfo.1
+            trainingSet.mfo.1.map
+            trainingSet.bpo.1
+            trainingSet.bpo.1.map
+            trainingSet.cco.1
+            trainingSet.cco.1.map
+        Each map file will have three types of information: sequence id, 
+        protein name, and list of GO terms with EXP evidence code.
 
     Mode 2: extract sequences for a specific species from some input file 
-            uniprot_sprot.dat.2010_01 and taxon id 9606
+            SwissProt file: uniprot_sprot.dat.2010_01 and taxon id: 9606
        > python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=9606
     Three fasta files and three map files will be created:
-            uniprot_sprot.dat.2010_01.9606.tfa_LK_mfo.1
-            uniprot_sprot.dat.2010_01.9606.tfa_LK_bpo.1
-            uniprot_sprot.dat.2010_01.9606.tfa_LK_cco.1
-            uniprot_sprot.dat.2010_01.9606.tfa_LK_mfo.1.map
-            uniprot_sprot.dat.2010_01.9606.tfa_LK_bpo.1.map
-            uniprot_sprot.dat.2010_01.9606.tfa_LK_cco.1.map
+            trainingSet.9606.mfo.1
+            trainingSet.9606.mfo.1.map
+            trainingSet.9606.bpo.1
+            trainingSet.9606.bpo.1.map
+            trainingSet.9606.cco.1
+            trainingSet.9606.cco.1.map
 '''
 import os
 import sys
