@@ -3,10 +3,10 @@
     This tool generates the set of protein sequences for the 
     evaluation of a predictive model. The tool accepts the following 
     four inputs:
-           (1) a UniProtKB/swissProt file at time t1  
-           (2) a UniProtKB/swissProt file at time t2 
-           (3) an optional taxon id and 
-           (4) an optional output file name prefix 
+           (1) a UniProtKB/swissProt file at time t1
+           (2) a UniProtKB/swissProt file at time t2
+           (3) an optional taxon id and
+           (4) an optional output file name prefix
     This tool extracts the protein sequences from the UniProtKB/SwissProt 
     database at t2 for the proteins whose annotations did not have EXP 
     evidence at time t1 but gained experimental evidence at time t2.
@@ -117,12 +117,6 @@ class xTract_evalSet:
         self.evalSet_bpo_map = self.evalSet_bpo + '.map' 
         self.evalSet_cco_map = self.evalSet_cco + '.map'
 
-        #print(self.evalSet_mfo)
-        #print(self.evalSet_mfo_map)
-        #print(self.evalSet_bpo)
-        #print(self.evalSet_bpo_map)
-        #print(self.evalSet_cco)
-        #print(self.evalSet_cco_map)
         return None
 
     def __create_outfilename(self, ontType):
