@@ -316,8 +316,8 @@ def create_evalSet_allSpecies(fh_sprot_t1, fh_sprot_t2,
     evalSet_cco_map_handle.flush()
     return None
 
-def __filter_evalSet_singleSpecies(fh_sprot_t1, fh_sprot_t2, taxon_id, fh_test_seq, 
-                                 fh_map, ontType, EXP_default=set([])):
+def __filter_evalSet_singleSpecies(fh_sprot_t1, fh_sprot_t2, taxon_id, fh_test_seq,
+                                   fh_map, ontType, EXP_default=set([])):
     '''
     This method filters the protein sequences from a SwissProt file
     at time point t2 such that the annotations of those proteins
