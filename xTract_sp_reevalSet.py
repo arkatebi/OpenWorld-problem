@@ -19,6 +19,13 @@
         the output map file in the same format as the map file 
         at time t1. 
    
+    create_reevalSet_singleSpecies(fh_mapFile_t1, fh_sprot_t2, taxon_id,
+                                reevalSet_handle, 
+                                reevalSet_map_handle,
+                                ontType,
+                                EXP_default=set([])):
+        This method creates reevaluation sets for single species. 
+ 
     The module also has a few other internal methods: 
         __collect_prevES(fh_mapFile): 
         This method creates a dictionary from the map file. 
