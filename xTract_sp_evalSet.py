@@ -173,13 +173,13 @@ def __get_NEXP_accession_list(fh_sprot, taxon_id, ontType, EXP_default=set([])):
     # that meet certain criteria: 
     if not taxon_id: # if taxon_id is empty, invoke the method for all species
         nexp_accessions = __build_NEXP_accession_allSpecies(fh_sprot,
-                                                          ontType, 
-                                                          EXP_default)
+                                                            ontType, 
+                                                            EXP_default)
     else: # if taxon_id is supplied, invoke the method for single species 
         nexp_accessions = __build_NEXP_accession_singleSpecies(fh_sprot,
-                                                             taxon_id,
-                                                             ontType, 
-                                                             EXP_default)
+                                                               taxon_id,
+                                                               ontType, 
+                                                               EXP_default)
     return nexp_accessions
 
 def __is_accession_found(accession_t2, nexp_accessions_t1):
