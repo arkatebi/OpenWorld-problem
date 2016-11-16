@@ -1,5 +1,4 @@
 #!/bin/sh
-
 git config --global user.email arkatebi@gmail.com
 git config --global user.name arkatebi
 
