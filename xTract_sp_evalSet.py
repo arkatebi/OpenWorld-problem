@@ -274,8 +274,6 @@ def __filter_evalSet_allSpecies(fh_sprot_t1, fh_sprot_t2, fh_test_seq,
                     fh_map.write("%s" % mapStr)
                 target_id += 1
                 countMatch += 1
-            #if countMatch > 10:
-            #    return None 
     return None
 
 def create_evalSet_allSpecies(fh_sprot_t1, fh_sprot_t2,
@@ -287,7 +285,6 @@ def create_evalSet_allSpecies(fh_sprot_t1, fh_sprot_t2,
                               evalSet_cco_map_handle,
                               EXP_default=set([])):
     print('MFO ontology:')
-    #sys.exit(0)
     __filter_evalSet_allSpecies(fh_sprot_t1, fh_sprot_t2,
                                   evalSet_mfo_handle,
                                   evalSet_mfo_map_handle,
