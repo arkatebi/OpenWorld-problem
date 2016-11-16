@@ -104,6 +104,10 @@ class xTract_reevalSet:
 
         self.reevalSet_fname = self.create_outfilename(self.ontology_name)
         self.reevalSet_map_fname = self.reevalSet_fname + '.map'
+
+        #print(self.reevalSet_fname)
+        #print(self.reevalSet_map_fname)
+        #sys.exit(0)
         return None
         
     def create_outfilename(self, ontType):
@@ -262,14 +266,22 @@ class xTract_reevalSet:
         if not basename(self.parsed_dict['g']): # Extract for all organisms
             print('Ontology: ' + self.ontology_name)
             xt.create_reevalSet_allSpecies(open(self.t1_input_file, 'r'),
-                                         open(self.t2_input_file, 'r'),
-                                         open(self.reevalSet_fname, 'w'),
-                                         open(self.reevalSet_map_fname, 'w'),
-                                         self.ontology_name,
-                                         self.ConfigParam['exp_eec'])
+                                           open(self.t2_input_file, 'r'),
+                                           open(self.reevalSet_fname, 'w'),
+                                           open(self.reevalSet_map_fname, 'w'),
+                                           self.ontology_name,
+                                           self.ConfigParam['exp_eec'])
         else: # Extract for specific organism 
-            print ('Not implmented yet. Quitting ...')
-            sys.exit(0)
+            #print ('Not implmented yet. Quitting ...')
+            #sys.exit(0)
+            print('Ontology: ' + self.ontology_name)
+            xt.create_reevalSet_singleSpecies(open(self.t1_input_file, 'r'),
+                                           open(self.t2_input_file, 'r'),
+                                           self.parsed_dict['g'],
+                                           open(self.reevalSet_fname, 'w'),
+                                           open(self.reevalSet_map_fname, 'w'),
+                                           self.ontology_name,
+                                           self.ConfigParam['exp_eec'])
         # Print the summary of running this program:
         self.print_epilog()
         return None
