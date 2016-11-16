@@ -77,3 +77,4 @@ python Assign_blastScores -I1=evalSet-6.cco.1.map \
                           -I2=trainingSet.cco.map \
                           -I3=evalSet-6.cco-blast-results.txt \
                           -O=evalSet-6.cco.scores.txt
+
