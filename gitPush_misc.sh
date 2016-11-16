@@ -1,4 +1,5 @@
 #!/bin/sh
+
 git config --global user.email arkatebi@gmail.com
 git config --global user.name arkatebi
 
@@ -29,7 +30,7 @@ git add gitPush_GT.sh
 git commit -m 'Script to add files related to Count_GOterms program' gitPush_GT.sh
 
 git add gitPush_misc.sh 
-git commit -m 'Script to add files to misc directory' gitPush_misc.sh
+git commit -m 'Script to add misc scripts' gitPush_misc.sh
 
 git add gitPush_reevalSet.sh 
 git commit -m 'Script to add files related to xTract_revalSet program' gitPush_reevalSet.sh
