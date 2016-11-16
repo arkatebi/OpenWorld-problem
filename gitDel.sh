@@ -1,5 +1,4 @@
 #!/bin/sh
-
 # Five STEPs before running this script:  
 
 # STEP 1: comment out the following line
