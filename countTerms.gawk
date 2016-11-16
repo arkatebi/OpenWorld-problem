@@ -27,4 +27,3 @@ function alen(a){
   for (i in a) k++;
   return k
 }
-
