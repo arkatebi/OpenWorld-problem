@@ -46,40 +46,40 @@ git commit -m 'Script to add figures and data files related to Count_genes progr
 git add pushGC_2012to2016.sh 
 git commit -m 'Script to add figures and data files related to Count_genes program' pushGC_2012to2016.sh
 
-git add run_genEvalSet-1.sh 
+git add genEvalSet-1.sh 
 git commit -m 'Script to generate ES-1' run_genEvalSet-1.sh
 
-git add run_genEvalSet-2.sh 
+git add genEvalSet-2.sh 
 git commit -m 'Script to generate ES-2' run_genEvalSet-2.sh
 
-git add run_genEvalSet-3.sh 
+git add genEvalSet-3.sh 
 git commit -m 'Script to generate ES-3' run_genEvalSet-3.sh
 
-git add run_genEvalSet-4.sh 
+git add genEvalSet-4.sh 
 git commit -m 'Script to generate ES-4' run_genEvalSet-4.sh
 
-git add run_genEvalSet-5.sh 
+git add genEvalSet-5.sh 
 git commit -m 'Script to generate ES-5' run_genEvalSet-5.sh
 
-git add run_genEvalSet-6.sh 
+git add genEvalSet-6.sh 
 git commit -m 'Script to generate ES-6' run_genEvalSet-6.sh
 
-git add run_genEvalSet-1-sp.sh 
+git add genEvalSet-1-sp.sh 
 git commit -m 'Script to generate ES-1 for species' run_genEvalSet-1-sp.sh
 
-git add run_genEvalSet-2-sp.sh 
+git add genEvalSet-2-sp.sh 
 git commit -m 'Script to generate ES-2 for species' run_genEvalSet-2-sp.sh
 
-git add run_genEvalSet-3-sp.sh 
+git add genEvalSet-3-sp.sh 
 git commit -m 'Script to generate ES-3 for species' run_genEvalSet-3-sp.sh
 
-git add run_genEvalSet-4-sp.sh 
+git add genEvalSet-4-sp.sh 
 git commit -m 'Script to generate ES-4 for species' run_genEvalSet-4-sp.sh
 
-git add run_genEvalSet-5-sp.sh 
+git add genEvalSet-5-sp.sh 
 git commit -m 'Script to generate ES-5 for species' run_genEvalSet-5-sp.sh
 
-git add run_genEvalSet-6-sp.sh 
+git add genEvalSet-6-sp.sh 
 git commit -m 'Script to generate ES-6 for species' run_genEvalSet-6-sp.sh
 
 git add countTerms.gawk 
