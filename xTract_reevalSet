@@ -67,10 +67,6 @@ class bcolors:
 # Default configuration file name:
 config_filename = '.cafarc' 
 
-splitterStr = '.dat.'
-year_Llimit = 2010
-month_str = ['01','02','03','04','05','06','07','08','09','10','11','12']
-
 DEFAULT_PREFIX = 'evalSet'
 
 class xTract_reevalSet: 
@@ -95,22 +91,14 @@ class xTract_reevalSet:
 
         self.ontology_name = self.parsed_dict['Aspect'] # Extract ontology name 
 
-        #if not self.check_map_filename_format(t1): 
-        #    sys.exit(0) 
-
-        # Check the SwissProt filename formats:
-        if not self.check_SwissProt_filename_format(t2):
-            sys.exit(0)
-
-        self.reevalSet_fname = self.create_outfilename(self.ontology_name)
+        self.reevalSet_fname = self.__create_outfilename(self.ontology_name)
         self.reevalSet_map_fname = self.reevalSet_fname + '.map'
-
         #print(self.reevalSet_fname)
         #print(self.reevalSet_map_fname)
         #sys.exit(0)
         return None
         
-    def create_outfilename(self, ontType):
+    def __create_outfilename(self, ontType):
         """ 
         Creates an output filename based on the output file prefix
         provided by the user and at the end returns the newly
@@ -147,26 +135,7 @@ class xTract_reevalSet:
         output_filename = self.work_dir + '/' + ob + '.' + str(index)
         return output_filename
 
-    def create_iterator(self, infile):
-        """ 
-        Creates and returns an iterator object for an input a UniProt-GOA
-        file along with a list of all field names contained in the
-        UniProt-GOA file.
-        """
-        infile_handle = open(infile, 'r')
-        iter_handle = GOA.gafiterator(infile_handle)
-        for ingen in iter_handle:
-            if len(ingen) == 17:
-                GAFFIELDS = GOA.GAF20FIELDS
-                break
-            else:
-                GAFFIELDS = GOA.GAF10FIELDS
-                break
-        infile_handle = open(infile, 'r')
-        iter_handle = GOA.gafiterator(infile_handle)
-        return iter_handle, GAFFIELDS
-
-    def print_prolog(self):
+    def __print_prolog(self):
         print ("*************************************************")
         print ("Running Reevaluation Sequence Generatin Tool !!!!!")
         print ('Following is a list of user supplied inputs:')
@@ -175,7 +144,7 @@ class xTract_reevalSet:
         print ('*********************************************\n')
         return None
 
-    def print_epilog(self):
+    def __print_epilog(self):
         print(bcolors.OKGREEN + 'The following output files are created: ' +
               bcolors.ENDC)
         if os.path.exists(self.reevalSet_fname):
@@ -188,52 +157,13 @@ class xTract_reevalSet:
               'Generation Tool' + bcolors.ENDC)
         return None
 
-    def check_SwissProt_filename_format(self, sp_fname):
-        '''
-        This method checks whether UniProtKB/SwissProt filenames are 
-        are named in the correct format.
-        The names of the files should be in this format: 
-            uniprot_sprot.dat.yyyy_mm
-            yyyy is a year that cannot be less than year_Llimit 
-            mm is a month that must be in month_str
-            where year_Llimit and month_str are global variables.   
-        If the file name is NOT in that format, 
-            the the method returns False.
-        If all above checks are passed, the method returns True
-        '''
-        if not splitterStr in basename(sp_fname):
-             print('Given UniProtKB/SwissProt filename: ' + basename(sp_fname.strip()))
-             print('File name format must be: ' + 'prfix' + splitterStr + 'date')
-             return False
-        fname_parts = basename(sp_fname).strip().split(splitterStr)
-        if (len(fname_parts)) != 2: 
-             print('Given UniProtKB/SwissProt filename: ' + basename(sp_fname.strip()))
-             print('File name format must be: ' + 'prfix' + splitterStr + 'date')
-             return False
-        if len(fname_parts[1].split('_')) !=2:
-            print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
-            return False
-        yy = fname_parts[1].split('_')[0]
-        mm = fname_parts[1].split('_')[1]
-        if int(yy) < year_Llimit:
-            print('Given UniProtKB/SwissProt filename: ' + basename(sp_fname.strip()))
-            print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
-            print('And a valid year must be greater than 2009')
-            return False
-        if(mm not in month_str):
-            print('Given UniProtKB/SwissProt filename: ' + basename(sp_fname.strip()))
-            print('Third part of the filename must be in the format: ' + '"yyyy_mm"')
-            print('And a valid month must be between 01 and 12.')
-            return False
-        return True
-
-    def check_sprot_format(self, sprot_fname):
+    def __check_sprot_format(self, sprot_fname):
         """
         This method exits the xTract_testSeq program on any of the
         following conditions:
             Case 1: if the file is empty
             Case 2: if the file is NOT in UniProtKB/SwissProt format.
-                    To check this it invokes check_sprot_format method
+                    To check this it invokes __check_sprot_format method
                     of FormatChecker module.
         """
         if os.stat(sprot_fname).st_size == 0:
@@ -253,10 +183,10 @@ class xTract_reevalSet:
         to test sequence generation.
         """
         # Print the wellcome message:
-        self.print_prolog()
+        self.__print_prolog()
 
         # Check UniProtKB/SwissProt file format: 
-        self.check_sprot_format(self.t2_input_file)
+        self.__check_sprot_format(self.t2_input_file)
 
         # Filter out the target sequences from the UniProtKB/SwissProt file:
         print('Filtering reevaluation sequences based on ' + \
@@ -283,7 +213,7 @@ class xTract_reevalSet:
                                            self.ontology_name,
                                            self.ConfigParam['exp_eec'])
         # Print the summary of running this program:
-        self.print_epilog()
+        self.__print_epilog()
         return None
 
 if __name__ == '__main__':
