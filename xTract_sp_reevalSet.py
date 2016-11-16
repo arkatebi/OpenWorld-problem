@@ -132,6 +132,77 @@ def create_reevalSet_allSpecies(fh_mapFile_t1, fh_sprot_t2,
     print('countFunctionGain at t2: ' + str(countFunctionGain))
     return None
 
+def create_reevalSet_singleSpecies(fh_mapFile_t1, fh_sprot_t2, taxon_id,
+                                   reevalSet_handle,
+                                   reevalSet_map_handle,
+                                   ontType,
+                                   EXP_default=set([])):
+    prevES_dict = __collect_prevES(fh_mapFile_t1)
+    fh_mapFile_t1.close()
+    # Counter for the number of proteins that had also annotations at t1:
+    countMatch = 0
+    # Counter for the number of proteins that gained annotations at t2:
+    countFunctionGain = 0
+    for rec in sp.parse(fh_sprot_t2):
+        # Checks whether the protein had annotation at t1:
+        retVal = __is_accession_found(rec.accessions, prevES_dict)
+        #if (retVal):
+        if (taxon_id in rec.taxonomy_id and retVal):
+            countMatch+=1
+            exp_code = False
+            goTerms = set()
+            # Going over the list of GO information:
+            for crossRef in rec.cross_references:
+                # Consider the cross_reference entries
+                # that relate to GO DB:
+                if crossRef[0] == 'GO':
+                    goList = [crossRef[1],
+                             (crossRef[3].split(':'))[0],
+                             crossRef[2][0]]
+                    if goList[2] == ontType and \
+                       (crossRef[3].split(':'))[0] in EXP_default:
+                        goTerms.add(goList[0])
+                        exp_code = True
+                        #break
+            # If the current protein's annotation gains EXP evidence
+            # code at t2, write the sequence to the output file:
+            # GO terms from map file at time point t1: 
+            curGOterms=prevES_dict[retVal]
+            # Gained GO terms between time points t1 and t2: 
+            newGOterms = goTerms-curGOterms
+            if exp_code and newGOterms:
+                target_id=retVal.split(':')[0]
+                protName=retVal.split(':')[1]
+                outseq = SeqRecord(Seq(rec.sequence),
+                                   id=str(target_id),
+                                   description = "%s" %
+                                   (protName))
+                outseq_list = [outseq]
+                # Write out the sequence to fasta file:
+                SeqIO.write(outseq_list, reevalSet_handle, "fasta")
+
+                # Write out the mapping to the map file:
+                # (protein sequence id, protein name, new GO term(s))
+                for gt in sorted(newGOterms):
+                    #mapStr = "T" + str(target_id) + '\t' + \
+                    #           str(gt) + '\n'
+                    mapStr = str(target_id) + '\t' + \
+                             str(protName) + '\t' + \
+                             str(gt) + '\n'
+                    reevalSet_map_handle.write("%s" % mapStr)
+                countFunctionGain += 1
+                #if countFunctionGain > 3: 
+                #    return None
+    # Close the open files: 
+    fh_sprot_t2.close()
+    reevalSet_handle.close() 
+    reevalSet_map_handle.close()
+    print('countMatch at t2: ' + str(countMatch))
+    print('countFunctionGain at t2: ' + str(countFunctionGain))
+    return None
+
+
+
 if __name__ == '__main__':
     print (sys.argv[0] + ':')
     print(__doc__)
