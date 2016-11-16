@@ -26,3 +26,4 @@ python2 CAFAAssess/precrec_main.py BPO 117 9606 ./workspace/evalSet-6.bpo.scores
 python2 CAFAAssess/precrec_main.py CCO 117 9606 ./workspace/evalSet-6.cco.scores.txt.1 ./figures-prec/evalSet-6.cco.png
 
 # Note: though this scores are on all organisms, the group name and organism name is supplied to comply with the CAFAAssess program
+
