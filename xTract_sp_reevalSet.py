@@ -146,7 +146,6 @@ def create_reevalSet_singleSpecies(fh_mapFile_t1, fh_sprot_t2, taxon_id,
     for rec in sp.parse(fh_sprot_t2):
         # Checks whether the protein had annotation at t1:
         retVal = __is_accession_found(rec.accessions, prevES_dict)
-        #if (retVal):
         if (taxon_id in rec.taxonomy_id and retVal):
             countMatch+=1
             exp_code = False
@@ -191,8 +190,7 @@ def create_reevalSet_singleSpecies(fh_mapFile_t1, fh_sprot_t2, taxon_id,
                              str(gt) + '\n'
                     reevalSet_map_handle.write("%s" % mapStr)
                 countFunctionGain += 1
-                #if countFunctionGain > 3: 
-                #    return None
+
     # Close the open files: 
     fh_sprot_t2.close()
     reevalSet_handle.close() 
@@ -200,8 +198,6 @@ def create_reevalSet_singleSpecies(fh_mapFile_t1, fh_sprot_t2, taxon_id,
     print('countMatch at t2: ' + str(countMatch))
     print('countFunctionGain at t2: ' + str(countFunctionGain))
     return None
-
-
 
 if __name__ == '__main__':
     print (sys.argv[0] + ':')
