@@ -47,11 +47,11 @@ git commit -m 'Script to add files related to xTract_trainingSet program' ../mis
 git add ../misc/pushGC_2010to2016.sh 
 git commit -m 'Script to add figures and data files related to Count_genes program' ../misc/pushGC_2010to2016.sh
 
-git add ../misc/pushGC_2012to2016.sh 
-git commit -m 'Script to add figures and data files related to Count_genes program' ../misc/pushGC_2012to2016.sh
+#git add ../misc/pushGC_2012to2016.sh 
+#git commit -m 'Script to add figures and data files related to Count_genes program' ../misc/pushGC_2012to2016.sh
 
-git add ../misc/genEvalSet_1.sh
-git commit -m 'Script to generate ES-1' ../misc/run_genEvalSet_1.sh
+git add ../misc/genEvalSet-1.sh
+git commit -m 'Script to generate ES-1' ../misc/run_genEvalSet-1.sh
 
 git add ../misc/genEvalSet-2.sh 
 git commit -m 'Script to generate ES-2' ../misc/run_genEvalSet-2.sh
