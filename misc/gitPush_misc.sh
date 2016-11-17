@@ -50,7 +50,7 @@ git commit -m 'Script to add figures and data files related to Count_genes progr
 git add ../misc/pushGC_2012to2016.sh 
 git commit -m 'Script to add figures and data files related to Count_genes program' ../misc/pushGC_2012to2016.sh
 
-git add ../misc/genEvalSet-1.sh 
+git add ../misc/genEvalSet-1.sh
 git commit -m 'Script to generate ES-1' ../misc/run_genEvalSet-1.sh
 
 git add ../misc/genEvalSet-2.sh 
