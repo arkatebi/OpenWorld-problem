@@ -47,44 +47,44 @@ git commit -m 'Script to add files related to xTract_trainingSet program' ../mis
 git add ../misc/pushGC_2010to2016.sh 
 git commit -m 'Script to add figures and data files related to Count_genes program' ../misc/pushGC_2010to2016.sh
 
-#git add ../misc/pushGC_2012to2016.sh 
-#git commit -m 'Script to add figures and data files related to Count_genes program' ../misc/pushGC_2012to2016.sh
+git add ../misc/pushGC_2012to2016.sh 
+git commit -m 'Script to add figures and data files related to Count_genes program' ../misc/pushGC_2012to2016.sh
 
 git add ../misc/genEvalSet-1.sh
-git commit -m 'Script to generate ES-1' ../misc/run_genEvalSet-1.sh
+git commit -m 'Script to generate ES-1' ../misc/genEvalSet-1.sh
 
 git add ../misc/genEvalSet-2.sh 
-git commit -m 'Script to generate ES-2' ../misc/run_genEvalSet-2.sh
+git commit -m 'Script to generate ES-2' ../misc/genEvalSet-2.sh
 
 git add ../misc/genEvalSet-3.sh 
-git commit -m 'Script to generate ES-3' ../misc/run_genEvalSet-3.sh
+git commit -m 'Script to generate ES-3' ../misc/genEvalSet-3.sh
 
 git add ../misc/genEvalSet-4.sh 
-git commit -m 'Script to generate ES-4' ../misc/run_genEvalSet-4.sh
+git commit -m 'Script to generate ES-4' ../misc/genEvalSet-4.sh
 
 git add ../misc/genEvalSet-5.sh 
-git commit -m 'Script to generate ES-5' ../misc/run_genEvalSet-5.sh
+git commit -m 'Script to generate ES-5' ../misc/genEvalSet-5.sh
 
 git add ../misc/genEvalSet-6.sh 
-git commit -m 'Script to generate ES-6' ../misc/run_genEvalSet-6.sh
+git commit -m 'Script to generate ES-6' ../misc/genEvalSet-6.sh
 
 git add ../misc/genEvalSet-1-sp.sh 
-git commit -m 'Script to generate ES-1 for species' ../misc/run_genEvalSet-1-sp.sh
+git commit -m 'Script to generate ES-1 for species' ../misc/genEvalSet-1-sp.sh
 
 git add ../misc/genEvalSet-2-sp.sh 
-git commit -m 'Script to generate ES-2 for species' ../misc/run_genEvalSet-2-sp.sh
+git commit -m 'Script to generate ES-2 for species' ../misc/genEvalSet-2-sp.sh
 
 git add ../misc/genEvalSet-3-sp.sh 
-git commit -m 'Script to generate ES-3 for species' ../misc/run_genEvalSet-3-sp.sh
+git commit -m 'Script to generate ES-3 for species' ../misc/genEvalSet-3-sp.sh
 
 git add ../misc/genEvalSet-4-sp.sh 
-git commit -m 'Script to generate ES-4 for species' ../misc/run_genEvalSet-4-sp.sh
+git commit -m 'Script to generate ES-4 for species' ../misc/genEvalSet-4-sp.sh
 
 git add ../misc/genEvalSet-5-sp.sh 
-git commit -m 'Script to generate ES-5 for species' ../misc/run_genEvalSet-5-sp.sh
+git commit -m 'Script to generate ES-5 for species' ../misc/genEvalSet-5-sp.sh
 
 git add ../misc/genEvalSet-6-sp.sh 
-git commit -m 'Script to generate ES-6 for species' ../misc/run_genEvalSet-6-sp.sh
+git commit -m 'Script to generate ES-6 for species' ../misc/genEvalSet-6-sp.sh
 
 git add ../misc/countTerms.gawk 
 git commit -m 'Script to count strings in a text file' ../misc/countTerms.gawk
