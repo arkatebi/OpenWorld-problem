@@ -19,4 +19,3 @@ git stash drop
 
 # STEP 4: Push all the changes to the remote repository: 
 git push origin master 
-
