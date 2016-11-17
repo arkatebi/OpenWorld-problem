@@ -14,7 +14,6 @@ git stash drop
 #git filter-branch -f --index-filter "git rm -rf --cached --ignore-unmatch FOLDERNAME" -- --all
 #git filter-branch -f --index-filter "git rm -rf --cached --ignore-unmatch Ontology" -- --all
 #git filter-branch -f --index-filter "git rm -rf --cached --ignore-unmatch workspace/geneCount.stat.1.xls" -- --all
-git filter-branch -f --index-filter "git rm -rf --cached --ignore-unmatch ArgParser_xTract_testSet.py" -- --all
 
 # STEP 4: Clean up the local repository:
 rm -rf ./git/refs/original/
