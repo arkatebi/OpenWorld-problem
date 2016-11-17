@@ -10,3 +10,4 @@ python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=83333 -O=trainingSet
 python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=224308 -O=trainingSet
 python xTract_trainingSet -I1=uniprot_sprot.dat.2010_01 -G=44689 -O=trainingSet
 date 
+
