@@ -96,7 +96,7 @@ git add ../misc/countTerms.gawk
 git commit -m 'Script to count strings in a text file' ../misc/countTerms.gawk
 
 git add ../misc/gitPush_CAFAAssess.sh 
-git commit -m 'Script to generate ES-6 for species' ../misc/gitPush_CAFAAssess.sh
+git commit -m 'Script to add CAFAAssess folder' ../misc/gitPush_CAFAAssess.sh
 
 git remote add origin https://github.com/arkatebi/OpenWorld-problem
 #git pull origin master
