@@ -97,8 +97,25 @@ The fourth input is the output filename where the program records scores:
 the first column has the target id, the second column has the protein name,
 and the third column has the assigned score.
 
-#### HMMER 
-See reference [2].
+##### BLAST Results 
+To obtain the blast results between evaluation set and training set, one 
+needs follow the following two steps. 
+
+###### Create BLAST DB
+Create BLAST DB for the training sequences using the parameters as shown 
+below: 
+
+```
+      makeblastdb -in trainingSet.9606.mfo -dbtype 'prot' -out trainingSet.9606.mfo-DB
+```  
+
+###### Obtain BLAST Resulst 
+Once the BLAST DBs are created, blast the evaluation set against the specific BLAST DB
+with the parameters as shown below:  
+
+```
+  blastp -db trainingSet.mfo-DB -query evalSet-1.9606.mfo.1 -outfmt "6 qseqid sseqid evalue length pident nident" -out evalSet-1.9606.mfo-blast-results.txt
+```
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
