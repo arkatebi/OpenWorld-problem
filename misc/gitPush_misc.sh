@@ -36,7 +36,7 @@ git add ../misc/gitPush_GT.sh
 git commit -m 'Script to add files related to Count_GOterms program' ../misc/gitPush_GT.sh
 
 git add ../misc/gitPush_misc.sh 
-git commit -m 'Script to add misc scripts' ../misc/gitPush_misc.sh
+git commit -m 'Script to update misc folder' ../misc/gitPush_misc.sh
 
 git add ../misc/gitPush_reevalSet.sh 
 git commit -m 'Script to add files related to xTract_revalSet program' ../misc/gitPush_reevalSet.sh
