@@ -113,7 +113,7 @@ Once the BLAST databases are created, blast the evaluation set against the
 specific BLAST blast database with the parameters as shown below:  
 
 ```
-blastp -db trainingSet.mfo-DB -query evalSet-1.9606.mfo.1 -outfmt "6 qseqid sseqid evalue length pident nident" -out evalSet-1.9606.mfo-blast-results.txt
+blastp -db trainingSet.9606.mfo-DB -query evalSet-1.9606.mfo.1 -outfmt "6 qseqid sseqid evalue length pident nident" -out evalSet-1.9606.mfo-blast-results.txt
 ```
 
 ### Source Code
