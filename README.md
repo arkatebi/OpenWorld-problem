@@ -99,22 +99,21 @@ and the third column has the assigned score.
 
 ##### BLAST Results 
 To obtain the blast results between evaluation set and training set, one 
-needs follow the following two steps. 
+needs to follow the two steps as described below.
 
 ###### Create BLAST DB
-Create BLAST DB for the training sequences using the parameters as shown 
-below: 
+Create BLAST databases for the training sequences using the following command:
 
 ```
-      makeblastdb -in trainingSet.9606.mfo -dbtype 'prot' -out trainingSet.9606.mfo-DB
+makeblastdb -in trainingSet.9606.mfo -dbtype 'prot' -out trainingSet.9606.mfo-DB
 ```  
 
 ###### Obtain BLAST Resulst 
-Once the BLAST DBs are created, blast the evaluation set against the specific BLAST DB
-with the parameters as shown below:  
+Once the BLAST databases are created, blast the evaluation set against the 
+specific BLAST blast database with the parameters as shown below:  
 
 ```
-  blastp -db trainingSet.mfo-DB -query evalSet-1.9606.mfo.1 -outfmt "6 qseqid sseqid evalue length pident nident" -out evalSet-1.9606.mfo-blast-results.txt
+blastp -db trainingSet.mfo-DB -query evalSet-1.9606.mfo.1 -outfmt "6 qseqid sseqid evalue length pident nident" -out evalSet-1.9606.mfo-blast-results.txt
 ```
 
 ### Source Code
