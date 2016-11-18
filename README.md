@@ -108,7 +108,7 @@ Create BLAST databases for the training sequences using the following command:
 makeblastdb -in trainingSet.9606.mfo -dbtype 'prot' -out trainingSet.9606.mfo-DB
 ```  
 
-###### Obtain BLAST Resulst 
+###### Obtain BLAST Result
 Once the BLAST databases are created, blast the evaluation set against the 
 specific BLAST blast database with the parameters as shown below:  
 
