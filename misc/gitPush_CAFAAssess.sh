@@ -8,7 +8,6 @@ git add ../CAFAAssess
 git commit -m 'Added CAFAAsses folder' ../CAFAAssess
 
 git remote add origin https://github.com/arkatebi/OpenWorld-problem
-#git pull origin master
 git push origin master
 
 # Discard unstaged changes:
