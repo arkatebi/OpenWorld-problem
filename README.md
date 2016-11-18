@@ -98,7 +98,7 @@ the first column has the target id, the second column has the protein name,
 and the third column has the assigned score.
 
 ##### BLAST Results 
-To obtain the blast results between evaluation set and training set, one 
+To obtain the blast results used as input file in the above BLAST model, one 
 needs to follow the two steps as described below.
 
 ###### Create BLAST DB
