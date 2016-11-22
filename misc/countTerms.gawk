@@ -3,10 +3,7 @@
 # where comma separated terms are stored in each line.
 # gawk -f countTerms.gawk termFile.txt 
 BEGIN {FS=","}
-{
-   split($0,a,FS)
-   for (i in a) {terms[a[i]]=a[i]}
-}
+{split($0,a,FS);for (i in a) {terms[a[i]]=a[i]} }
 END { n=alen(terms); print(n)}
 
 function alen(a){
