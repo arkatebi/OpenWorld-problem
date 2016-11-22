@@ -95,6 +95,9 @@ git commit -m 'Script to generate ES-6 for species' ../misc/genEvalSet-6-sp.sh
 git add ../misc/countTerms.gawk 
 git commit -m 'Script to count strings in a text file' ../misc/countTerms.gawk
 
+git add ../misc/termFile.txt 
+git commit -m 'Sample file for countTerms.gawk script' ../misc/termFile.txt
+
 git add ../misc/gitPush_CAFAAssess.sh 
 git commit -m 'Script to add CAFAAssess folder' ../misc/gitPush_CAFAAssess.sh
 
