@@ -67,7 +67,6 @@ parser.add_argument('plotfile', help='Input path+filename to save the PR plot')
 #parser.parse_args(['BPO','117','./CAFAAssess/confidence/117/PaccanaroLab_1_9606_BPO.txt','./CAFAAssess/confidence/117/'])
 args = parser.parse_args()
 
-# test line
 print('Evaluating %s.\n' % args.file.name)
 print('Ontology: %s\n' % args.ontology)
 print('Species: %s\n' % args.taxon)
