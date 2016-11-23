@@ -8,7 +8,7 @@
 #git commit -m 'Added CAFAAsses folder' ../CAFAAssess
 
 git add ../CAFAAssess/precrec_main.py
-git commit -m 'Added CAFAAsses folder' ../CAFAAssess/precrec_main.py
+git commit -m 'Simplified' ../CAFAAssess/precrec_main.py
 
 #git remote add origin https://github.com/arkatebi/OpenWorld-problem
 git push origin master
