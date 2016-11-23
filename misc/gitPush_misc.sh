@@ -99,7 +99,7 @@ git add ../misc/termFile.txt
 git commit -m 'Sample file for countTerms.gawk script' ../misc/termFile.txt
 
 git add ../misc/gitPush_CAFAAssess.sh 
-git commit -m 'Script to add CAFAAssess folder' ../misc/gitPush_CAFAAssess.sh
+git commit -m 'Script to update CAFAAssess folder' ../misc/gitPush_CAFAAssess.sh
 
 git remote add origin https://github.com/arkatebi/OpenWorld-problem
 #git pull origin master
