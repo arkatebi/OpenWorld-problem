@@ -10,6 +10,9 @@
 git add ../CAFAAssess/precrec_main.py
 git commit -m 'Simplified' ../CAFAAssess/precrec_main.py
 
+git add ../CAFAAssess/precRec.py
+git commit -m 'Modified method read_benchamrk' ../CAFAAssess/precRec.py
+
 #git remote add origin https://github.com/arkatebi/OpenWorld-problem
 git push origin master
 
