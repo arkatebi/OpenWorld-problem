@@ -56,8 +56,25 @@ class benchmark:
                 #A: what does |= do?
                 self.true_terms[protein] |= ancestors
         
+def read_benchmark(namespace, benchmark_path):
+    if namespace=='BPO':
+        ancestor_path = './CAFAAssess/precrec/gene_ontology_edit.obo_ancestors_bpo.txt'
+        #benchmark_path = './CAFAAssess/precrec/leafonly_BPO.txt'
+    elif namespace=='MFO':
+        ancestor_path = './CAFAAssess/precrec/gene_ontology_edit.obo_ancestors_mfo.txt'
+        #benchmark_path = './CAFAAssess/precrec/leafonly_MFO.txt'
+        #benchmark_path = './CAFAAssess/precrec/tmp/t2.txt'
+    elif namespace =='CCO':
+        ancestor_path = './CAFAAssess/precrec/gene_ontology_edit.obo_ancestors_cco.txt'
+        #benchmark_path = './CAFAAssess/precrec/leafonly_CCO.txt'
+    else:
+        raise ValueError('Please enter a valid ontology: BPO, MFO, CCO')
+    bench = benchmark(ancestor_path,benchmark_path)
+    bench.propagate()
+    return bench
 
-def read_benchmark(namespace):
+
+def read_benchmark_old(namespace):
     if namespace=='BPO':
         ancestor_path = './CAFAAssess/precrec/gene_ontology_edit.obo_ancestors_bpo.txt'
         benchmark_path = './CAFAAssess/precrec/leafonly_BPO.txt'
