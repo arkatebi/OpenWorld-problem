@@ -57,8 +57,8 @@ def taxon_name_converter(taxonID):
 
 parser = argparse.ArgumentParser(description='Precision- Recall assessment for protein function predictions.', )
 parser.add_argument('ontology',help='Input ontology',choices=['BPO','MFO','CCO'])
-parser.add_argument('team',help = 'Input team number',type=int)
-parser.add_argument('taxon', help= 'Input taxon ID, this will only be used to name the plot', type=int)
+#parser.add_argument('team',help = 'Input team number',type=int)
+#parser.add_argument('taxon', help= 'Input taxon ID, this will only be used to name the plot', type=int)
 #If it's all species combined, enter 0 as taxon ID(07/18/2016)
 #parser.add_argument('model',help = 'Input model number', choices=['1','2','3'])
 parser.add_argument('file',type=open,
@@ -69,8 +69,8 @@ args = parser.parse_args()
 
 print('Evaluating %s.\n' % args.file.name)
 print('Ontology: %s\n' % args.ontology)
-print('Species: %s\n' % args.taxon)
-print('Team: %s\n' % args.team)
+#print('Species: %s\n' % args.taxon)
+#print('Team: %s\n' % args.team)
 #print('model: %s\n' % args.taxon)
 
 #bench = [read_benchmark('BPO'), read_benchmark('MFO'), read_benchmark('CCO')]
