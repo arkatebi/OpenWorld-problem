@@ -73,11 +73,15 @@ print('Species: %s\n' % args.taxon)
 print('Team: %s\n' % args.team)
 #print('model: %s\n' % args.taxon)
 
-bench = [read_benchmark('BPO'), read_benchmark('MFO'), read_benchmark('CCO')]
-index = get_namespace_index(args.ontology)
+#bench = [read_benchmark('BPO'), read_benchmark('MFO'), read_benchmark('CCO')]
+#index = get_namespace_index(args.ontology)
+
+bench = read_benchmark(args.ontology)
+
 all_pred = GOPred()
 all_pred.read(args.file)
-c = PrecREC(bench[index],all_pred)
+#c = PrecREC(bench[index],all_pred)
+c = PrecREC(bench,all_pred)
 fm = c.Fmax_output(99)
 
 plt.plot(fm[1],fm[0])
