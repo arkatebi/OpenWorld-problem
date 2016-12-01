@@ -17,11 +17,11 @@ git commit -m 'Script to run CAFAAssess on all evaluation sets' ../misc/genPrecR
 git add ../misc/gitPush_trainingSet.sh 
 git commit -m 'Script to add files related to xTract_trainingSet program' ../misc/gitPush_trainingSet.sh
 
-git add ../misc/gitDel.sh 
-git commit -m 'Script to delete a file or directory from git repo' ../misc/gitDel.sh
+#git add ../misc/gitDel.sh 
+#git commit -m 'Script to delete a file or directory from git repo' ../misc/gitDel.sh
 
-#git rm ../misc/gitDel.sh 
-#git commit -m 'Delete script from git repo' ../misc/gitDel.sh
+git rm ../misc/gitDel.sh 
+git commit -m 'Delete script from git repo' ../misc/gitDel.sh
 
 #git add ../misc/gitDelFiles.sh 
 #git commit -m 'Script to delete files  from git repo' ../misc/gitDelFiles.sh
@@ -115,5 +115,5 @@ git remote add origin https://github.com/arkatebi/OpenWorld-problem
 git push origin master
 
 # Discard unstaged changes:
-#git stash save --keep-index
-#git stash drop
+git stash save --keep-index
+git stash drop
