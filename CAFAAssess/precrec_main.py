@@ -11,7 +11,9 @@ import os
 sys.path.append(os.getcwd())
 import argparse
 from CAFAAssess.precRec import PrecREC,read_benchmark
+#from precRec import PrecREC,read_benchmark
 from CAFAAssess.precrec.GOPred import GOPred
+#from precrec.GOPred import GOPred
 import matplotlib.pyplot as plt
 import numpy
 
@@ -57,31 +59,18 @@ def taxon_name_converter(taxonID):
 
 parser = argparse.ArgumentParser(description='Precision- Recall assessment ' + \
          'for protein function predictions.', )
-#parser.add_argument('team',help = 'Input team number',type=int)
-#parser.add_argument('taxon', help= 'Input taxon ID, this will only be used to name the plot', type=int)
-#If it's all species combined, enter 0 as taxon ID(07/18/2016)
-#parser.add_argument('model',help = 'Input model number', choices=['1','2','3'])
-#parser.add_argument('file',type=open, help='Input the path of the ' + \
-#                    'prediction file. File should be split according ' + \
-#                    'to ontology, and should be a .txt file')
 
 parser.add_argument('-I1', '--input1',type=open, help='Input the path of the ' + \
                     'prediction file. File should be split according ' + \
                     'to ontology, and should be a .txt file')
-
 parser.add_argument('-I2', '--input2', help='Input the path of the ' + \
                     'benchmark file. File should have two columns: ' + \
                     'column 1: protein name, column 2: GO term')
-
-#parser.add_argument('ontology',help='Input ontology',
-#                     choices=['BPO','MFO','CCO'])
 parser.add_argument('-G', '--ontology',help='Input ontology',
                      choices=['BPO','MFO','CCO'])
-#parser.add_argument('plotfile', help='Input path+filename to save the PR plot')
 parser.add_argument('-O', '--output', help='Input path+filename to save '+ \
                     'the Precision-Recall plot')
 
-#parser.parse_args(['BPO','117','./CAFAAssess/confidence/117/PaccanaroLab_1_9606_BPO.txt','./CAFAAssess/confidence/117/'])
 args = parser.parse_args()
 
 print('prediction file: %s' %args.input1)
@@ -89,23 +78,11 @@ print('benchmark file: %s' %args.input2)
 print('Ontology: %s' %args.ontology)
 print('Output plot file: %s' %args.output)
 
-#sys.exit(0)
-#print('Evaluating %s.\n' % args.file.name)
-#print('Ontology: %s\n' % args.ontology)
-#print('Species: %s\n' % args.taxon)
-#print('Team: %s\n' % args.team)
-#print('model: %s\n' % args.taxon)
-
-#bench = [read_benchmark('BPO'), read_benchmark('MFO'), read_benchmark('CCO')]
-#index = get_namespace_index(args.ontology)
-
 bench = read_benchmark(args.ontology, args.input2)
 
 all_pred = GOPred()
-#all_pred.read(args.file)
 all_pred.read(args.input1)
 
-#c = PrecREC(bench[index],all_pred)
 c = PrecREC(bench,all_pred)
 fm = c.Fmax_output(99)
 
@@ -114,9 +91,7 @@ plt.axis([0,1,0,1])
 plt.yticks(numpy.arange(0,1,0.1))
 plt.xlabel('Recall')
 plt.ylabel('Precision')
-#plt.title(str(args.team)+" "+str(args.taxon)+" "+args.ontology)
 plt.title(args.ontology)
-#plt.savefig(args.plotfile,dpi=200)
 plt.savefig(args.output,dpi=200)
 plt.close()
 
