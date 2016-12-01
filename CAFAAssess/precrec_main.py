@@ -5,7 +5,7 @@
     pythonn2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.bpo.scores.txt.1 
                                           -I2=./workspace/evalSets/bm-evalSet-1.bpo 
                                           -G=BPO 
-                                          -O=./workspace/figures/prCurve-evalSet-1.bpo.png
+                                          -O=./figures/prCurve-evalSet-1.bpo.png
    First input parameter is a prediction score file, whose column 1 has the
         target protein name, column 2 has the GO term, and column 3 has the
         confidence score for the prediction.
@@ -24,22 +24,6 @@ from CAFAAssess.precRec import PrecREC,read_benchmark
 from CAFAAssess.precrec.GOPred import GOPred
 import matplotlib.pyplot as plt
 import numpy
-
-def get_namespace_index(namespace):
-    '''
-    copied from confidence.py 07/15/2016
-    '''
-    num = None
-    if namespace=='BPO' or namespace=='bpo':
-        num = 0
-    elif namespace=='MFO' or namespace=='mfo':
-        num = 1
-    elif namespace=='CCO' or namespace=='cco':
-        num =2
-    else:
-        raise ValueError("name space not found, check prediction files")
-        print namespace
-    return num
 
 parser = argparse.ArgumentParser(description='Precision- Recall assessment ' + \
          'for protein function predictions.', )
