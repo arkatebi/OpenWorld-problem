@@ -1,3 +1,4 @@
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 ''' This program calculates precision-recall valuses from prediction scores. 
     How to run the program: 
@@ -24,19 +25,6 @@ from CAFAAssess.precrec.GOPred import GOPred
 import matplotlib.pyplot as plt
 import numpy
 
-'''
-arguments supplied to main:
-updated on 07/12/2016
-    ontology: 'BPO', 'MFO', 'CCO', 'HPO'
-    team number: e.g. 117
-    species: use taxon ID e.g. 9606 for Homo Sapien
-    model: which model of the submission, e.g. 1,2 or 3 
-    saveplot path: the path where the PR curve plot is saved (should be an absolute path??)
-    #use default go.obo: True or supply obopath (should be an absolute path??)
-    #use default benchmark: True or supply benchmark path (Ontology-specific!!) (should be an absolute path)
-    #submission folder: folder containing all submissions with each team in separate  folders titled by team number
-'''
-
 def get_namespace_index(namespace):
     '''
     copied from confidence.py 07/15/2016
@@ -52,21 +40,9 @@ def get_namespace_index(namespace):
         raise ValueError("name space not found, check prediction files")
         print namespace
     return num
-'''
-def team_name_converter(team_number):
-    
-    #convert team number to team name for plotting purposes
-    #07/18/2016: waiting for input from actual CAFA3
-    
-    return "teamName"
-    
-def taxon_name_converter(taxonID):
-    return "taxon"
-'''    
 
 parser = argparse.ArgumentParser(description='Precision- Recall assessment ' + \
          'for protein function predictions.', )
-
 parser.add_argument('-I1', '--input1',type=open, help='Input the path of the ' + \
                     'prediction file. File should be split according ' + \
                     'to ontology, and should be a .txt file')
@@ -77,7 +53,6 @@ parser.add_argument('-G', '--ontology',help='Input ontology',
                      choices=['BPO','MFO','CCO'])
 parser.add_argument('-O', '--output', help='Input path+filename to save '+ \
                     'the Precision-Recall plot')
-
 args = parser.parse_args()
 
 print('prediction file: %s' %args.input1)
@@ -103,5 +78,4 @@ plt.savefig(args.output,dpi=200)
 plt.close()
 
 print('fmax value for this prediction is: %s.\n' % fm[2])
-#print('PR plot is saved to %s.\n' % args.plotfile)
 print('PR plot is saved to %s.\n' % args.output)
