@@ -1,19 +1,26 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Thu Jul 14 15:02:03 2016
-This creates the command-line interface of the precision-recall calculations in
-CAFA assessment tool
-@author: Ashley Zhou
-"""
+''' This program calculates precision-recall valuses from prediction scores. 
+    How to run the program: 
+    pythonn2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.bpo.scores.txt.1 
+                                          -I2=./workspace/evalSets/bm-evalSet-1.bpo 
+                                          -G=BPO 
+                                          -O=./CAFAAssess/tmp-BPO-4.png
+   First input parameter is a prediction score file, whose column 1 has the
+        target name, column 2 has the GO term, and column 3 has the
+        confidence score.
+   Second input file is a benchmark file, whose column 1 has the target name
+        and column 2 has the experimentally verified GO term.
+   Third input parameter is the ontology name: MFO, BPO, or CCO
+   Fourth input parameter is an output filename, where the precision-recall
+        scores will be stored.
+'''
 
 import sys
 import os
 sys.path.append(os.getcwd())
 import argparse
 from CAFAAssess.precRec import PrecREC,read_benchmark
-#from precRec import PrecREC,read_benchmark
 from CAFAAssess.precrec.GOPred import GOPred
-#from precrec.GOPred import GOPred
 import matplotlib.pyplot as plt
 import numpy
 
