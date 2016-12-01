@@ -5,13 +5,13 @@
     pythonn2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.bpo.scores.txt.1 
                                           -I2=./workspace/evalSets/bm-evalSet-1.bpo 
                                           -G=BPO 
-                                          -O=./CAFAAssess/tmp-BPO-4.png
+                                          -O=./workspace/figures/prCurve-evalSet-1.bpo.png
    First input parameter is a prediction score file, whose column 1 has the
-        target name, column 2 has the GO term, and column 3 has the
-        confidence score.
+        target protein name, column 2 has the GO term, and column 3 has the
+        confidence score for the prediction.
    Second input file is a benchmark file, whose column 1 has the target name
         and column 2 has the experimentally verified GO term.
-   Third input parameter is the ontology name: MFO, BPO, or CCO
+   Third input parameter is the ontology name: any of MFO, BPO, and CCO
    Fourth input parameter is an output filename, where the precision-recall
         scores will be stored.
 '''
