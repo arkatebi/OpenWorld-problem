@@ -20,8 +20,8 @@ git commit -m 'Script to add files related to xTract_trainingSet program' ../mis
 #git add ../misc/gitDel.sh 
 #git commit -m 'Script to delete a file or directory from git repo' ../misc/gitDel.sh
 
-git rm ../misc/gitDel.sh 
-git commit -m 'Delete script from git repo' ../misc/gitDel.sh
+#git rm ../misc/gitDel.sh 
+#git commit -m 'Delete script from git repo' ../misc/gitDel.sh
 
 #git add ../misc/gitDelFiles.sh 
 #git commit -m 'Script to delete files  from git repo' ../misc/gitDelFiles.sh
