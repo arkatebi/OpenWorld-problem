@@ -1,0 +1,132 @@
+Evaluation Set 1
+Ontology: MFO
+prediction file: <open file './workspace/blastScores/evalSet-1.mfo.scores.txt.1', mode 'r' at 0x7f668812fae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-1.mfo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-1.mfo.png
+fmax value for this prediction is: 0.5529
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-1.mfo.png.
+
+Ontology: BPO
+prediction file: <open file './workspace/blastScores/evalSet-1.bpo.scores.txt.1', mode 'r' at 0x7f863782dae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-1.bpo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-1.bpo.png
+fmax value for this prediction is: 0.3147
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-1.bpo.png.
+
+Ontology: CCO
+prediction file: <open file './workspace/blastScores/evalSet-1.cco.scores.txt.1', mode 'r' at 0x7fe674596ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-1.cco
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-1.cco.png
+fmax value for this prediction is: 0.4936
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-1.cco.png.
+
+Evaluation Set 2
+Ontology: MFO
+prediction file: <open file './workspace/blastScores/evalSet-2.mfo.scores.txt.1', mode 'r' at 0x7f3960a03ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-2.mfo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-2.mfo.png
+fmax value for this prediction is: 0.4619
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-2.mfo.png.
+
+Ontology: BPO
+prediction file: <open file './workspace/blastScores/evalSet-2.bpo.scores.txt.1', mode 'r' at 0x7fc4687c3ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-2.bpo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-2.bpo.png
+fmax value for this prediction is: 0.2630
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-2.bpo.png.
+
+Ontology: CCO
+prediction file: <open file './workspace/blastScores/evalSet-2.cco.scores.txt.1', mode 'r' at 0x7f4b62a1eae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-2.cco
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-2.cco.png
+fmax value for this prediction is: 0.4619
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-2.cco.png.
+
+Evaluation Set 3
+Ontology: MFO
+prediction file: <open file './workspace/blastScores/evalSet-3.mfo.scores.txt.1', mode 'r' at 0x7f2a1d3edae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-3.mfo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-3.mfo.png
+fmax value for this prediction is: 0.5025
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-3.mfo.png.
+
+Ontology: BPO
+prediction file: <open file './workspace/blastScores/evalSet-3.bpo.scores.txt.1', mode 'r' at 0x7f9245a37ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-3.bpo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-3.bpo.png
+fmax value for this prediction is: 0.2885
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-3.bpo.png.
+
+Ontology: CCO
+prediction file: <open file './workspace/blastScores/evalSet-3.cco.scores.txt.1', mode 'r' at 0x7f1cb89f4ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-3.cco
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-3.cco.png
+fmax value for this prediction is: 0.4998
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-3.cco.png.
+
+Evaluation Set 4
+Ontology: MFO
+prediction file: <open file './workspace/blastScores/evalSet-4.mfo.scores.txt.1', mode 'r' at 0x7f0d52e97ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-4.mfo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-4.mfo.png
+fmax value for this prediction is: 0.4121
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-4.mfo.png.
+
+Ontology: BPO
+prediction file: <open file './workspace/blastScores/evalSet-4.bpo.scores.txt.1', mode 'r' at 0x7f8c04010ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-4.bpo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-4.bpo.png
+fmax value for this prediction is: 0.2675
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-4.bpo.png.
+
+Ontology: CCO
+prediction file: <open file './workspace/blastScores/evalSet-4.cco.scores.txt.1', mode 'r' at 0x7f34fa2b3ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-4.cco
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-4.cco.png
+fmax value for this prediction is: 0.4225
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-4.cco.png.
+
+Evaluation Set 5
+Ontology: MFO
+prediction file: <open file './workspace/blastScores/evalSet-5.mfo.scores.txt.1', mode 'r' at 0x7f690c130ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-5.mfo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-5.mfo.png
+fmax value for this prediction is: 0.5162
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-5.mfo.png.
+
+Ontology: BPO
+prediction file: <open file './workspace/blastScores/evalSet-5.bpo.scores.txt.1', mode 'r' at 0x7f96261eeae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-5.bpo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-5.bpo.png
+fmax value for this prediction is: 0.3291
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-5.bpo.png.
+
+Ontology: CCO
+prediction file: <open file './workspace/blastScores/evalSet-5.cco.scores.txt.1', mode 'r' at 0x7f4260df4ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-5.cco
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-5.cco.png
+fmax value for this prediction is: 0.5321
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-5.cco.png.
+
+Evaluation Set 6
+Ontology: MFO
+prediction file: <open file './workspace/blastScores/evalSet-6.mfo.scores.txt.1', mode 'r' at 0x7f4aa8d5bae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-6.mfo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-6.mfo.png
+fmax value for this prediction is: 0.4218
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-6.mfo.png.
+
+Ontology: BPO
+prediction file: <open file './workspace/blastScores/evalSet-6.bpo.scores.txt.1', mode 'r' at 0x7fecae65cae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-6.bpo
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-6.bpo.png
+fmax value for this prediction is: 0.2656
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-6.bpo.png.
+
+Ontology: CCO
+prediction file: <open file './workspace/blastScores/evalSet-6.cco.scores.txt.1', mode 'r' at 0x7f0c00cf4ae0>
+benchmark file: ./workspace/evalSets/bm-evalSet-6.cco
+Output precision-recall plot file: ./figures/prCurves/prCurve-evalSet-6.cco.png
+fmax value for this prediction is: 0.4302
+PR plot is saved to ./figures/prCurves/prCurve-evalSet-6.cco.png.
+
