@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 ''' This program calculates precision-recall valuses from prediction scores. 
     How to run the program: 
-    pythonn2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.bpo.scores.txt.1 
-                                          -I2=./workspace/evalSets/bm-evalSet-1.bpo 
-                                          -G=BPO 
+    python2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.bpo.scores.txt.1 \
+                                          -I2=./workspace/evalSets/bm-evalSet-1.bpo \
+                                          -G=BPO \
                                           -O=./figures/prCurve-evalSet-1.bpo.png
    First input parameter is a prediction score file, whose column 1 has the
         target protein name, column 2 has the GO term, and column 3 has the
