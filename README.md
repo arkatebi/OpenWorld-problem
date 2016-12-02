@@ -136,7 +136,8 @@ precision-recall curve will be saved.
 
 The script genPRcurves.sh calculates precision-recall for all prediction 
 scores obtained from the BLAST model. These precision-recall curves can 
-be found in folder figures/prCurves.
+be found in folder figures/prCurves. Precision-recall values are calculated 
+according to [3].
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
@@ -147,8 +148,15 @@ Ataur Katebi (arkatebi@gmail.com).
 <a name="refSet" />
 ### References 
 
-[1] Altschul SF, Gish W, Miller W, Myers EW & Lipman DJ (1990). Basic local alignment search tool. J. Mol. Biol. 215:403-410
+[1] Altschul SF, Gish W, Miller W, Myers EW & Lipman DJ (1990). Basic local 
+    alignment search tool. J. Mol. Biol. 215:403-410
 
 [2] HMMER 3.1b2 (February 2015); http://hmmer.org/
+
+[3] Radivojac P, Clark WT, Oron TR, et al. (2013). A large-scale evaluation of 
+    computational protein function prediction, Nature Methods 10(3), pp 221-227,
+    PMID 23353650
+
+ 
 
 [Go to the top] (#title)
