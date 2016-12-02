@@ -29,9 +29,11 @@ parser = argparse.ArgumentParser(description='Precision- Recall assessment ' + \
          'for protein function predictions.', )
 parser.add_argument('-I1', '--input1',type=open, help='Input the path of the ' + \
                     'prediction file. File should be split according ' + \
-                    'to ontology, and should be a .txt file')
+                    'to ontology, and should be a .txt file. File should have ' + \
+                    'three columns - column 1: protein name, column 2: GO ' + \
+                    'term, and column 3: prediction score')
 parser.add_argument('-I2', '--input2', help='Input the path of the ' + \
-                    'benchmark file. File should have two columns: ' + \
+                    'benchmark file. File should have two columns - ' + \
                     'column 1: protein name, column 2: GO term')
 parser.add_argument('-G', '--ontology',help='Input ontology',
                      choices=['BPO','MFO','CCO'])
