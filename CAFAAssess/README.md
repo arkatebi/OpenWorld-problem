@@ -1,6 +1,6 @@
 
 # A command-line interface for assessing a single prediction file using precision-recall.
-##### Modified CAFAAssess software: https://github.com/ashleyzhou972/CAFAAssess
+##### Modified from the CAFAAssess software: https://github.com/ashleyzhou972/CAFAAssess
 
 All GO files, benchmark files and test prediction files are in /precrec/. 
 
