@@ -22,5 +22,3 @@ python2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.mfo.s
                                      -G=MFO \
                                      -O=./figures/prCurves/prCurve-evalSet-1.mfo.png
 ```
-
-Future work including another module that processes zipped submission files and combining species
