@@ -21,7 +21,7 @@
 
 6\. [Predictive Models] (#modelSet)
 
-7.\ [Calculating Precision-Recall] (<#prScores)
+7\. [Calculating Precision-Recall] (<#prScores)
 
 <a name="intro">
 ### Introduction
