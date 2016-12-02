@@ -39,10 +39,10 @@ parser.add_argument('-O', '--output', help='Input path+filename to save '+ \
                     'the Precision-Recall plot')
 args = parser.parse_args()
 
+print('Ontology: %s' %args.ontology)
 print('prediction file: %s' %args.input1)
 print('benchmark file: %s' %args.input2)
-print('Ontology: %s' %args.ontology)
-print('Output plot file: %s' %args.output)
+print('Output precision-recall plot file: %s' %args.output)
 
 bench = read_benchmark(args.ontology, args.input2)
 
@@ -61,5 +61,5 @@ plt.title(args.ontology)
 plt.savefig(args.output,dpi=200)
 plt.close()
 
-print('fmax value for this prediction is: %s.\n' % fm[2])
+print('fmax value for this prediction is: %3.4f' % fm[2])
 print('PR plot is saved to %s.\n' % args.output)
