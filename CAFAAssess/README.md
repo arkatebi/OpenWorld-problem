@@ -1,5 +1,6 @@
 
-# A command-line interface for assessing a single CAFA prediction file using precision-recall.
+# A command-line interface for assessing a single prediction file using precision-recall.
+##### Modified CAFAAssess software: https://github.com/ashleyzhou972/CAFAAssess
 
 All GO files, benchmark files and test prediction files are in /precrec/. 
 
@@ -15,7 +16,11 @@ To use:
 
 ## Example:
 
-`python CAFAAssess/precrec_main.py BPO 117 9606 ./CAFAAssess/TEST_1_9606.txt ./CAFAAssess/testplot.png`
-
+```
+python2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.mfo.scores.txt.1 \
+                                     -I2=./workspace/evalSets/bm-evalSet-1.mfo \
+                                     -G=MFO \
+                                     -O=./figures/prCurves/prCurve-evalSet-1.mfo.png
+```
 
 Future work including another module that processes zipped submission files and combining species
