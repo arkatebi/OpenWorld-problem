@@ -134,10 +134,10 @@ file for calculating precision-recall, the third argument is the ontology
 (MFO, BPO, or CCO), and the fourth one is the output file where the 
 precision-recall curve will be saved.
 
-The script genPRcurves.sh calculates precision-recall for all prediction 
-scores obtained from the BLAST model. These precision-recall curves can 
-be found in folder figures/prCurves. Precision-recall values are calculated 
-according to reference [3].
+The script genPRcurves.sh calculates precision-recall values for all prediction 
+scores obtained from applying the BLAST model on all the evaluation sets. 
+These precision-recall curves can be found in folder figures/prCurves. 
+Precision-recall values are calculated according to reference [3].
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
