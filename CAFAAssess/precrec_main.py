@@ -64,4 +64,4 @@ plt.savefig(args.output,dpi=200)
 plt.close()
 
 print('fmax value for this prediction is: %3.4f' % fm[2])
-print('PR plot is saved to %s.\n' % args.output)
+print('PR plot is saved to %s\n' % args.output)
