@@ -122,7 +122,7 @@ blastp -db trainingSet.9606.mfo-DB -query evalSet-1.9606.mfo.1 -outfmt "6 qseqid
 The CAFAAssess software (https://github.com/ashleyzhou972/CAFAAssess) is 
 modified to calculate the precision-recall scores for different evaluation 
 sets. The following command calcualtes precision-recall scores for prediction 
-scores obtained from BLAST model in MFO ontology:
+scores obtained from the BLAST model in the MFO ontology:
 ```
 python2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.mfo.scores.txt.1 \
                                      -I2=./workspace/evalSets/bm-evalSet-1.mfo \
@@ -134,9 +134,9 @@ file for calculating precision-recall, the third argument is the ontology
 (MFO, BPO, or CCO), and the fourth one is the output file where the 
 precision-recall curve will be saved.
 
-The script genPRcurves.sh calcualtes precision-recall for all prediction 
-prediction scores obtained from the BLAST model. These precision-recall 
-curves can found in folder figures/prCurves.
+The script genPRcurves.sh calculates precision-recall for all prediction 
+scores obtained from the BLAST model. These precision-recall curves can 
+be found in folder figures/prCurves.
 
 ### Source Code
 This is an open source project and the source code is publicly available on 
