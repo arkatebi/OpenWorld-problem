@@ -2,8 +2,6 @@
 # A command-line interface for assessing a single prediction file using precision-recall.
 ##### Modified from the CAFAAssess software: https://github.com/ashleyzhou972/CAFAAssess
 
-All GO files, benchmark files and test prediction files are in /precrec/. 
-
 Default GO release is from 06/01/2014.
 
 To use:
@@ -14,7 +12,7 @@ To use:
 
 ### 3. Type `python CAFAAssess/precrec_main.py -h` for the usage of this module
 
-## Example:
+# Example:
 
 ```
 python2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.mfo.scores.txt.1 \
