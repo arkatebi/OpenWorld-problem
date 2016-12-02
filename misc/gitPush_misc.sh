@@ -107,11 +107,11 @@ git commit -m 'Sample file for countTerms.gawk script' ../misc/termFile.txt
 #git add ../misc/gitPush_CAFAAssess.sh 
 #git commit -m 'Script to update CAFAAssess folder' ../misc/gitPush_CAFAAssess.sh
 
-#git rm ../misc/gitPush_CAFAAssess.sh 
-#git commit -m 'Script deleted' ../misc/gitPush_CAFAAssess.sh
+git rm ../misc/gitPush_CAFAAssess.sh 
+git commit -m 'Script deleted' ../misc/gitPush_CAFAAssess.sh
 
-git add ../misc/gitPush_prScores.sh 
-git commit -m 'Script for computing precision-recall' ../misc/gitPush_CAFAAssess.sh
+git add ../misc/gitPush_PRcurves.sh 
+git commit -m 'Script for computing precision-recall' ../misc/gitPush_PRcurves.sh
 
 git add ../misc/gitPush_workspace.sh 
 git commit -m 'Script to update workspace folder' ../misc/gitPush_workspace.sh
