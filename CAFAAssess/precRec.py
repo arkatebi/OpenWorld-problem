@@ -1,16 +1,7 @@
-# -*- coding: utf-8 -*-
 #!/usr/bin/env python3
-"""
-new CAFA precision recall assessment
-
-Created on Thu Apr 14 17:14:30 2016
-dependency: - 
-@author: Ashley Zhou
-"""
-
+# -*- coding: utf-8 -*-
 
 import sys
-sys.path.append('/home/nzhou/git')
 from collections import defaultdict
 import numpy
 
@@ -73,7 +64,6 @@ def read_benchmark(namespace, benchmark_path):
     bench.propagate()
     return bench
 
-
 def read_benchmark_old(namespace):
     if namespace=='BPO':
         ancestor_path = './CAFAAssess/precrec/gene_ontology_edit.obo_ancestors_bpo.txt'
@@ -89,7 +79,6 @@ def read_benchmark_old(namespace):
     bench = benchmark(ancestor_path,benchmark_path)
     bench.propagate()
     return bench
-
 
 class PrecREC:
     '''
@@ -223,7 +212,7 @@ class PrecREC:
             except ZeroDivisionError:
                 precision=None
             recall = TP/len(self.true_terms[protein])
-            #recall should not have zerodivision problem
+            #recall should not have zero division problem
             #since if self.predicted[protein] is not None
             #This protein is in the benchmark file
             #i.e. gained experimental annotation
@@ -253,7 +242,7 @@ class PrecREC:
     def getNumProteins(self,threshold):
          
         '''
-        run precision_recall first
+        Run precision_recall first
         '''         
         print('number of benchmark proteins: %s\n'% len(self.true_terms))
         print('number of proteins predicted: %s\n'% len(self.predicted))
@@ -298,8 +287,3 @@ class PrecREC:
                 for term in self.predicted[prot]:
                     out.write("%s\t%s\t%s\n" % (str(protindex), self.predicted[prot][term][0],self.predicted[prot][term][1]))
         out.close()
-
-        
-        
-
-
