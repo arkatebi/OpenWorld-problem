@@ -124,10 +124,10 @@ modified to calculate the precision-recall scores for different evaluation
 sets. The following command calcualtes precision-recall scores for prediction 
 scores obtained from the BLAST model in the MFO ontology:
 ```
-python2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.mfo.scores.txt.1 \
-                                     -I2=./workspace/evalSets/bm-evalSet-1.mfo \
-                                     -G=MFO \
-                                     -O=./figures/prCurves/prCurve-evalSet-1.mfo.png
+python ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.mfo.scores.txt.1 \
+                                    -I2=./workspace/evalSets/bm-evalSet-1.mfo \
+                                    -G=MFO \
+                                    -O=./figures/prCurves/prCurve-evalSet-1.mfo.png
 ```
 The first argument is the prediction score file, the second is the benchmark
 file for calculating precision-recall, the third argument is the ontology
