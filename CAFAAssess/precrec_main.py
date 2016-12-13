@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 ''' This program calculates precision-recall valuses from prediction scores. 
     How to run the program: 
-    python2 ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.mfo.scores.txt.1 \
+    python ./CAFAAssess/precrec_main.py -I1=./workspace/blastScores/evalSet-1.mfo.scores.txt.1 \
                                          -I2=./workspace/evalSets/bm-evalSet-1.mfo \
                                          -G=MFO \
                                          -O=./figures/prCurves/prCurve-evalSet-1.mfo.png
