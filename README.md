@@ -137,7 +137,7 @@ precision-recall curve will be saved.
 The script genPRcurves.sh calculates precision-recall values for all the 
 prediction scores obtained by applying the BLAST model on all the evaluation 
 sets. Precision-recall values are calculated according to reference [3]. The 
-precision-recall curves can be found in folder figures/prCurves.
+precision-recall curves can be found in the folder figures/prCurves.
 
 
 ### Source Code
