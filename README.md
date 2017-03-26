@@ -1,4 +1,3 @@
-<a name="title" />
 ## Impact of 'Open World Assumption' on assessment of predictive models
 * The open-world problem arises from the open-world assumption: 'the 
   absence of evidence does not amount to the evidence of absence'.
@@ -9,21 +8,20 @@
   facilitate the research. 
 
 ### Contents
-1\. [Introduction] (#intro)
+1\. Introduction 
 
-2\. [Experiment Design] (#expDesign)
+2\. Experiment Design
 
-3\. [Requirements to use the tools] (#requirements)
+3\. Requirements to use the tools 
 
-4\. [Gene Count Statistics] (#geneCounts)
+4\. Gene Count Statistics 
 
-5\. [Training and Evaluation Sets] (#genSets)
+5\. Training and Evaluation Sets 
 
-6\. [Predictive Models] (#modelSet)
+6\. Predictive Models 
 
-7\. [Calculating Precision-Recall] (<#prScores)
+7\. Calculating Precision-Recall
 
-<a name="intro">
 ### Introduction
 Models for functional predictions of proteins are developed based on the
 current state of the functional annotation databases. However, the
@@ -44,27 +42,23 @@ become T′ as shown in the figure above, then tp, fp, and fn will change. We
 want to address the following question: how can this change of knowledge 
 impact the performance evaluation of the predictive model A?
 
-<a name="expDesign" />
 ### Experimental Design 
 The following figure shows the time points for collecting the training and 
 evaluation sets. 
 
 ![alt Experiment Design] (/figures/experiment-design-1.3.png?raw=true “Experiment Design”)
 
-<a name="requirements" />
 ### Requirements
 * Python 3.5 or greater
 * Biopython 1.66 or greater
 * test line
 
-<a name="geneCounts" />
 ### Gene Count Statistics 
 The statistics for gene counts in the UniProtKB/SwissProt can 
 be found by following the link below: 
 
 https://github.com/arkatebi/OpenWorld-problem/blob/master/doc/geneCount.md
 
-<a name="genSets" />
 ### Training and Evaluation Sets 
 
 The details of how to collect the training and evaluation data sets
@@ -73,7 +67,6 @@ can be found by following the link below:
 https://github.com/arkatebi/OpenWorld-problem/blob/master/doc/getDataSet.md
 
 
-<a name="modelSet" />
 ### Predictive Models 
 
 #### BLAST 
@@ -117,7 +110,6 @@ specific BLAST blast database with the parameters as shown below:
 blastp -db trainingSet.9606.mfo-DB -query evalSet-1.9606.mfo.1 -outfmt "6 qseqid sseqid evalue length pident nident" -out evalSet-1.9606.mfo-blast-results.txt
 ```
 
-<a name="prScores" />
 ### Calculating Precision-Recall
 The CAFAAssess software (https://github.com/ashleyzhou972/CAFAAssess) is 
 modified to calculate the precision-recall scores for different evaluation 
@@ -146,7 +138,6 @@ GitHub through the following URL: https://github.com/arkatebi/OpenWorld-problem.
 For questions, please email either of us: Iddo Friedberg (idoerg@gmail.com),
 Ataur Katebi (arkatebi@gmail.com).
 
-<a name="refSet" />
 ### References 
 
 [1] Altschul SF, Gish W, Miller W, Myers EW & Lipman DJ (1990). Basic local 
@@ -157,7 +148,3 @@ Ataur Katebi (arkatebi@gmail.com).
 [3] Radivojac P, Clark WT, Oron TR, et al. (2013). A large-scale evaluation of 
     computational protein function prediction, Nature Methods 10(3), pp 221-227,
     PMID 23353650
-
- 
-
-[Go to the top] (#title)
