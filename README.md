@@ -1,4 +1,3 @@
-<a name="title" />
 ## Impact of 'Open World Assumption' on assessment of predictive models
 * The open-world problem arises from the open-world assumption: 'the 
   absence of evidence does not amount to the evidence of absence'.
