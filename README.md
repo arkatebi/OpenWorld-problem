@@ -31,7 +31,7 @@ on the current knowledge still hold when new annotations become
 available through additional experiments. The situation can be depicted in the
 following figure.
 
-![alt tag] (/figures/incomplete-knowledge-1.1.png)
+![alt tag] (figures/incomplete-knowledge-1.1.png)
 
 Suppose, T is the set of experimentally annotated functions for some protein, 
 according to the current state of knowledge. Some model A predicts this 
