@@ -8,19 +8,19 @@
   facilitate the research. 
 
 ### Contents
-1\. [Introduction] 
+1\. Introduction 
 
-2\. [Experiment Design] 
+2\. Experiment Design
 
-3\. [Requirements to use the tools] 
+3\. Requirements to use the tools 
 
-4\. [Gene Count Statistics] 
+4\. Gene Count Statistics 
 
-5\. [Training and Evaluation Sets] 
+5\. Training and Evaluation Sets 
 
-6\. [Predictive Models] 
+6\. Predictive Models 
 
-7\. [Calculating Precision-Recall] 
+7\. Calculating Precision-Recall
 
 ### Introduction
 Models for functional predictions of proteins are developed based on the
